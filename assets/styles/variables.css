@@ -1,0 +1,55 @@
+/* Variables CSS pour le thème Matrix */
+:root {
+    /* Couleurs Matrix */
+    --matrix-black: #0d1117;
+    --matrix-dark: #161b22;
+    --matrix-green: #00ff41;
+    --matrix-green-light: #39ff8a;
+    --matrix-green-dark: #00cc33;
+    --matrix-text: #c9d1d9;
+    --matrix-text-secondary: #8b949e;
+    --matrix-border: #30363d;
+    --matrix-shadow: rgba(0, 255, 65, 0.2);
+    --matrix-glow: rgba(0, 255, 65, 0.4);
+
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+
+    /* Typography */
+    --font-family-mono: "Courier New", Consolas, "Lucida Console", monospace;
+    --font-family-sans: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+
+    /* Breakpoints */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+
+    /* Animation */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
+
+    /* Border radius */
+    --radius-sm: 0.125rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 var(--matrix-shadow);
+    --shadow-md: 0 4px 6px -1px var(--matrix-shadow);
+    --shadow-lg: 0 10px 15px -3px var(--matrix-shadow);
+    --shadow-glow: 0 0 10px var(--matrix-glow);
+}

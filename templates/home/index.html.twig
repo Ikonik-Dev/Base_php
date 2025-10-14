@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours PHP - Matrix Style
+{% endblock %}
+
+{% block body %}
+	<!-- Header -->
+	<header class="header">
+		<div class="container">
+			<div class="header-content">
+				<h1 class="header-title">// FORMATION PHP</h1>
+				<p class="header-subtitle">
+					Explorez les concepts fondamentaux du PHP dans un environnement Matrix. 
+										                Chaque notion est une porte vers la maîtrise du développement web.
+				</p>
+			</div>
+		</div>
+	</header>
+
+	<!-- Contenu principal -->
+	<main class="main-content">
+		<div class="container">
+			<div class="grid">
+				{% for key, concept in data %}
+					<article id="{{ key }}" class="concept-card" onclick="window.open('#', '_blank')">
+						<h2 class="concept-card-title">
+							{{ key|replace({'_': ' '})|title }}
+						</h2>
+						<p class="concept-card-description">
+							{{ concept.description }}
+						</p>
+						<div class="concept-card-example">
+							<strong>Exemple :</strong><br>
+							{{ concept.example }}
+						</div>
+					</article>
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+
+	<!-- Effet Matrix de fond (optionnel) -->
+	<div class="matrix-bg" id="matrix-canvas"></div>
+
+	<script>
+		// Script pour l'effet Matrix de fond (optionnel et léger)
+document.addEventListener('DOMContentLoaded', function () { // Ajout d'un léger effet de scintillement pour les cartes
+const cards = document.querySelectorAll('.concept-card');
+
+cards.forEach((card, index) => { // Animation d'apparition décalée
+card.style.animationDelay = `${
+index * 0.1
+}s`;
+card.style.animation = 'fadeInUp 0.6s ease-out forwards';
+
+// Effet de hover avancé
+card.addEventListener('mouseenter', function () {
+this.style.transform = 'translateY(-8px) scale(1.02)';
+});
+
+card.addEventListener('mouseleave', function () {
+this.style.transform = 'translateY(0) scale(1)';
+});
+});
+
+// Smooth scroll pour la navigation
+document.querySelectorAll('.nav-link').forEach(link => {
+link.addEventListener('click', function (e) {
+e.preventDefault();
+const targetId = this.getAttribute('href').substring(1);
+const targetElement = document.getElementById(targetId);
+
+if (targetElement) {
+targetElement.scrollIntoView({behavior: 'smooth', block: 'center'});
+
+// Effet de highlight temporaire
+targetElement.style.boxShadow = '0 0 20px var(--matrix-glow)';
+setTimeout(() => {
+targetElement.style.boxShadow = '';
+}, 2000);
+}
+});
+});
+});
+	</script>
+
+	<style>
+		/* Animations personnalisées pour cette page */
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* Style initial pour les cartes avant animation */
+		.concept-card {
+			opacity: 0;
+		}
+
+		/* Style pour l'effet de focus sur les cartes */
+		.concept-card:focus {
+			outline: 2px solid var(--matrix-green);
+			outline-offset: 2px;
+		}
+
+		/* Amélioration du contraste pour l'accessibilité */
+		.concept-card-example {
+			position: relative;
+		}
+
+		.concept-card-example::before {
+			content: '$ ';
+			color: var(--matrix-green);
+			font-weight: bold;
+		}
+	</style>
+{% endblock %}

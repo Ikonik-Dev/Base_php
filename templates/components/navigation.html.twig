@@ -1,0 +1,19 @@
+{# Composant de navigation #}
+<nav class="navbar">
+	<div class="container">
+		<div class="navbar-container">
+			<div class="navbar-brand">
+				&lt;/&gt; Cours PHP
+			</div>
+			<ul class="navbar-nav">
+				{% if data is defined %}
+					{% for key, concept in data %}
+						<li>
+							<a href="#{{ key }}" class="nav-link">{{ key|replace({'_': ' '})|title }}</a>
+						</li>
+					{% endfor %}
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
