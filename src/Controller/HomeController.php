@@ -53,6 +53,10 @@ final class HomeController extends AbstractController
                 'description' => 'Apprenez à interagir avec les bases de données en PHP : connexions PDO sécurisées, requêtes préparées, transactions, jointures, ORM Doctrine, migrations et optimisation des performances.',
                 'example' => '$pdo = new PDO("mysql:host=localhost;dbname=boutique", "user", "password"); $stmt = $pdo->prepare("SELECT * FROM produits WHERE prix > ?"); $stmt->execute([100]);',
             ],
+            'infrastructure_web' => [
+                'description' => 'Comprenez l\'écosystème web et la place de PHP : architecture client-serveur, pile LAMP/LEMP, cycle HTTP, rôle de PHP dans l\'infrastructure moderne et interactions avec les autres technologies.',
+                'example' => 'Client (Navigateur) → Requête HTTP → Serveur (Apache/Nginx + PHP) → Base de données (MySQL) → Réponse HTTP → Client',
+            ],
         ];
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

@@ -45,17 +45,16 @@
 	<script>
 		// Navigation function for module cards
 function navigateToModule(moduleKey) {
-const moduleRoutes = {
-'variables': '{{ path('app_variables') }}',
-'programmation_orientee_objet': '{{ path('app_poo') }}',
-'interaction_avec_les_bases_de_donnees': '{{ path('app_bdd') }}',
-'operateurs': '{{ path('app_operateurs') }}',
-'structures_de_controle': '{{ path('app_structure_controle') }}',
-'fonctions': '{{ path('app_fonction_p_h_p') }}',
-'types_de_donnees': '{{ path('app_typages') }}'
-};
-
-if (moduleRoutes[moduleKey]) {
+			const moduleRoutes = {
+				'variables': '{{ path('app_variables') }}',
+				'programmation_orientee_objet': '{{ path('app_poo') }}',
+				'interaction_avec_les_bases_de_donnees': '{{ path('app_bdd') }}',
+				'infrastructure_web': '{{ path('app_infrastructure') }}',
+				'operateurs': '{{ path('app_operateurs') }}',
+				'structures_de_controle': '{{ path('app_structure_controle') }}',
+				'fonctions': '{{ path('app_fonction_p_h_p') }}',
+				'types_de_donnees': '{{ path('app_typages') }}'
+			};if (moduleRoutes[moduleKey]) {
 window.location.href = moduleRoutes[moduleKey];
 } else { // For modules not yet implemented, show a message
 alert('Module "' + moduleKey.replace(/_/g, ' ') + '" en cours de développement...');

@@ -1,0 +1,726 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ pageTitle }} - Cours PHP Matrix
+{% endblock %}
+
+{% block body %}
+	<div class="infrastructure-page">
+		<!-- Header avec style spécifique Infrastructure -->
+		<header class="infrastructure-header">
+			<div class="container">
+				<h1 class="page-title">
+					<span class="icon">🌐</span>
+					Infrastructure Web & PHP
+				</h1>
+				<p class="page-subtitle">
+					Comprendre l'écosystème web et la place de PHP dans l'architecture moderne
+				</p>
+			</div>
+		</header>
+
+		<!-- Navigation rapide -->
+		<nav class="quick-nav">
+			<div class="container">
+				<div class="nav-pills">
+					<a href="#architecture" class="nav-pill">Architecture</a>
+					<a href="#pile-tech" class="nav-pill">Pile Tech</a>
+					<a href="#http-cycle" class="nav-pill">Cycle HTTP</a>
+					<a href="#php-role" class="nav-pill">Rôle PHP</a>
+					<a href="#diagrams" class="nav-pill">Diagrammes</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Section principale avec diagrammes -->
+		<main class="main-content">
+			<div class="container">
+				
+				<!-- Diagramme Architecture Client-Serveur -->
+				<section id="architecture" class="concept-section">
+					<h2>{{ concepts.architecture_client_serveur.title }}</h2>
+					<p class="section-description">{{ concepts.architecture_client_serveur.description }}</p>
+					
+					<div class="diagram-container">
+						<div class="client-server-diagram">
+							<div class="client-side">
+								<div class="client-box">
+									<div class="browser-icon">🌐</div>
+									<h3>CLIENT</h3>
+									<p>Navigateur Web</p>
+									<ul>
+										<li>Chrome, Firefox, Safari</li>
+										<li>Interprète HTML/CSS/JS</li>
+										<li>Envoie requêtes HTTP</li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="communication-flow">
+								<div class="request-arrow">
+									<span class="arrow-label">Requête HTTP</span>
+									<div class="arrow">→</div>
+								</div>
+								<div class="response-arrow">
+									<div class="arrow">←</div>
+									<span class="arrow-label">Réponse HTTP</span>
+								</div>
+							</div>
+							
+							<div class="server-side">
+								<div class="server-box">
+									<div class="server-icon">🖥️</div>
+									<h3>SERVEUR</h3>
+									<p>Serveur Web</p>
+									<ul>
+										<li>Apache, Nginx</li>
+										<li>Exécute PHP</li>
+										<li>Accès base de données</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Diagramme Pile LAMP/LEMP -->
+				<section id="pile-tech" class="concept-section">
+					<h2>{{ concepts.pile_lamp_lemp.title }}</h2>
+					<p class="section-description">{{ concepts.pile_lamp_lemp.description }}</p>
+					
+					<div class="diagram-container">
+						<div class="lamp-stack-diagram">
+							<div class="stack-layer os-layer">
+								<div class="layer-icon">🐧</div>
+								<div class="layer-content">
+									<h3>LINUX</h3>
+									<p>Système d'exploitation</p>
+									<span class="layer-description">Ubuntu, CentOS, Debian</span>
+								</div>
+							</div>
+							
+							<div class="stack-layer web-server-layer">
+								<div class="layer-icon">⚡</div>
+								<div class="layer-content">
+									<h3>APACHE / NGINX</h3>
+									<p>Serveur Web</p>
+									<span class="layer-description">Traite les requêtes HTTP</span>
+								</div>
+							</div>
+							
+							<div class="stack-layer database-layer">
+								<div class="layer-icon">🗄️</div>
+								<div class="layer-content">
+									<h3>MYSQL</h3>
+									<p>Base de données</p>
+									<span class="layer-description">Stockage des données</span>
+								</div>
+							</div>
+							
+							<div class="stack-layer php-layer">
+								<div class="layer-icon">🐘</div>
+								<div class="layer-content">
+									<h3>PHP</h3>
+									<p>Langage de programmation</p>
+									<span class="layer-description">Logique métier côté serveur</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Diagramme Cycle HTTP -->
+				<section id="http-cycle" class="concept-section">
+					<h2>{{ concepts.cycle_requete_reponse.title }}</h2>
+					<p class="section-description">{{ concepts.cycle_requete_reponse.description }}</p>
+					
+					<div class="diagram-container">
+						<div class="http-cycle-diagram">
+							<div class="cycle-step step-1">
+								<div class="step-number">1</div>
+								<div class="step-content">
+									<h4>Requête HTTP</h4>
+									<p>GET /page.php</p>
+									<code>User-Agent: Browser<br>Accept: text/html</code>
+								</div>
+							</div>
+							
+							<div class="cycle-arrow">→</div>
+							
+							<div class="cycle-step step-2">
+								<div class="step-number">2</div>
+								<div class="step-content">
+									<h4>Routage</h4>
+									<p>Apache/Nginx</p>
+									<code>Document Root<br>/var/www/html</code>
+								</div>
+							</div>
+							
+							<div class="cycle-arrow">→</div>
+							
+							<div class="cycle-step step-3">
+								<div class="step-number">3</div>
+								<div class="step-content">
+									<h4>Traitement PHP</h4>
+									<p>Exécution script</p>
+									<code>Database Query<br>Business Logic</code>
+								</div>
+							</div>
+							
+							<div class="cycle-arrow">→</div>
+							
+							<div class="cycle-step step-4">
+								<div class="step-number">4</div>
+								<div class="step-content">
+									<h4>Réponse HTTP</h4>
+									<p>200 OK</p>
+									<code>Content-Type: text/html<br>&lt;html&gt;...&lt;/html&gt;</code>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Rôle de PHP -->
+				<section id="php-role" class="concept-section">
+					<h2>{{ concepts.role_de_php.title }}</h2>
+					<p class="section-description">{{ concepts.role_de_php.description }}</p>
+					
+					<div class="php-role-grid">
+						{% for detail, description in concepts.role_de_php.details %}
+							<div class="role-card">
+								<div class="role-icon">
+									{% if 'génération' in detail|lower %}🎨
+									{% elseif 'formulaires' in detail|lower %}📝
+									{% elseif 'session' in detail|lower %}👤
+									{% else %}🗃️
+									{% endif %}
+								</div>
+								<h4>{{ detail }}</h4>
+								<p>{{ description }}</p>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Concepts détaillés -->
+				<section class="detailed-concepts">
+					<h2>Concepts Approfondis</h2>
+					<div class="concepts-grid">
+						{% for key, concept in concepts %}
+							{% if key not in ['architecture_client_serveur', 'pile_lamp_lemp', 'cycle_requete_reponse', 'role_de_php'] %}
+								<div class="concept-card advanced-concept">
+									<h3>{{ concept.title }}</h3>
+									<p class="concept-description">{{ concept.description }}</p>
+									<div class="concept-details">
+										{% for detail, description in concept.details %}
+											<div class="detail-item">
+												<strong>{{ detail }}:</strong>
+												<span>{{ description }}</span>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Outils -->
+				<section class="tools-section">
+					<h2>Outils et Technologies</h2>
+					<div class="tools-grid">
+						{% for category, toolList in tools %}
+							<div class="tool-category">
+								<h3>{{ category|replace({'_': ' '})|title }}</h3>
+								<div class="tools-list">
+									{% for tool, description in toolList %}
+										<div class="tool-item">
+											<div class="tool-name">{{ tool }}</div>
+											<div class="tool-description">{{ description }}</div>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Call to action -->
+				<section class="cta-section">
+					<div class="cta-content">
+						<h2>Prêt à maîtriser PHP ?</h2>
+						<p>Maintenant que vous comprenez l'infrastructure, explorez les modules pratiques !</p>
+						<div class="cta-buttons">
+							<a href="{{ path('app_poo') }}" class="cta-btn primary">Programmation Orientée Objet</a>
+							<a href="{{ path('app_bdd') }}" class="cta-btn secondary">Bases de Données</a>
+							<a href="{{ path('app_glossaire') }}" class="cta-btn tertiary">Glossaire</a>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</div>
+
+	<style>
+		/* Styles spécifiques au module Infrastructure */
+		.infrastructure-page {
+			--infra-primary: #ff6b35;
+			--infra-secondary: #f7931e;
+			--infra-accent: #ffb347;
+			--infra-gradient: linear-gradient(135deg, var(--infra-primary), var(--infra-secondary));
+		}
+
+		.infrastructure-header {
+			background: var(--infra-gradient);
+			color: white;
+			padding: 2rem 0;
+			margin-bottom: 2rem;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.infrastructure-header::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+			animation: float 20s infinite linear;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+			margin-bottom: 0.5rem;
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.page-title .icon {
+			font-size: 3rem;
+			animation: pulse 2s infinite;
+		}
+
+		.quick-nav {
+			background: rgba(255, 107, 53, 0.1);
+			padding: 1rem 0;
+			margin-bottom: 2rem;
+			border-top: 2px solid var(--infra-primary);
+			border-bottom: 2px solid var(--infra-primary);
+		}
+
+		.nav-pills {
+			display: flex;
+			gap: 1rem;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		.nav-pill {
+			padding: 0.5rem 1rem;
+			background: var(--infra-gradient);
+			color: white;
+			text-decoration: none;
+			border-radius: 25px;
+			transition: all 0.3s ease;
+			font-weight: 500;
+		}
+
+		.nav-pill:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+		}
+
+		/* Diagramme Client-Serveur */
+		.client-server-diagram {
+			display: grid;
+			grid-template-columns: 1fr auto 1fr;
+			gap: 2rem;
+			align-items: center;
+			padding: 2rem;
+			background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+			border-radius: 15px;
+			margin: 2rem 0;
+		}
+
+		.client-box, .server-box {
+			background: white;
+			padding: 1.5rem;
+			border-radius: 10px;
+			box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+			text-align: center;
+			border: 3px solid var(--infra-primary);
+		}
+
+		.browser-icon, .server-icon {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+			display: block;
+		}
+
+		.communication-flow {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			align-items: center;
+		}
+
+		.request-arrow, .response-arrow {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.arrow {
+			font-size: 1.5rem;
+			color: var(--infra-primary);
+			font-weight: bold;
+		}
+
+		.arrow-label {
+			background: var(--infra-primary);
+			color: white;
+			padding: 0.25rem 0.5rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			font-weight: bold;
+		}
+
+		/* Diagramme Pile LAMP */
+		.lamp-stack-diagram {
+			display: flex;
+			flex-direction: column-reverse;
+			gap: 1rem;
+			max-width: 600px;
+			margin: 2rem auto;
+		}
+
+		.stack-layer {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding: 1.5rem;
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+
+		.os-layer { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
+		.web-server-layer { background: linear-gradient(135deg, #17a2b8, #6f42c1); color: white; }
+		.database-layer { background: linear-gradient(135deg, #ffc107, #fd7e14); color: white; }
+		.php-layer { background: linear-gradient(135deg, #6f42c1, #e83e8c); color: white; }
+
+		.stack-layer:hover {
+			transform: translateX(10px);
+			box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+		}
+
+		.layer-icon {
+			font-size: 2.5rem;
+			opacity: 0.9;
+		}
+
+		.layer-content h3 {
+			margin: 0 0 0.25rem 0;
+			font-size: 1.2rem;
+		}
+
+		.layer-content p {
+			margin: 0 0 0.25rem 0;
+			opacity: 0.9;
+		}
+
+		.layer-description {
+			font-size: 0.8rem;
+			opacity: 0.8;
+		}
+
+		/* Diagramme Cycle HTTP */
+		.http-cycle-diagram {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding: 2rem;
+			background: linear-gradient(135deg, #f8f9fa, #dee2e6);
+			border-radius: 15px;
+			overflow-x: auto;
+			margin: 2rem 0;
+		}
+
+		.cycle-step {
+			background: white;
+			padding: 1.5rem;
+			border-radius: 10px;
+			min-width: 200px;
+			text-align: center;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			position: relative;
+		}
+
+		.step-number {
+			position: absolute;
+			top: -15px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: var(--infra-primary);
+			color: white;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+		}
+
+		.cycle-step h4 {
+			margin: 1rem 0 0.5rem 0;
+			color: var(--infra-primary);
+		}
+
+		.cycle-step code {
+			background: #f8f9fa;
+			padding: 0.5rem;
+			border-radius: 5px;
+			display: block;
+			font-size: 0.8rem;
+			margin-top: 0.5rem;
+		}
+
+		.cycle-arrow {
+			font-size: 1.5rem;
+			color: var(--infra-primary);
+			font-weight: bold;
+		}
+
+		/* Grille des rôles PHP */
+		.php-role-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 1.5rem;
+			margin: 2rem 0;
+		}
+
+		.role-card {
+			background: white;
+			padding: 1.5rem;
+			border-radius: 10px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			text-align: center;
+			border-left: 4px solid var(--infra-primary);
+			transition: all 0.3s ease;
+		}
+
+		.role-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+		}
+
+		.role-icon {
+			font-size: 2.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.role-card h4 {
+			color: var(--infra-primary);
+			margin-bottom: 0.5rem;
+		}
+
+		/* Concepts avancés */
+		.concepts-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+			gap: 2rem;
+			margin: 2rem 0;
+		}
+
+		.advanced-concept {
+			background: linear-gradient(135deg, #fff, #f8f9fa);
+			border: 2px solid var(--infra-accent);
+		}
+
+		.concept-details {
+			margin-top: 1rem;
+		}
+
+		.detail-item {
+			margin-bottom: 0.5rem;
+			padding: 0.5rem;
+			background: rgba(255, 107, 53, 0.05);
+			border-radius: 5px;
+			border-left: 3px solid var(--infra-primary);
+		}
+
+		.detail-item strong {
+			color: var(--infra-primary);
+		}
+
+		/* Section Outils */
+		.tools-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 2rem;
+			margin: 2rem 0;
+		}
+
+		.tool-category {
+			background: white;
+			padding: 1.5rem;
+			border-radius: 10px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			border-top: 4px solid var(--infra-secondary);
+		}
+
+		.tool-category h3 {
+			color: var(--infra-secondary);
+			margin-bottom: 1rem;
+		}
+
+		.tool-item {
+			margin-bottom: 1rem;
+			padding: 0.75rem;
+			background: #f8f9fa;
+			border-radius: 5px;
+		}
+
+		.tool-name {
+			font-weight: bold;
+			color: var(--infra-primary);
+			margin-bottom: 0.25rem;
+		}
+
+		.tool-description {
+			font-size: 0.9rem;
+			color: #666;
+		}
+
+		/* Call to Action */
+		.cta-section {
+			background: var(--infra-gradient);
+			color: white;
+			padding: 3rem 0;
+			margin: 3rem 0;
+			border-radius: 15px;
+			text-align: center;
+		}
+
+		.cta-buttons {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin-top: 2rem;
+		}
+
+		.cta-btn {
+			padding: 1rem 2rem;
+			border-radius: 25px;
+			text-decoration: none;
+			font-weight: bold;
+			transition: all 0.3s ease;
+		}
+
+		.cta-btn.primary {
+			background: white;
+			color: var(--infra-primary);
+		}
+
+		.cta-btn.secondary {
+			background: rgba(255,255,255,0.2);
+			color: white;
+			border: 2px solid white;
+		}
+
+		.cta-btn.tertiary {
+			background: transparent;
+			color: white;
+			border: 2px solid rgba(255,255,255,0.5);
+		}
+
+		.cta-btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+		}
+
+		/* Animations */
+		@keyframes float {
+			0% { transform: translateY(0); }
+			50% { transform: translateY(-10px); }
+			100% { transform: translateY(0); }
+		}
+
+		@keyframes pulse {
+			0%, 100% { transform: scale(1); }
+			50% { transform: scale(1.1); }
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.client-server-diagram {
+				grid-template-columns: 1fr;
+				text-align: center;
+			}
+			
+			.communication-flow {
+				order: 2;
+			}
+			
+			.http-cycle-diagram {
+				flex-direction: column;
+				align-items: stretch;
+			}
+			
+			.cycle-arrow {
+				transform: rotate(90deg);
+				align-self: center;
+			}
+			
+			.cta-buttons {
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+	</style>
+
+	<script>
+		// Smooth scrolling pour navigation rapide
+		document.querySelectorAll('.nav-pill').forEach(link => {
+			link.addEventListener('click', function(e) {
+				e.preventDefault();
+				const targetId = this.getAttribute('href').substring(1);
+				const targetElement = document.getElementById(targetId);
+				if (targetElement) {
+					targetElement.scrollIntoView({
+						behavior: 'smooth',
+						block: 'start'
+					});
+				}
+			});
+		});
+
+		// Animation d'apparition des cartes
+		const observerOptions = {
+			threshold: 0.1,
+			rootMargin: '0px 0px -50px 0px'
+		};
+
+		const animateCards = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.style.opacity = '1';
+					entry.target.style.transform = 'translateY(0)';
+				}
+			});
+		}, observerOptions);
+
+		// Appliquer l'animation aux éléments
+		document.querySelectorAll('.concept-card, .role-card, .tool-category').forEach(card => {
+			card.style.opacity = '0';
+			card.style.transform = 'translateY(30px)';
+			card.style.transition = 'all 0.6s ease';
+			animateCards.observe(card);
+		});
+	</script>
+{% endblock %}
