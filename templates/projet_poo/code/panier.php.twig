@@ -1,0 +1,254 @@
+<?php
+/**
+ * Classe Panier - Gère les achats en cours d'un client
+ * 
+ * Analogie : Comme un caddie de supermarché virtuel
+ * où on peut ajouter/retirer des articles, voir le total,
+ * et tout vider à la fin
+ */
+class Panier 
+{
+    // 🛒 PROPRIÉTÉS du panier
+    private $produits;      // Tableau des produits dans le panier
+    private $quantites;     // Tableau des quantités pour chaque produit
+    private $dateCreation;  // Quand le panier a été créé
+    private $proprietaire;  // Quel client possède ce panier
+    
+    /**
+     * 🏗️ CONSTRUCTEUR : Créer un panier vide
+     * 
+     * Analogie : Prendre un caddie propre à l'entrée du magasin
+     */
+    public function __construct($proprietaire = null) 
+    {
+        $this->produits = [];
+        $this->quantites = [];
+        $this->dateCreation = date('Y-m-d H:i:s');
+        $this->proprietaire = $proprietaire;
+        
+        $nomProprietaire = $proprietaire ? $proprietaire->getNom() : "Invité";
+        echo "🛒 Nouveau panier créé pour {$nomProprietaire}\n";
+    }
+    
+    /**
+     * ➕ MÉTHODE : Ajouter un produit au panier
+     * 
+     * Analogie : Mettre un article dans le caddie
+     */
+    public function ajouter($produit, $quantite = 1) 
+    {
+        // Vérifier que le produit existe et qu'il y a assez de stock
+        if (!$produit->verifierStock()) {
+            echo "❌ Impossible d'ajouter {$produit->nom} : pas en stock\n";
+            return false;
+        }
+        
+        if ($quantite > $produit->stock) {
+            echo "❌ Stock insuffisant pour {$produit->nom} (demandé: {$quantite}, disponible: {$produit->stock})\n";
+            return false;
+        }
+        
+        // Chercher si le produit est déjà dans le panier
+        $produitTrouve = false;
+        foreach ($this->produits as $index => $produitPanier) {
+            if ($produitPanier->nom === $produit->nom) {
+                // Produit déjà présent : augmenter la quantité
+                $this->quantites[$index] += $quantite;
+                $produitTrouve = true;
+                echo "📈 Quantité mise à jour pour {$produit->nom} : {$this->quantites[$index]}\n";
+                break;
+            }
+        }
+        
+        if (!$produitTrouve) {
+            // Nouveau produit : l'ajouter
+            $this->produits[] = $produit;
+            $this->quantites[] = $quantite;
+            echo "➕ {$produit->nom} ajouté au panier (quantité: {$quantite})\n";
+        }
+        
+        return true;
+    }
+    
+    /**
+     * ➖ MÉTHODE : Retirer un produit du panier
+     * 
+     * Analogie : Remettre un article sur l'étagère
+     */
+    public function retirer($nomProduit, $quantiteARetirer = null) 
+    {
+        foreach ($this->produits as $index => $produit) {
+            if ($produit->nom === $nomProduit) {
+                if ($quantiteARetirer === null || $quantiteARetirer >= $this->quantites[$index]) {
+                    // Retirer complètement le produit
+                    echo "🗑️ {$nomProduit} retiré du panier\n";
+                    array_splice($this->produits, $index, 1);
+                    array_splice($this->quantites, $index, 1);
+                } else {
+                    // Réduire la quantité
+                    $this->quantites[$index] -= $quantiteARetirer;
+                    echo "📉 Quantité réduite pour {$nomProduit} : {$this->quantites[$index]}\n";
+                }
+                return true;
+            }
+        }
+        
+        echo "❌ Produit '{$nomProduit}' non trouvé dans le panier\n";
+        return false;
+    }
+    
+    /**
+     * 💰 MÉTHODE : Calculer le total du panier
+     * 
+     * Analogie : Scanner tous les articles à la caisse
+     */
+    public function calculerTotal($remiseGlobale = 0) 
+    {
+        $total = 0;
+        $details = [];
+        
+        echo "🧾 Calcul du total du panier :\n";
+        echo "----------------------------\n";
+        
+        foreach ($this->produits as $index => $produit) {
+            $quantite = $this->quantites[$index];
+            $sousTotal = $produit->prix * $quantite;
+            $total += $sousTotal;
+            
+            echo "📦 {$produit->nom} x{$quantite} = {$sousTotal}€\n";
+            
+            $details[] = [
+                'nom' => $produit->nom,
+                'prix_unitaire' => $produit->prix,
+                'quantite' => $quantite,
+                'sous_total' => $sousTotal
+            ];
+        }
+        
+        echo "----------------------------\n";
+        echo "💵 Sous-total : {$total}€\n";
+        
+        // Appliquer une remise globale si fournie
+        if ($remiseGlobale > 0) {
+            $montantRemise = $total * ($remiseGlobale / 100);
+            $total -= $montantRemise;
+            echo "🎯 Remise ({$remiseGlobale}%) : -{$montantRemise}€\n";
+        }
+        
+        echo "💰 TOTAL FINAL : {$total}€\n";
+        echo "----------------------------\n";
+        
+        return [
+            'total' => $total,
+            'details' => $details,
+            'remise' => $remiseGlobale ?? 0
+        ];
+    }
+    
+    /**
+     * 📋 MÉTHODE : Afficher le contenu du panier
+     * 
+     * Analogie : Regarder dans son caddie
+     */
+    public function afficherContenu() 
+    {
+        if (empty($this->produits)) {
+            echo "🛒 Panier vide\n";
+            return;
+        }
+        
+        echo "🛒 Contenu du panier :\n";
+        echo "=====================\n";
+        
+        foreach ($this->produits as $index => $produit) {
+            $quantite = $this->quantites[$index];
+            echo "📦 {$produit->nom}\n";
+            echo "   💰 Prix unitaire : {$produit->prix}€\n";
+            echo "   📊 Quantité : {$quantite}\n";
+            echo "   💵 Sous-total : " . ($produit->prix * $quantite) . "€\n";
+            echo "   ---\n";
+        }
+        
+        $infosTotal = $this->calculerTotal();
+        echo "👤 Propriétaire : " . ($this->proprietaire ? $this->proprietaire->getNom() : "Invité") . "\n";
+        echo "📅 Créé le : {$this->dateCreation}\n";
+    }
+    
+    /**
+     * 🗑️ MÉTHODE : Vider complètement le panier
+     * 
+     * Analogie : Vider son caddie après avoir payé
+     */
+    public function vider() 
+    {
+        $nbProduits = count($this->produits);
+        $this->produits = [];
+        $this->quantites = [];
+        
+        echo "🗑️ Panier vidé ! ({$nbProduits} produits supprimés)\n";
+    }
+    
+    /**
+     * 📊 MÉTHODE : Statistiques du panier
+     * 
+     * Analogie : Résumé rapide du contenu
+     */
+    public function getStatistiques() 
+    {
+        $nbArticlesDifferents = count($this->produits);
+        $nbArticlesTotal = array_sum($this->quantites);
+        $infosTotal = $this->calculerTotal();
+        
+        return [
+            'nb_articles_differents' => $nbArticlesDifferents,
+            'nb_articles_total' => $nbArticlesTotal,
+            'valeur_totale' => $infosTotal['total'],
+            'panier_vide' => empty($this->produits)
+        ];
+    }
+    
+    /**
+     * 🔄 MÉTHODE : Dupliquer le panier (pour sauvegarder avant paiement)
+     * 
+     * Analogie : Faire une photocopie de son ticket avant de payer
+     */
+    public function dupliquer() 
+    {
+        $nouveauPanier = new Panier($this->proprietaire);
+        
+        foreach ($this->produits as $index => $produit) {
+            $nouveauPanier->ajouter($produit, $this->quantites[$index]);
+        }
+        
+        echo "📋 Panier dupliqué avec succès\n";
+        return $nouveauPanier;
+    }
+}
+
+// 🧪 EXEMPLE D'UTILISATION :
+/*
+// Créer un client et un panier
+$client = new Client("Marie Gameuse", "marie@email.com", 25, "pass123", "1 rue du Jeu", "1234567890123456");
+$panier = new Panier($client);
+
+// Créer quelques produits
+$jeu1 = new JeuVideo("Cyberpunk 2077", 39.99, 10, "PC", "RPG", 18, "CD Projekt");
+$jeu2 = new JeuVideo("Mario Kart", 49.99, 5, "Switch", "Course", 3, "Nintendo");
+
+// Utiliser le panier
+$panier->ajouter($jeu1, 2);     // 2 copies de Cyberpunk
+$panier->ajouter($jeu2, 1);     // 1 copy de Mario Kart
+$panier->afficherContenu();
+
+// Modifier le panier
+$panier->retirer("Cyberpunk 2077", 1);  // Retirer 1 copie
+$panier->calculerTotal(10);             // Avec 10% de remise
+
+// Statistiques
+$stats = $panier->getStatistiques();
+echo "Articles différents : " . $stats['nb_articles_differents'] . "\n";
+echo "Articles total : " . $stats['nb_articles_total'] . "\n";
+
+// Finaliser
+$panier->vider();
+*/

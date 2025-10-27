@@ -1,0 +1,356 @@
+<?php
+/**
+ * Classe MagasinManager - Le système de gestion COMPLET du magasin
+ * 
+ * Analogie : C'est comme le système informatique central d'un grand magasin
+ * qui gère TOUT : les produits, les clients, les commandes, les stocks, les rapports...
+ * C'est le "cerveau" de tout le commerce !
+ */
+class MagasinManager 
+{
+    // 🏢 PROPRIÉTÉS : Toutes les données du magasin
+    private $produits;          // Catalogue complet des produits
+    private $utilisateurs;      // Tous les utilisateurs (clients + admins)
+    private $commandes;         // Historique de toutes les commandes
+    private $statistiques;      // Stats du magasin (ventes, revenus...)
+    private $nomMagasin;        // Nom du magasin
+    private $dateOuverture;     // Date de création du magasin
+    
+    /**
+     * 🏗️ CONSTRUCTEUR : Ouvrir le magasin
+     * 
+     * Analogie : Créer le magasin avec ses systèmes de base
+     */
+    public function __construct($nomMagasin = "GameShop Pro") 
+    {
+        $this->nomMagasin = $nomMagasin;
+        $this->dateOuverture = date('Y-m-d');
+        $this->produits = [];
+        $this->utilisateurs = [];
+        $this->commandes = [];
+        $this->statistiques = [
+            'ventes_totales' => 0,
+            'chiffre_affaires' => 0,
+            'nb_clients' => 0,
+            'produit_plus_vendu' => null
+        ];
+        
+        echo "🏢 Ouverture de {$nomMagasin} le {$this->dateOuverture}\n";
+        echo "🎮 Système de gestion initialisé\n";
+    }
+    
+    /**
+     * 📦 MÉTHODE : Ajouter un produit au catalogue
+     * 
+     * Analogie : Recevoir une nouvelle marchandise et la mettre en rayon
+     */
+    public function ajouterProduit($produit) 
+    {
+        // Vérifier si le produit existe déjà
+        foreach ($this->produits as $produitExistant) {
+            if ($produitExistant->nom === $produit->nom) {
+                echo "⚠️ Produit '{$produit->nom}' déjà présent, stock mis à jour\n";
+                $produitExistant->stock += $produit->stock;
+                return true;
+            }
+        }
+        
+        // Nouveau produit
+        $this->produits[] = $produit;
+        echo "✅ Nouveau produit ajouté au catalogue : {$produit->nom}\n";
+        
+        return true;
+    }
+    
+    /**
+     * 👤 MÉTHODE : Inscrire un nouvel utilisateur
+     * 
+     * Analogie : Faire une carte de fidélité pour un nouveau client
+     */
+    public function inscrireUtilisateur($utilisateur) 
+    {
+        // Vérifier si l'email existe déjà
+        foreach ($this->utilisateurs as $utilisateurExistant) {
+            if ($utilisateurExistant->getEmail() === $utilisateur->getEmail()) {
+                echo "❌ Un compte existe déjà avec l'email : {$utilisateur->getEmail()}\n";
+                return false;
+            }
+        }
+        
+        $this->utilisateurs[] = $utilisateur;
+        
+        // Mettre à jour les stats
+        if ($utilisateur instanceof Client) {
+            $this->statistiques['nb_clients']++;
+        }
+        
+        echo "👤 Nouvel utilisateur inscrit : {$utilisateur->getNom()}\n";
+        return true;
+    }
+    
+    /**
+     * 🔍 MÉTHODE : Rechercher des produits
+     * 
+     * Analogie : Chercher un jeu spécifique dans les rayons
+     */
+    public function rechercher($terme, $filtre = 'nom') 
+    {
+        $resultats = [];
+        
+        echo "🔍 Recherche : '{$terme}' dans {$filtre}\n";
+        
+        foreach ($this->produits as $produit) {
+            $valeurRecherche = '';
+            
+            switch($filtre) {
+                case 'nom':
+                    $valeurRecherche = $produit->nom;
+                    break;
+                case 'genre':
+                    $valeurRecherche = $produit->genre ?? '';
+                    break;
+                case 'plateforme':
+                    $valeurRecherche = $produit->plateforme ?? '';
+                    break;
+                case 'editeur':
+                    $valeurRecherche = $produit->editeur ?? '';
+                    break;
+                case 'prix':
+                    // Recherche par gamme de prix (ex: "50-70" pour entre 50 et 70€)
+                    if (strpos($terme, '-') !== false) {
+                        [$min, $max] = explode('-', $terme);
+                        if ($produit->prix >= $min && $produit->prix <= $max) {
+                            $resultats[] = $produit;
+                        }
+                    }
+                    continue 2; // Sortir du switch et de la boucle pour ce cas
+            }
+            
+            // Recherche insensible à la casse
+            if (stripos($valeurRecherche, $terme) !== false) {
+                $resultats[] = $produit;
+            }
+        }
+        
+        echo "📋 " . count($resultats) . " résultat(s) trouvé(s)\n";
+        
+        foreach ($resultats as $produit) {
+            echo "  🎮 {$produit->nom} - {$produit->prix}€\n";
+        }
+        
+        return $resultats;
+    }
+    
+    /**
+     * 🛒 MÉTHODE : Traiter une commande complète
+     * 
+     * Analogie : Gérer tout le processus d'achat d'un client
+     */
+    public function traiterCommande($client, $panier, $moyenPaiement) 
+    {
+        echo "🛒 === TRAITEMENT DE COMMANDE ===\n";
+        echo "👤 Client : {$client->getNom()}\n";
+        
+        // 1. Calculer le total
+        $infosTotal = $panier->calculerTotal();
+        $montant = $infosTotal['total'];
+        
+        if ($montant <= 0) {
+            echo "❌ Panier vide ou montant invalide\n";
+            return false;
+        }
+        
+        // 2. Vérifier les stocks
+        $statsParier = $panier->getStatistiques();
+        if ($statsParier['panier_vide']) {
+            echo "❌ Panier vide\n";
+            return false;
+        }
+        
+        // 3. Traiter le paiement
+        echo "\n💳 === PAIEMENT ===\n";
+        if (!$moyenPaiement->verifierSolde($montant)) {
+            echo "❌ Commande annulée : paiement impossible\n";
+            return false;
+        }
+        
+        $transactionId = $moyenPaiement->payer($montant);
+        if (!$transactionId) {
+            echo "❌ Erreur lors du paiement\n";
+            return false;
+        }
+        
+        // 4. Mettre à jour les stocks
+        $this->mettreAJourStocks($panier);
+        
+        // 5. Créer la commande
+        $commande = [
+            'id' => 'CMD_' . time() . '_' . rand(1000, 9999),
+            'client' => $client,
+            'produits' => $infosTotal['details'],
+            'montant' => $montant,
+            'transaction_id' => $transactionId,
+            'date' => date('Y-m-d H:i:s'),
+            'statut' => 'confirmée'
+        ];
+        
+        $this->commandes[] = $commande;
+        
+        // 6. Mettre à jour les statistiques
+        $this->mettreAJourStatistiques($commande);
+        
+        // 7. Vider le panier
+        $panier->vider();
+        
+        echo "\n✅ === COMMANDE CONFIRMÉE ===\n";
+        echo "🆔 Numéro de commande : {$commande['id']}\n";
+        echo "📧 Confirmation envoyée à {$client->getEmail()}\n";
+        echo "🚚 Préparation en cours...\n";
+        
+        return $commande;
+    }
+    
+    /**
+     * 📊 MÉTHODE PRIVÉE : Mettre à jour les stocks après achat
+     */
+    private function mettreAJourStocks($panier) 
+    {
+        echo "📊 Mise à jour des stocks...\n";
+        
+        // Cette méthode nécessiterait l'accès aux détails du panier
+        // Simplification pour l'exemple
+        echo "✅ Stocks mis à jour\n";
+    }
+    
+    /**
+     * 📈 MÉTHODE PRIVÉE : Mettre à jour les statistiques
+     */
+    private function mettreAJourStatistiques($commande) 
+    {
+        $this->statistiques['ventes_totales']++;
+        $this->statistiques['chiffre_affaires'] += $commande['montant'];
+        
+        // Trouver le produit le plus vendu (simplifiée)
+        // En réalité, il faudrait compter tous les produits vendus
+    }
+    
+    /**
+     * 📊 MÉTHODE : Générer un rapport complet du magasin
+     * 
+     * Analogie : Faire le bilan mensuel/annuel
+     */
+    public function genererRapport($periode = 'mensuel') 
+    {
+        echo "📊 === RAPPORT {$periode} - {$this->nomMagasin} ===\n";
+        echo "📅 Généré le : " . date('d/m/Y H:i:s') . "\n\n";
+        
+        // 1. Statistiques générales
+        echo "🏢 === STATISTIQUES GÉNÉRALES ===\n";
+        echo "👥 Nombre de clients : {$this->statistiques['nb_clients']}\n";
+        echo "📦 Produits au catalogue : " . count($this->produits) . "\n";
+        echo "🛒 Commandes traitées : {$this->statistiques['ventes_totales']}\n";
+        echo "💰 Chiffre d'affaires : {$this->statistiques['chiffre_affaires']}€\n\n";
+        
+        // 2. Top produits
+        echo "🏆 === TOP PRODUITS ===\n";
+        echo "📊 Analyse des ventes par produit...\n";
+        foreach (array_slice($this->produits, 0, 5) as $produit) {
+            $ventesEstimees = rand(5, 50);
+            echo "  🎮 {$produit->nom} : {$ventesEstimees} ventes\n";
+        }
+        echo "\n";
+        
+        // 3. Analyse des stocks
+        echo "📦 === ÉTAT DES STOCKS ===\n";
+        $produitsEnRupture = 0;
+        $produitsStockFaible = 0;
+        
+        foreach ($this->produits as $produit) {
+            if ($produit->stock == 0) {
+                $produitsEnRupture++;
+            } elseif ($produit->stock < 5) {
+                $produitsStockFaible++;
+                echo "⚠️ Stock faible : {$produit->nom} ({$produit->stock} unités)\n";
+            }
+        }
+        
+        echo "❌ Produits en rupture : {$produitsEnRupture}\n";
+        echo "⚠️ Produits à réapprovisionner : {$produitsStockFaible}\n\n";
+        
+        // 4. Recommandations
+        echo "💡 === RECOMMANDATIONS ===\n";
+        if ($produitsEnRupture > 0) {
+            echo "🔄 Réapprovisionner les produits en rupture\n";
+        }
+        if ($this->statistiques['chiffre_affaires'] > 10000) {
+            echo "🚀 Excellent mois ! Envisager d'élargir le catalogue\n";
+        }
+        if ($this->statistiques['nb_clients'] < 10) {
+            echo "📢 Lancer une campagne marketing pour attirer plus de clients\n";
+        }
+        
+        echo "\n" . str_repeat("=", 50) . "\n";
+    }
+    
+    /**
+     * 🔍 MÉTHODE : Obtenir les informations d'un utilisateur
+     */
+    public function getUtilisateur($email) 
+    {
+        foreach ($this->utilisateurs as $utilisateur) {
+            if ($utilisateur->getEmail() === $email) {
+                return $utilisateur;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 📋 MÉTHODE : Lister le catalogue complet
+     */
+    public function afficherCatalogue() 
+    {
+        echo "📋 === CATALOGUE {$this->nomMagasin} ===\n";
+        echo "Total : " . count($this->produits) . " produits\n\n";
+        
+        foreach ($this->produits as $index => $produit) {
+            echo ($index + 1) . ". ";
+            $produit->afficherInfos();
+        }
+    }
+}
+
+// 🧪 EXEMPLE D'UTILISATION COMPLÈTE :
+/*
+// 1. Créer le magasin
+$magasin = new MagasinManager("GameWorld");
+
+// 2. Ajouter des produits
+$jeu1 = new JeuVideo("FIFA 24", 69.99, 20, "PS5", "Sport", 3, "EA Sports");
+$jeu2 = new JeuVideo("Call of Duty", 79.99, 15, "PC", "FPS", 18, "Activision");
+$magasin->ajouterProduit($jeu1);
+$magasin->ajouterProduit($jeu2);
+
+// 3. Inscrire des utilisateurs
+$client = new Client("Marie Gamer", "marie@email.com", 25, "pass123", "1 rue du Jeu", "1234567890123456");
+$admin = new Administrateur("Bob Manager", "bob@gameworld.com", 35, "admin456", "senior");
+$magasin->inscrireUtilisateur($client);
+$magasin->inscrireUtilisateur($admin);
+
+// 4. Simulation d'achat complet
+$panier = new Panier($client);
+$panier->ajouter($jeu1, 1);
+$panier->ajouter($jeu2, 1);
+
+$carte = new CarteCredit("1234567890123456", "Marie Gamer", "12/26", "1234", 3000);
+$commande = $magasin->traiterCommande($client, $panier, $carte);
+
+// 5. Générer rapport
+$magasin->genererRapport();
+
+// 6. Recherche
+$resultats = $magasin->rechercher("FIFA", "nom");
+$resultats = $magasin->rechercher("60-80", "prix");
+
+echo "\n🎉 Magasin opérationnel avec toutes les fonctionnalités !\n";
+*/

@@ -1,0 +1,166 @@
+<?php
+/**
+ * Classe JeuVideo - Un produit spécialisé dans les jeux
+ * 
+ * Analogie : Comme une boîte de jeu avec ses spécificités
+ * (console, âge requis, genre...) en plus des infos de base
+ */
+class JeuVideo 
+{
+    // 📦 PROPRIÉTÉS : Toutes les infos spécifiques aux jeux
+    
+    public $nom;
+    public $prix;
+    public $stock;
+    public $description;
+    
+    // 🎮 Propriétés spécifiques aux jeux vidéo
+    public $plateforme;     // PS5, Xbox, PC, Switch...
+    public $genre;          // Action, RPG, Sport, Aventure...
+    public $ageMinimum;     // PEGI : 3, 7, 12, 16, 18
+    public $editeur;        // Ubisoft, EA, Nintendo...
+    
+    /**
+     * 🏗️ CONSTRUCTEUR : Créer un jeu vidéo
+     * 
+     * Analogie : Remplir la fiche complète d'un jeu
+     * avec toutes ses caractéristiques
+     */
+    public function __construct($nom, $prix, $stock, $plateforme, $genre, $ageMinimum, $editeur, $description = "") 
+    {
+        // Infos de base (comme tout produit)
+        $this->nom = $nom;
+        $this->prix = $prix;
+        $this->stock = $stock;
+        $this->description = $description;
+        
+        // Infos spécifiques aux jeux
+        $this->plateforme = $plateforme;
+        $this->genre = $genre;
+        $this->ageMinimum = $ageMinimum;
+        $this->editeur = $editeur;
+        
+        echo "🎮 Nouveau jeu ajouté au catalogue : {$nom} ({$plateforme})\n";
+    }
+    
+    /**
+     * 📋 MÉTHODE : Afficher les infos complètes du jeu
+     * 
+     * Analogie : Lire toutes les infos sur la boîte du jeu
+     */
+    public function afficherInfos() 
+    {
+        echo "🎮 Jeu : {$this->nom}\n";
+        echo "💰 Prix : {$this->prix}€\n";
+        echo "📦 Stock : {$this->stock} unités\n";
+        echo "🕹️ Plateforme : {$this->plateforme}\n";
+        echo "🎯 Genre : {$this->genre}\n";
+        echo "👶 Âge minimum : {$this->ageMinimum} ans\n";
+        echo "🏢 Éditeur : {$this->editeur}\n";
+        echo "📝 Description : {$this->description}\n";
+        echo "-------------------\n";
+    }
+    
+    /**
+     * 🔍 MÉTHODE : Vérifier si en stock (comme Produit mais avec message spécialisé)
+     */
+    public function verifierStock() 
+    {
+        if ($this->stock > 0) {
+            echo "✅ Le jeu {$this->nom} est disponible sur {$this->plateforme} ({$this->stock} copies)\n";
+            return true;
+        } else {
+            echo "❌ {$this->nom} est épuisé sur {$this->plateforme}\n";
+            return false;
+        }
+    }
+    
+    /**
+     * 🎲 MÉTHODE : Simuler "jouer" au jeu
+     * 
+     * Analogie : Comme mettre le jeu dans la console et l'allumer
+     */
+    public function jouer() 
+    {
+        echo "🎮 Lancement de {$this->nom} sur {$this->plateforme}...\n";
+        echo "🔥 Vous jouez à un {$this->genre} ! Amusez-vous bien !\n";
+    }
+    
+    /**
+     * 💿 MÉTHODE : Simuler l'installation
+     * 
+     * Analogie : Télécharger et installer le jeu
+     */
+    public function installerJeu() 
+    {
+        $tailleGo = rand(15, 100); // Taille aléatoire entre 15 et 100 Go
+        echo "💿 Installation de {$this->nom} en cours...\n";
+        echo "📊 Taille : {$tailleGo} Go\n";
+        echo "⏳ Installation terminée !\n";
+    }
+    
+    /**
+     * 👶 MÉTHODE : Vérifier l'âge du joueur
+     * 
+     * Analogie : Vérifier la carte d'identité avant la vente
+     */
+    public function verifierAge($ageJoueur) 
+    {
+        if ($ageJoueur >= $this->ageMinimum) {
+            echo "✅ Âge vérifié ! {$ageJoueur} ans >= {$this->ageMinimum} ans requis\n";
+            echo "🎮 Vous pouvez acheter {$this->nom}\n";
+            return true;
+        } else {
+            echo "❌ Désolé, vous devez avoir au moins {$this->ageMinimum} ans pour acheter ce jeu\n";
+            echo "👶 Votre âge : {$ageJoueur} ans\n";
+            return false;
+        }
+    }
+    
+    /**
+     * 🏷️ MÉTHODE : Prix avec remise selon la plateforme
+     * 
+     * Analogie : Promo spéciale selon la console
+     */
+    public function calculerPrix($remise = 0) 
+    {
+        // Bonus : remise supplémentaire pour PC
+        if ($this->plateforme === "PC" && $remise < 20) {
+            $remise += 5; // +5% de remise sur PC
+            echo "🖥️ Bonus PC : +5% de remise supplémentaire !\n";
+        }
+        
+        $prixFinal = $this->prix * (1 - $remise / 100);
+        
+        if ($remise > 0) {
+            echo "🏷️ Prix original : {$this->prix}€\n";
+            echo "🎯 Remise totale : {$remise}%\n";
+            echo "💸 Prix final : {$prixFinal}€\n";
+        }
+        
+        return $prixFinal;
+    }
+}
+
+// 🧪 EXEMPLE D'UTILISATION :
+/*
+// Créer un jeu vidéo
+$cod = new JeuVideo(
+    "Call of Duty: Modern Warfare III", 
+    69.99, 
+    25, 
+    "PS5", 
+    "FPS/Action", 
+    18, 
+    "Activision",
+    "Le dernier opus de la saga mythique"
+);
+
+// Utiliser les méthodes
+$cod->afficherInfos();
+$cod->verifierStock();
+$cod->verifierAge(20);  // Joueur de 20 ans
+$cod->installerJeu();
+$cod->jouer();
+$cod->calculerPrix(15); // 15% de remise
+*/

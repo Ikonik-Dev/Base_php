@@ -1,0 +1,989 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ pageTitle }} - Formation PHP
+{% endblock %}
+
+{% block body %}
+	<div class="projet-poo-page">
+		<!-- Header du projet -->
+		<header class="projet-header">
+			<div class="container">
+				<h1 class="page-title">
+					<span class="icon">🎮</span>
+					Projet POO : Commerce de Jeux Vidéo
+				</h1>
+				<p class="page-subtitle">
+					Formation progressive sur 2,5 jours pour maîtriser la Programmation Orientée Objet
+				</p>
+				<div class="formation-meta">
+					<span class="duration">⏱️ Total : 18h</span>
+					<span class="level">👶 Niveau : Débutant</span>
+					<span class="format">📝 Théorie + Pratique</span>
+				</div>
+			</div>
+		</header>
+
+		<!-- Navigation des jours -->
+		<nav class="days-nav">
+			<div class="container">
+				<div class="nav-tabs">
+					<button class="nav-tab active" data-day="jour1">
+						<span class="day-number">1</span>
+						<span class="day-title">Fondations</span>
+						<span class="day-time">Niveau 1</span>
+					</button>
+					<button class="nav-tab" data-day="jour2">
+						<span class="day-number">2</span>
+						<span class="day-title">Organisation</span>
+						<span class="day-time">Niveau 2</span>
+					</button>
+					<button class="nav-tab" data-day="jour3">
+						<span class="day-number">3</span>
+						<span class="day-title">Maîtrise</span>
+						<span class="day-time">Niveau 3</span>
+					</button>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Contenu principal -->
+		<main class="main-content">
+			<div class="container">
+				
+				<!-- Progression par jour -->
+				{% for jour_key, jour in progression %}
+					<section class="day-section {{ jour_key == 'jour1' ? 'active' : '' }}" id="{{ jour_key }}">
+						<div class="day-header">
+							<h2>{{ jour.title }}</h2>
+							<div class="day-info">
+								<span class="duration">{{ jour.duration }}</span>
+								<span class="objectives-count">{{ jour.objectives|length }} objectifs</span>
+							</div>
+						</div>
+
+						<!-- Objectifs du jour -->
+						<div class="objectives-section">
+							<h3>🎯 Objectifs du jour</h3>
+							<ul class="objectives-list">
+								{% for objectif in jour.objectives %}
+									<li>{{ objectif }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+
+						<!-- Analogies explicatives -->
+						<div class="analogies-section">
+							<h3>🧠 Analogies pour comprendre</h3>
+							<div class="analogies-grid">
+								{% for concept, analogie in jour.analogies %}
+									<div class="analogy-card">
+										<div class="concept-name">{{ concept|title }}</div>
+										<div class="analogy-arrow">→</div>
+										<div class="analogy-text">{{ analogie }}</div>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+
+						<!-- Concepts clés -->
+						<div class="concepts-section">
+							<h3>📚 Concepts abordés</h3>
+							<div class="concepts-tags">
+								{% for concept in jour.concepts %}
+									<span class="concept-tag">{{ concept|title }}</span>
+								{% endfor %}
+							</div>
+						</div>
+
+						<!-- Exercices du jour -->
+						<div class="exercices-section">
+							<h3>💻 Exercices pratiques</h3>
+							<div class="exercices-list">
+								{% for exercice in exercices[jour_key] %}
+									<div class="exercice-card">
+										<div class="exercice-header">
+											<h4>{{ exercice.titre }}</h4>
+											<div class="exercice-meta">
+												<span class="difficulty difficulty-{{ exercice.difficulte|lower|replace({' ': '-'}) }}">
+													{{ exercice.difficulte }}
+												</span>
+												<span class="time">{{ exercice.temps }}</span>
+											</div>
+										</div>
+										<p class="exercice-consigne">{{ exercice.consigne }}</p>
+										<div class="exercice-skills">
+											{% for competence in exercice.competences %}
+												<span class="skill-tag">{{ competence }}</span>
+											{% endfor %}
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</section>
+				{% endfor %}
+
+				<!-- Section Classes du Projet -->
+				<section class="classes-section">
+					<h2>🏗️ Architecture du Projet</h2>
+					<p class="section-description">
+						Découvrez les classes que vous allez créer tout au long de la formation, 
+						avec leurs relations et leur évolution progressive.
+					</p>
+
+					<div class="classes-timeline">
+						{% for jour_num in 1..3 %}
+							<div class="timeline-day">
+								<h3>Jour {{ jour_num }}</h3>
+								<div class="classes-for-day">
+									{% for classe_name, classe_info in classes_projet %}
+										{% if classe_info.jour == jour_num %}
+											<div class="classe-card">
+												<div class="classe-header">
+													<h4>{{ classe_name }}</h4>
+													<span class="classe-analogy">{{ classe_info.analogie }}</span>
+												</div>
+												<p class="classe-description">{{ classe_info.description }}</p>
+												
+												<div class="classe-details">
+													<div class="proprietes">
+														<h5>Propriétés</h5>
+														{% if classe_info.proprietes is defined and classe_info.proprietes is not empty %}
+															<ul>
+																{% for propriete in classe_info.proprietes %}
+																	<li>{{ propriete }}</li>
+																{% endfor %}
+															</ul>
+														{% else %}
+															<p class="empty-list">Aucune propriété (Interface)</p>
+														{% endif %}
+													</div>
+													<div class="methodes">
+														<h5>Méthodes</h5>
+														{% if classe_info.methodes is defined and classe_info.methodes is not empty %}
+															<ul>
+																{% for methode in classe_info.methodes %}
+																	<li>{{ methode }}</li>
+																{% endfor %}
+															</ul>
+														{% else %}
+															<p class="empty-list">Aucune méthode définie</p>
+														{% endif %}
+													</div>
+												</div>
+
+												<!-- Code révélable -->
+												<div class="code-section">
+													<button class="reveal-code-btn" onclick="toggleCode('{{ classe_name|lower }}')">
+														👁️ Révéler le code
+													</button>
+													<div class="code-content hidden" id="code-{{ classe_name|lower }}">
+														<pre><code class="language-php">{{ include('projet_poo/code/' ~ classe_name|lower ~ '.php.twig') }}</code></pre>
+													</div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Conseils Formateur -->
+				<section class="formateur-section">
+					<h2>👨‍🏫 Guide pour le Formateur</h2>
+					<div class="conseils-grid">
+						<div class="conseil-category">
+							<h3>💡 Approche Pédagogique</h3>
+							<ul>
+								{% for conseil in conseils_formateur.approche %}
+									<li>{{ conseil }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="conseil-category">
+							<h3>🛠️ Outils Recommandés</h3>
+							<ul>
+								{% for outil in conseils_formateur.outils %}
+									<li>{{ outil }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="conseil-category">
+							<h3>⚠️ Difficultés Communes</h3>
+							<ul>
+								{% for difficulte in conseils_formateur.difficulties_communes %}
+									<li>{{ difficulte }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- Planning détaillé -->
+				<section class="planning-section">
+					<h2>📅 Planning Détaillé</h2>
+					<div class="planning-timeline">
+						<div class="timeline-item">
+							<div class="timeline-marker niveau1"></div>
+							<div class="timeline-content">
+								<h3>Niveau 1 - Fondations (4h)</h3>
+								<div class="timeline-schedule">
+									<div class="schedule-item">
+										<span class="time">13h30 - 14h15</span>
+										<span class="activity">Introduction POO + Analogies</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">14h15 - 15h30</span>
+										<span class="activity">Première classe : JeuVideo</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">15h30 - 15h45</span>
+										<span class="activity">Pause</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">15h45 - 17h30</span>
+										<span class="activity">Exercices pratiques + Instanciation</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="timeline-item">
+							<div class="timeline-marker niveau2"></div>
+							<div class="timeline-content">
+								<h3>Niveau 2 - Organisation (7h)</h3>
+								<div class="timeline-schedule">
+									<div class="schedule-item">
+										<span class="time">9h00 - 10h30</span>
+										<span class="activity">Encapsulation + Analogie coffre-fort</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">10h30 - 10h45</span>
+										<span class="activity">Pause</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">10h45 - 12h00</span>
+										<span class="activity">Héritage : Utilisateur → Client/Admin</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">14h00 - 15h30</span>
+										<span class="activity">Exercices héritage</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">15h30 - 15h45</span>
+										<span class="activity">Pause</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">15h45 - 17h00</span>
+										<span class="activity">Projet : Système utilisateurs</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="timeline-item">
+							<div class="timeline-marker niveau3"></div>
+							<div class="timeline-content">
+								<h3>Niveau 3 - Maîtrise (7h)</h3>
+								<div class="timeline-schedule">
+									<div class="schedule-item">
+										<span class="time">9h00 - 10h30</span>
+										<span class="activity">Polymorphisme + Analogie télécommande</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">10h30 - 10h45</span>
+										<span class="activity">Pause</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">10h45 - 12h00</span>
+										<span class="activity">Interfaces : PaymentInterface</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">14h00 - 16h00</span>
+										<span class="activity">Projet final : Magasin complet</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">16h00 - 16h15</span>
+										<span class="activity">Pause</span>
+									</div>
+									<div class="schedule-item">
+										<span class="time">16h15 - 17h00</span>
+										<span class="activity">Présentation projets + Bilan</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Call to action -->
+				<section class="cta-section">
+					<div class="cta-content">
+						<h2>🚀 Prêt à créer votre commerce de jeux vidéo ?</h2>
+						<p>Suivez cette progression et vos stagiaires maîtriseront la POO en douceur !</p>
+						<div class="cta-buttons">
+							<a href="{{ path('app_poo') }}" class="cta-btn primary">📖 Revoir les concepts</a>
+							<a href="{{ path('app_glossaire') }}" class="cta-btn secondary">📚 Consulter le glossaire</a>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</div>
+
+	<style>
+		/* Styles spécifiques au projet POO */
+		.projet-poo-page {
+			--poo-primary: #9b59b6;
+			--poo-secondary: #8e44ad;
+			--poo-accent: #e74c3c;
+			--poo-success: #27ae60;
+			--poo-warning: #f39c12;
+			--poo-gradient: linear-gradient(135deg, var(--poo-primary), var(--poo-secondary));
+		}
+
+		.projet-header {
+			background: var(--poo-gradient);
+			color: white;
+			padding: 2rem 0;
+			margin-bottom: 2rem;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.projet-header::before {
+			content: '🎮🕹️👾🎯🏆';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			font-size: 2rem;
+			opacity: 0.1;
+			animation: float 15s infinite linear;
+			white-space: nowrap;
+			padding: 2rem;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+			margin-bottom: 0.5rem;
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.page-title .icon {
+			font-size: 3rem;
+			animation: bounce 2s infinite;
+		}
+
+		.formation-meta {
+			display: flex;
+			gap: 2rem;
+			margin-top: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.formation-meta span {
+			background: rgba(255,255,255,0.2);
+			padding: 0.5rem 1rem;
+			border-radius: 20px;
+			font-size: 0.9rem;
+		}
+
+		/* Navigation des jours */
+		.days-nav {
+			background: #f8f9fa;
+			border-bottom: 3px solid var(--poo-primary);
+			padding: 1rem 0;
+			margin-bottom: 2rem;
+		}
+
+		.nav-tabs {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+		}
+
+		.nav-tab {
+			background: white;
+			border: 2px solid #dee2e6;
+			border-radius: 10px;
+			padding: 1rem 1.5rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.25rem;
+		}
+
+		.nav-tab:hover, .nav-tab.active {
+			border-color: var(--poo-primary);
+			background: var(--poo-gradient);
+			color: white;
+			transform: translateY(-2px);
+		}
+
+		.day-number {
+			font-size: 1.5rem;
+			font-weight: bold;
+			background: var(--poo-accent);
+			color: white;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.nav-tab.active .day-number {
+			background: white;
+			color: var(--poo-primary);
+		}
+
+		.day-title {
+			font-weight: bold;
+		}
+
+		.day-time {
+			font-size: 0.8rem;
+			opacity: 0.8;
+		}
+
+		/* Sections des jours */
+		.day-section {
+			display: none;
+			margin-bottom: 3rem;
+		}
+
+		.day-section.active {
+			display: block;
+		}
+
+		.day-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 2rem;
+			padding: 1.5rem;
+			background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+			border-radius: 10px;
+			border-left: 5px solid var(--poo-primary);
+		}
+
+		.day-info {
+			display: flex;
+			gap: 1rem;
+		}
+
+		.day-info span {
+			background: var(--poo-primary);
+			color: white;
+			padding: 0.25rem 0.75rem;
+			border-radius: 15px;
+			font-size: 0.8rem;
+		}
+
+		/* Objectifs */
+		.objectives-list {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 1rem;
+			list-style: none;
+			padding: 0;
+		}
+
+		.objectives-list li {
+			background: white;
+			padding: 1rem;
+			border-radius: 8px;
+			border-left: 4px solid var(--poo-success);
+			box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+		}
+
+		.objectives-list li::before {
+			content: '✅ ';
+			margin-right: 0.5rem;
+		}
+
+		/* Analogies */
+		.analogies-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+			gap: 1.5rem;
+			margin: 1.5rem 0;
+		}
+
+		.analogy-card {
+			background: white;
+			padding: 1.5rem;
+			border-radius: 10px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			border-top: 4px solid var(--poo-warning);
+		}
+
+		.concept-name {
+			background: var(--poo-primary);
+			color: white;
+			padding: 0.5rem 1rem;
+			border-radius: 20px;
+			font-weight: bold;
+			min-width: 80px;
+			text-align: center;
+		}
+
+		.analogy-arrow {
+			font-size: 1.5rem;
+			color: var(--poo-accent);
+		}
+
+		.analogy-text {
+			flex: 1;
+			font-style: italic;
+			color: #555;
+		}
+
+		/* Concepts tags */
+		.concepts-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin: 1rem 0;
+		}
+
+		.concept-tag {
+			background: var(--poo-gradient);
+			color: white;
+			padding: 0.5rem 1rem;
+			border-radius: 20px;
+			font-size: 0.9rem;
+			font-weight: 500;
+		}
+
+		/* Exercices */
+		.exercices-list {
+			display: grid;
+			gap: 1.5rem;
+		}
+
+		.exercice-card {
+			background: white;
+			border-radius: 10px;
+			padding: 1.5rem;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			border-left: 5px solid var(--poo-accent);
+		}
+
+		.exercice-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			margin-bottom: 1rem;
+		}
+
+		.exercice-meta {
+			display: flex;
+			gap: 1rem;
+			align-items: center;
+		}
+
+		.difficulty {
+			padding: 0.25rem 0.75rem;
+			border-radius: 15px;
+			font-size: 0.8rem;
+			font-weight: bold;
+		}
+
+		.difficulty-facile { background: var(--poo-success); color: white; }
+		.difficulty-moyen { background: var(--poo-warning); color: white; }
+		.difficulty-difficile { background: var(--poo-accent); color: white; }
+		.difficulty-expert { background: #2c3e50; color: white; }
+
+		.time {
+			background: #6c757d;
+			color: white;
+			padding: 0.25rem 0.75rem;
+			border-radius: 15px;
+			font-size: 0.8rem;
+		}
+
+		.exercice-consigne {
+			font-size: 1.1rem;
+			line-height: 1.6;
+			margin-bottom: 1rem;
+		}
+
+		.exercice-skills, .skill-tag {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+		}
+
+		.skill-tag {
+			background: rgba(155, 89, 182, 0.1);
+			color: var(--poo-primary);
+			padding: 0.25rem 0.75rem;
+			border-radius: 15px;
+			font-size: 0.8rem;
+			border: 1px solid rgba(155, 89, 182, 0.3);
+		}
+
+		/* Classes timeline */
+		.classes-timeline {
+			margin: 2rem 0;
+		}
+
+		.timeline-day {
+			margin-bottom: 3rem;
+		}
+
+		.timeline-day h3 {
+			background: var(--poo-gradient);
+			color: white;
+			padding: 1rem;
+			border-radius: 10px;
+			margin-bottom: 1.5rem;
+			text-align: center;
+		}
+
+		.classes-for-day {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.classe-card {
+			background: white;
+			border-radius: 10px;
+			padding: 1.5rem;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			border-top: 4px solid var(--poo-primary);
+		}
+
+		.classe-header h4 {
+			color: var(--poo-primary);
+			margin-bottom: 0.5rem;
+		}
+
+		.classe-analogy {
+			font-style: italic;
+			color: #666;
+			font-size: 0.9rem;
+		}
+
+		.classe-details {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1rem;
+			margin: 1rem 0;
+		}
+
+		.classe-details h5 {
+			color: var(--poo-secondary);
+			margin-bottom: 0.5rem;
+		}
+
+		.classe-details ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		.classe-details li {
+			padding: 0.25rem 0;
+			font-size: 0.9rem;
+			color: #555;
+		}
+
+		.classe-details li::before {
+			content: '• ';
+			color: var(--poo-primary);
+			font-weight: bold;
+		}
+
+		/* Code révélable */
+		.reveal-code-btn {
+			background: var(--poo-gradient);
+			color: white;
+			border: none;
+			padding: 0.75rem 1.5rem;
+			border-radius: 25px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-weight: bold;
+		}
+
+		.reveal-code-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+		}
+
+		.code-content {
+			margin-top: 1rem;
+			background: #2d3748;
+			border-radius: 8px;
+			overflow: hidden;
+		}
+
+		.code-content.hidden {
+			display: none;
+		}
+
+		.code-content pre {
+			margin: 0;
+			padding: 1.5rem;
+			overflow-x: auto;
+		}
+
+		.code-content code {
+			color: #e2e8f0;
+			font-family: 'Fira Code', 'Courier New', monospace;
+		}
+
+		/* Planning timeline */
+		.planning-timeline {
+			position: relative;
+			padding-left: 2rem;
+		}
+
+		.planning-timeline::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			width: 4px;
+			background: var(--poo-gradient);
+			border-radius: 2px;
+		}
+
+		.timeline-item {
+			position: relative;
+			margin-bottom: 3rem;
+		}
+
+		.timeline-marker {
+			position: absolute;
+			left: -2rem;
+			top: 0;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			border: 4px solid white;
+			box-shadow: 0 0 0 4px var(--poo-primary);
+		}
+
+		.timeline-marker.niveau1 { background: var(--poo-success); }
+		.timeline-marker.niveau2 { background: var(--poo-warning); }
+		.timeline-marker.niveau3 { background: var(--poo-accent); }
+
+		.timeline-content {
+			background: white;
+			padding: 1.5rem;
+			border-radius: 10px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			margin-left: 1rem;
+		}
+
+		.timeline-schedule {
+			margin-top: 1rem;
+		}
+
+		.schedule-item {
+			display: flex;
+			padding: 0.75rem;
+			border-radius: 5px;
+			margin-bottom: 0.5rem;
+			background: #f8f9fa;
+		}
+
+		.schedule-item .time {
+			font-weight: bold;
+			color: var(--poo-primary);
+			min-width: 120px;
+		}
+
+		.schedule-item .activity {
+			flex: 1;
+		}
+
+		/* Conseils formateur */
+		.conseils-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 2rem;
+			margin: 2rem 0;
+		}
+
+		.conseil-category {
+			background: white;
+			padding: 1.5rem;
+			border-radius: 10px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+		}
+
+		.conseil-category h3 {
+			color: var(--poo-primary);
+			margin-bottom: 1rem;
+		}
+
+		.conseil-category ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		.conseil-category li {
+			padding: 0.5rem 0;
+			border-bottom: 1px solid #eee;
+		}
+
+		.conseil-category li::before {
+			content: '👉 ';
+			margin-right: 0.5rem;
+		}
+
+		/* CTA Section */
+		.cta-section {
+			background: var(--poo-gradient);
+			color: white;
+			padding: 3rem 0;
+			margin: 3rem 0;
+			border-radius: 15px;
+			text-align: center;
+		}
+
+		.cta-buttons {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin-top: 2rem;
+		}
+
+		.cta-btn {
+			padding: 1rem 2rem;
+			border-radius: 25px;
+			text-decoration: none;
+			font-weight: bold;
+			transition: all 0.3s ease;
+		}
+
+		.cta-btn.primary {
+			background: white;
+			color: var(--poo-primary);
+		}
+
+		.cta-btn.secondary {
+			background: rgba(255,255,255,0.2);
+			color: white;
+			border: 2px solid white;
+		}
+
+		.cta-btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+		}
+
+		/* Animations */
+		@keyframes bounce {
+			0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+			40% { transform: translateY(-10px); }
+			60% { transform: translateY(-5px); }
+		}
+
+		@keyframes float {
+			0% { transform: translateX(-100%); }
+			100% { transform: translateX(100%); }
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.nav-tabs {
+				flex-direction: column;
+				align-items: center;
+			}
+			
+			.day-header {
+				flex-direction: column;
+				gap: 1rem;
+			}
+			
+			.analogies-grid {
+				grid-template-columns: 1fr;
+			}
+			
+			.classes-for-day {
+				grid-template-columns: 1fr;
+			}
+			
+			.exercice-header {
+				flex-direction: column;
+				gap: 1rem;
+			}
+			
+			.formation-meta {
+				justify-content: center;
+			}
+		}
+	</style>
+
+	<script>
+		// Navigation entre les jours
+		document.querySelectorAll('.nav-tab').forEach(tab => {
+			tab.addEventListener('click', function() {
+				// Retirer l'active de tous les tabs
+				document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+				document.querySelectorAll('.day-section').forEach(s => s.classList.remove('active'));
+				
+				// Activer le tab cliqué
+				this.classList.add('active');
+				const dayId = this.getAttribute('data-day');
+				document.getElementById(dayId).classList.add('active');
+			});
+		});
+
+		// Fonction pour révéler/cacher le code
+		function toggleCode(className) {
+			const codeElement = document.getElementById('code-' + className);
+			const button = codeElement.previousElementSibling;
+			
+			if (codeElement.classList.contains('hidden')) {
+				codeElement.classList.remove('hidden');
+				button.textContent = '🙈 Cacher le code';
+			} else {
+				codeElement.classList.add('hidden');
+				button.textContent = '👁️ Révéler le code';
+			}
+		}
+
+		// Animation d'apparition des cartes
+		const observerOptions = {
+			threshold: 0.1,
+			rootMargin: '0px 0px -50px 0px'
+		};
+
+		const animateCards = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.style.opacity = '1';
+					entry.target.style.transform = 'translateY(0)';
+				}
+			});
+		}, observerOptions);
+
+		// Appliquer l'animation aux éléments
+		document.querySelectorAll('.exercice-card, .classe-card, .analogy-card').forEach(card => {
+			card.style.opacity = '0';
+			card.style.transform = 'translateY(30px)';
+			card.style.transition = 'all 0.6s ease';
+			animateCards.observe(card);
+		});
+	</script>
+{% endblock %}

@@ -217,6 +217,7 @@
     top: 50%;
     transform: translateY(-50%);
     width: 280px;
+    max-height: 85vh; /* Limiter la hauteur pour permettre le scroll */
     background: linear-gradient(
         145deg,
         var(--matrix-dark) 0%,
@@ -232,7 +233,38 @@
     z-index: 1000;
     transition: left var(--transition-normal),
         transform var(--transition-normal);
-    overflow: hidden;
+    overflow-y: auto; /* Permettre le scroll vertical */
+    overflow-x: hidden; /* Cacher le scroll horizontal */
+}
+
+/* Style de la barre de scroll personnalisée Matrix */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-sm);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        var(--matrix-green) 0%,
+        rgba(0, 255, 65, 0.6) 100%
+    );
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 255, 65, 0.9) 0%,
+        var(--matrix-green) 100%
+    );
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
 }
 
 .sidebar::before {

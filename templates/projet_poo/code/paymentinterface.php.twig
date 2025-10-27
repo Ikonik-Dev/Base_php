@@ -1,0 +1,303 @@
+<?php
+/**
+ * Interface PaymentInterface - Contrat pour tous les moyens de paiement
+ * 
+ * Analogie : Comme un contrat de travail qui dit "peu importe 
+ * COMMENT vous payez (carte, PayPal, chèque...), vous DEVEZ 
+ * respecter ces 3 obligations : payer, vérifier le solde, confirmer"
+ * 
+ * Une interface = un CONTRAT, pas une implémentation !
+ */
+interface PaymentInterface 
+{
+    /**
+     * 💳 OBLIGATION 1 : Effectuer un paiement
+     * Toute classe qui implémente cette interface DOIT avoir cette méthode
+     */
+    public function payer($montant);
+    
+    /**
+     * 💰 OBLIGATION 2 : Vérifier si on peut payer ce montant
+     * Chaque moyen de paiement a sa façon de vérifier (solde, limite...)
+     */
+    public function verifierSolde($montant);
+    
+    /**
+     * ✅ OBLIGATION 3 : Confirmer que la transaction s'est bien passée
+     * Chaque système a sa façon de confirmer (SMS, email, reçu...)
+     */
+    public function confirmerTransaction($transactionId);
+}
+
+/**
+ * Classe CarteCredit - Implémente l'interface PaymentInterface
+ * 
+ * Analogie : Une carte bancaire qui respecte le "contrat" de paiement
+ * mais a SA PROPRE façon de payer (vérification code PIN, limite...)
+ */
+class CarteCredit implements PaymentInterface  // ← IMPLÉMENTE l'interface
+{
+    // 💳 Propriétés spécifiques aux cartes
+    private $numero;
+    private $nom;
+    private $dateExpiration;
+    private $codePin;
+    private $limite;    // Limite de paiement
+    private $solde;     // Solde disponible
+    
+    /**
+     * 🏗️ CONSTRUCTEUR : Créer une carte de crédit
+     */
+    public function __construct($numero, $nom, $dateExpiration, $codePin, $limite = 5000) 
+    {
+        $this->numero = $this->masquerNumero($numero);
+        $this->nom = $nom;
+        $this->dateExpiration = $dateExpiration;
+        $this->codePin = $codePin;
+        $this->limite = $limite;
+        $this->solde = $limite; // Au début, solde = limite
+        
+        echo "💳 Carte créée pour {$nom} (Limite: {$limite}€)\n";
+    }
+    
+    /**
+     * 🔐 MÉTHODE PRIVÉE : Masquer le numéro de carte pour la sécurité
+     */
+    private function masquerNumero($numero) 
+    {
+        return "**** **** **** " . substr($numero, -4);
+    }
+    
+    /**
+     * 💳 IMPLÉMENTATION : Payer avec une carte
+     * 
+     * Analogie : Insérer sa carte et taper son code PIN
+     */
+    public function payer($montant) 
+    {
+        echo "💳 === PAIEMENT PAR CARTE ===\n";
+        echo "🏷️ Montant : {$montant}€\n";
+        echo "💳 Carte : {$this->numero}\n";
+        
+        // 1. Vérifier le solde disponible
+        if (!$this->verifierSolde($montant)) {
+            echo "❌ Paiement refusé : solde insuffisant\n";
+            return false;
+        }
+        
+        // 2. Simuler la saisie du code PIN
+        echo "🔐 Veuillez saisir votre code PIN...\n";
+        echo "✅ Code PIN validé\n";
+        
+        // 3. Traitement du paiement
+        echo "⏳ Traitement en cours...\n";
+        sleep(1); // Simuler le délai de traitement
+        
+        // 4. Débiter le compte
+        $this->solde -= $montant;
+        
+        // 5. Générer un ID de transaction
+        $transactionId = "CARD_" . time() . "_" . rand(1000, 9999);
+        
+        echo "✅ Paiement réussi !\n";
+        echo "🆔 Transaction ID : {$transactionId}\n";
+        echo "💰 Nouveau solde : {$this->solde}€\n";
+        
+        // 6. Confirmer automatiquement
+        $this->confirmerTransaction($transactionId);
+        
+        return $transactionId;
+    }
+    
+    /**
+     * 💰 IMPLÉMENTATION : Vérifier le solde pour carte
+     * 
+     * Analogie : Vérifier qu'on n'a pas dépassé sa limite
+     */
+    public function verifierSolde($montant) 
+    {
+        echo "🔍 Vérification du solde carte...\n";
+        echo "💰 Solde disponible : {$this->solde}€\n";
+        echo "🛒 Montant demandé : {$montant}€\n";
+        
+        if ($this->solde >= $montant) {
+            echo "✅ Solde suffisant\n";
+            return true;
+        } else {
+            echo "❌ Solde insuffisant (manque " . ($montant - $this->solde) . "€)\n";
+            return false;
+        }
+    }
+    
+    /**
+     * ✅ IMPLÉMENTATION : Confirmer transaction carte
+     * 
+     * Analogie : Recevoir le reçu de carte bancaire
+     */
+    public function confirmerTransaction($transactionId) 
+    {
+        echo "📄 === REÇU CARTE BANCAIRE ===\n";
+        echo "🆔 Transaction : {$transactionId}\n";
+        echo "👤 Porteur : {$this->nom}\n";
+        echo "💳 Carte : {$this->numero}\n";
+        echo "📅 Date : " . date('d/m/Y H:i:s') . "\n";
+        echo "✅ Transaction confirmée par la banque\n";
+        echo "📧 Reçu envoyé par email\n";
+        echo "===============================\n";
+        
+        return true;
+    }
+}
+
+/**
+ * Classe PayPal - Autre implémentation de PaymentInterface
+ * 
+ * Analogie : Compte PayPal qui respecte le même "contrat" 
+ * mais a SA façon de payer (email/mot de passe, pas de limite physique...)
+ */
+class PayPal implements PaymentInterface  // ← IMPLÉMENTE la même interface
+{
+    // 📧 Propriétés spécifiques à PayPal
+    private $email;
+    private $motDePasse;
+    private $soldeCompte;
+    private $carteSecours; // Carte de secours si pas assez sur le compte
+    
+    /**
+     * 🏗️ CONSTRUCTEUR : Créer un compte PayPal
+     */
+    public function __construct($email, $motDePasse, $soldeInitial = 1000, $carteSecours = null) 
+    {
+        $this->email = $email;
+        $this->motDePasse = $motDePasse;
+        $this->soldeCompte = $soldeInitial;
+        $this->carteSecours = $carteSecours;
+        
+        echo "📧 Compte PayPal créé : {$email} (Solde: {$soldeInitial}€)\n";
+    }
+    
+    /**
+     * 📧 IMPLÉMENTATION : Payer avec PayPal
+     * 
+     * Analogie : Se connecter à son compte et valider le paiement
+     */
+    public function payer($montant) 
+    {
+        echo "📧 === PAIEMENT PAYPAL ===\n";
+        echo "🏷️ Montant : {$montant}€\n";
+        echo "📧 Compte : {$this->email}\n";
+        
+        // 1. Connexion au compte
+        echo "🔐 Connexion au compte PayPal...\n";
+        echo "✅ Connexion réussie\n";
+        
+        // 2. Vérifier les fonds disponibles
+        if (!$this->verifierSolde($montant)) {
+            echo "❌ Paiement impossible\n";
+            return false;
+        }
+        
+        // 3. Traitement spécifique PayPal
+        echo "⏳ Traitement PayPal en cours...\n";
+        sleep(1);
+        
+        // 4. Débiter le compte (ou la carte de secours)
+        if ($this->soldeCompte >= $montant) {
+            $this->soldeCompte -= $montant;
+            echo "💰 Débité depuis le solde PayPal\n";
+        } else {
+            // Utiliser la carte de secours pour le complément
+            $complement = $montant - $this->soldeCompte;
+            $this->soldeCompte = 0;
+            echo "💳 Complément de {$complement}€ débité sur la carte de secours\n";
+        }
+        
+        // 5. Générer transaction ID
+        $transactionId = "PP_" . time() . "_" . rand(1000, 9999);
+        
+        echo "✅ Paiement PayPal réussi !\n";
+        echo "🆔 Transaction ID : {$transactionId}\n";
+        echo "💰 Nouveau solde PayPal : {$this->soldeCompte}€\n";
+        
+        // 6. Confirmer
+        $this->confirmerTransaction($transactionId);
+        
+        return $transactionId;
+    }
+    
+    /**
+     * 💰 IMPLÉMENTATION : Vérifier solde PayPal + carte secours
+     * 
+     * Analogie : Vérifier combien on a sur le compte + carte de backup
+     */
+    public function verifierSolde($montant) 
+    {
+        echo "🔍 Vérification du solde PayPal...\n";
+        echo "💰 Solde compte : {$this->soldeCompte}€\n";
+        
+        $totalDisponible = $this->soldeCompte;
+        
+        // Ajouter la carte de secours si elle existe
+        if ($this->carteSecours) {
+            $totalDisponible += $this->carteSecours->solde ?? 1000; // Estimation
+            echo "💳 + Carte de secours disponible\n";
+        }
+        
+        echo "💵 Total disponible : {$totalDisponible}€\n";
+        echo "🛒 Montant demandé : {$montant}€\n";
+        
+        if ($totalDisponible >= $montant) {
+            echo "✅ Fonds suffisants\n";
+            return true;
+        } else {
+            echo "❌ Fonds insuffisants\n";
+            return false;
+        }
+    }
+    
+    /**
+     * ✅ IMPLÉMENTATION : Confirmer transaction PayPal
+     * 
+     * Analogie : Recevoir l'email de confirmation PayPal
+     */
+    public function confirmerTransaction($transactionId) 
+    {
+        echo "📧 === CONFIRMATION PAYPAL ===\n";
+        echo "🆔 Transaction : {$transactionId}\n";
+        echo "📧 Compte : {$this->email}\n";
+        echo "📅 Date : " . date('d/m/Y H:i:s') . "\n";
+        echo "🔔 Notification envoyée sur l'app PayPal\n";
+        echo "📧 Email de confirmation envoyé\n";
+        echo "✅ Transaction sécurisée et confirmée\n";
+        echo "🛡️ Protection PayPal active\n";
+        echo "==============================\n";
+        
+        return true;
+    }
+}
+
+// 🧪 EXEMPLE D'UTILISATION - Polymorphisme en action :
+/*
+// Créer différents moyens de paiement
+$carte = new CarteCredit("1234567890123456", "Alice Gamer", "12/25", "1234", 2000);
+$paypal = new PayPal("alice@email.com", "password123", 500);
+
+// 🔥 POLYMORPHISME : On peut traiter tous les moyens de paiement de la MÊME façon !
+$moyensPaiement = [$carte, $paypal];
+
+foreach ($moyensPaiement as $moyen) {
+    echo "🔄 Test avec " . get_class($moyen) . "\n";
+    
+    // Même code pour tous les moyens de paiement !
+    if ($moyen->verifierSolde(100)) {
+        $transactionId = $moyen->payer(100);
+        if ($transactionId) {
+            echo "✅ Paiement réussi\n";
+        }
+    }
+    
+    echo "\n" . str_repeat("-", 50) . "\n\n";
+}
+
+// Ça marche parce que les deux classes respectent le même "contrat" (interface) !
+*/

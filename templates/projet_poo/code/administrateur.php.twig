@@ -1,0 +1,236 @@
+<?php
+/**
+ * Classe Administrateur - Un utilisateur avec privilèges admin (HÉRITE d'Utilisateur)
+ * 
+ * Analogie : Comme le gérant du magasin qui a toutes les capacités 
+ * d'un utilisateur normal, PLUS l'accès aux commandes de gestion :
+ * modifier les stocks, ajouter des produits, voir les rapports...
+ */
+class Administrateur extends Utilisateur  // ← HÉRITAGE d'Utilisateur
+{
+    // 👑 PROPRIÉTÉS SPÉCIFIQUES aux administrateurs
+    public $niveau;        // Admin junior, senior, super-admin...
+    public $permissions;   // Liste des actions autorisées
+    private $codeAcces;    // Code secret pour actions sensibles
+    
+    /**
+     * 🏗️ CONSTRUCTEUR : Créer un administrateur
+     * 
+     * Analogie : Embaucher un employé et lui donner ses accès
+     */
+    public function __construct($nom, $email, $age, $motDePasse, $niveau = "junior", $codeAcces = null) 
+    {
+        // 🔗 APPEL AU PARENT : Créer l'utilisateur de base
+        parent::__construct($nom, $email, $age, $motDePasse);
+        
+        // ➕ PUIS ajouter les spécificités admin
+        $this->niveau = $niveau;
+        $this->codeAcces = $codeAcces ?? rand(1000, 9999); // Code aléatoire si non fourni
+        
+        // Définir les permissions selon le niveau
+        $this->definirPermissions();
+        
+        echo "👑 Administrateur {$niveau} créé avec code d'accès : {$this->codeAcces}\n";
+    }
+    
+    /**
+     * 🔐 MÉTHODE PRIVÉE : Définir les permissions selon le niveau
+     * 
+     * Analogie : Donner les clés appropriées selon le poste
+     */
+    private function definirPermissions() 
+    {
+        switch($this->niveau) {
+            case 'junior':
+                $this->permissions = ['voir_stocks', 'modifier_produits'];
+                break;
+            case 'senior':
+                $this->permissions = ['voir_stocks', 'modifier_produits', 'ajouter_produits', 'voir_rapports'];
+                break;
+            case 'super':
+                $this->permissions = ['voir_stocks', 'modifier_produits', 'ajouter_produits', 'voir_rapports', 'supprimer_utilisateurs', 'modifier_prix'];
+                break;
+            default:
+                $this->permissions = ['voir_stocks'];
+        }
+    }
+    
+    /**
+     * 🔍 MÉTHODE : Vérifier si l'admin a une permission
+     * 
+     * Analogie : Vérifier si on a la bonne clé pour ouvrir une porte
+     */
+    private function aPermission($action) 
+    {
+        if (in_array($action, $this->permissions)) {
+            return true;
+        } else {
+            echo "❌ Permission refusée pour '{$action}'. Niveau requis supérieur.\n";
+            return false;
+        }
+    }
+    
+    /**
+     * ➕ MÉTHODE : Ajouter un produit au catalogue
+     * 
+     * Analogie : Recevoir une nouvelle marchandise et la mettre en rayon
+     */
+    public function ajouterProduit($produit) 
+    {
+        if (!$this->aPermission('ajouter_produits')) {
+            return false;
+        }
+        
+        echo "📦 Ajout du produit au catalogue par {$this->nom}\n";
+        echo "✅ {$produit->nom} ajouté avec succès\n";
+        echo "💰 Prix : {$produit->prix}€\n";
+        echo "📊 Stock initial : {$produit->stock} unités\n";
+        
+        return true;
+    }
+    
+    /**
+     * 🗑️ MÉTHODE : Supprimer un utilisateur (action sensible)
+     * 
+     * Analogie : Résilier un compte client (nécessite confirmation)
+     */
+    public function supprimerUtilisateur($utilisateur, $codeConfirmation) 
+    {
+        if (!$this->aPermission('supprimer_utilisateurs')) {
+            return false;
+        }
+        
+        // Vérification du code de sécurité
+        if ($codeConfirmation != $this->codeAcces) {
+            echo "🔐 Code d'accès incorrect. Suppression annulée pour des raisons de sécurité.\n";
+            return false;
+        }
+        
+        echo "⚠️ SUPPRESSION D'UTILISATEUR par {$this->nom}\n";
+        echo "👤 Utilisateur concerné : {$utilisateur->getNom()}\n";
+        echo "📧 Email : {$utilisateur->getEmail()}\n";
+        echo "✅ Compte supprimé avec succès\n";
+        
+        return true;
+    }
+    
+    /**
+     * 📊 MÉTHODE : Modifier le stock d'un produit
+     * 
+     * Analogie : Faire l'inventaire et ajuster les quantités
+     */
+    public function modifierStock($produit, $nouvelleQuantite, $raison = "Ajustement inventaire") 
+    {
+        if (!$this->aPermission('modifier_produits')) {
+            return false;
+        }
+        
+        $ancienStock = $produit->stock;
+        $produit->stock = $nouvelleQuantite;
+        
+        echo "📊 Modification de stock par {$this->nom}\n";
+        echo "📦 Produit : {$produit->nom}\n";
+        echo "📈 Ancien stock : {$ancienStock}\n";
+        echo "📉 Nouveau stock : {$nouvelleQuantite}\n";
+        echo "📝 Raison : {$raison}\n";
+        
+        return true;
+    }
+    
+    /**
+     * 📈 MÉTHODE : Générer un rapport de ventes
+     * 
+     * Analogie : Faire le bilan mensuel du magasin
+     */
+    public function genererRapport($periode = "mensuel") 
+    {
+        if (!$this->aPermission('voir_rapports')) {
+            return false;
+        }
+        
+        echo "📊 RAPPORT {$periode} généré par {$this->nom}\n";
+        echo "📅 Date : " . date('Y-m-d H:i:s') . "\n";
+        echo "-------------------\n";
+        
+        // Simulation de données
+        $ventesSimulees = rand(50, 200);
+        $chiffreAffaires = rand(5000, 20000);
+        $produitsPopulaires = ["FIFA 24", "Call of Duty", "Zelda BOTW"];
+        
+        echo "🛍️ Ventes : {$ventesSimulees} produits vendus\n";
+        echo "💰 Chiffre d'affaires : {$chiffreAffaires}€\n";
+        echo "🏆 Top produits : " . implode(", ", $produitsPopulaires) . "\n";
+        echo "📊 Tendance : " . (rand(0,1) ? "📈 En hausse" : "📉 En baisse") . "\n";
+        
+        return true;
+    }
+    
+    /**
+     * 💰 MÉTHODE : Modifier le prix d'un produit (super-admin uniquement)
+     * 
+     * Analogie : Changer les étiquettes prix (action très sensible)
+     */
+    public function modifierPrix($produit, $nouveauPrix, $codeConfirmation) 
+    {
+        if (!$this->aPermission('modifier_prix')) {
+            return false;
+        }
+        
+        // Double vérification pour action sensible
+        if ($codeConfirmation != $this->codeAcces) {
+            echo "🔐 Code d'accès incorrect. Modification de prix refusée.\n";
+            return false;
+        }
+        
+        $ancienPrix = $produit->prix;
+        $produit->prix = $nouveauPrix;
+        
+        echo "💰 MODIFICATION DE PRIX par {$this->nom}\n";
+        echo "📦 Produit : {$produit->nom}\n";
+        echo "💸 Ancien prix : {$ancienPrix}€\n";
+        echo "💵 Nouveau prix : {$nouveauPrix}€\n";
+        echo "📊 Variation : " . ($nouveauPrix > $ancienPrix ? "📈 Hausse" : "📉 Baisse") . "\n";
+        
+        return true;
+    }
+    
+    /**
+     * 📋 MÉTHODE : Afficher le profil admin (OVERRIDE)
+     * 
+     * Analogie : Montrer son badge d'employé avec ses autorisations
+     */
+    public function afficherProfil() 
+    {
+        // 🔗 Appeler la méthode du parent
+        parent::afficherProfil();
+        
+        // ➕ Ajouter les infos admin
+        echo "👑 Niveau : Administrateur {$this->niveau}\n";
+        echo "🔐 Code d'accès : {$this->codeAcces}\n";
+        echo "🗝️ Permissions : " . implode(", ", $this->permissions) . "\n";
+        echo "-------------------\n";
+    }
+}
+
+// 🧪 EXEMPLE D'UTILISATION :
+/*
+// Créer différents niveaux d'admin
+$adminJunior = new Administrateur("Alice Admin", "alice.admin@magasin.com", 28, "admin123", "junior");
+$superAdmin = new Administrateur("Bob Boss", "bob.boss@magasin.com", 35, "boss456", "super", 9999);
+
+// Actions selon les permissions
+$jeu = new JeuVideo("Nouveau Jeu", 49.99, 0, "PC", "Action", 16, "Studio");
+
+// Admin junior : peut modifier stock mais pas ajouter de produit
+$adminJunior->modifierStock($jeu, 25, "Réassort");
+$adminJunior->ajouterProduit($jeu); // ❌ Permission refusée
+
+// Super admin : peut tout faire
+$superAdmin->ajouterProduit($jeu);
+$superAdmin->modifierPrix($jeu, 39.99, 9999); // Avec code correct
+$superAdmin->genererRapport("hebdomadaire");
+
+// Afficher les profils
+$adminJunior->afficherProfil();
+$superAdmin->afficherProfil();
+*/

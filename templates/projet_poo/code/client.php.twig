@@ -1,0 +1,195 @@
+<?php
+/**
+ * Classe Client - Un utilisateur qui peut acheter (HÉRITE d'Utilisateur)
+ * 
+ * Analogie : Comme un client du magasin qui a toutes les infos 
+ * d'un utilisateur de base, PLUS ses moyens de paiement et 
+ * son historique d'achats. C'est comme avoir une carte de fidélité !
+ */
+class Client extends Utilisateur  // ← HÉRITAGE : Client "hérite" d'Utilisateur
+{
+    // 🛍️ PROPRIÉTÉS SPÉCIFIQUES aux clients (en plus de celles héritées)
+    public $adresse;
+    private $carteCredit;    // Privé pour la sécurité !
+    public $historiqueAchats; // Tableau des achats
+    public $pointsFidelite;
+    
+    /**
+     * 🏗️ CONSTRUCTEUR : Créer un client
+     * 
+     * Analogie : Créer un compte utilisateur + ajouter les infos de livraison
+     */
+    public function __construct($nom, $email, $age, $motDePasse, $adresse, $carteCredit) 
+    {
+        // 🔗 APPEL AU PARENT : D'abord créer l'utilisateur de base
+        parent::__construct($nom, $email, $age, $motDePasse);
+        
+        // ➕ PUIS ajouter les spécificités du client
+        $this->adresse = $adresse;
+        $this->carteCredit = $this->chiffrerCarte($carteCredit);
+        $this->historiqueAchats = [];
+        $this->pointsFidelite = 0;
+        
+        echo "🛍️ Compte client créé avec adresse de livraison\n";
+    }
+    
+    /**
+     * 🔐 MÉTHODE PRIVÉE : Chiffrer les infos de carte bancaire
+     * 
+     * Analogie : Mettre la carte dans un coffre ultra-sécurisé
+     */
+    private function chiffrerCarte($numeroCarte) 
+    {
+        // On ne garde que les 4 derniers chiffres
+        $derniers4 = substr($numeroCarte, -4);
+        return "**** **** **** " . $derniers4;
+    }
+    
+    /**
+     * 🛒 MÉTHODE : Ajouter un produit au panier
+     * 
+     * Analogie : Mettre un article dans son caddie
+     */
+    public function ajouterAuPanier($produit) 
+    {
+        // Vérifier si le produit est en stock
+        if ($produit->verifierStock()) {
+            echo "🛒 {$produit->nom} ajouté au panier\n";
+            return true;
+        } else {
+            echo "❌ Impossible d'ajouter {$produit->nom} : rupture de stock\n";
+            return false;
+        }
+    }
+    
+    /**
+     * 💳 MÉTHODE : Payer un achat
+     * 
+     * Analogie : Présenter sa carte bancaire pour payer
+     */
+    public function payer($montant, $produits = []) 
+    {
+        echo "💳 Paiement en cours...\n";
+        echo "💰 Montant : {$montant}€\n";
+        echo "🔐 Carte utilisée : {$this->carteCredit}\n";
+        
+        // Simuler le paiement
+        if ($montant > 0) {
+            // Ajouter à l'historique
+            $achat = [
+                'date' => date('Y-m-d H:i:s'),
+                'montant' => $montant,
+                'produits' => $produits
+            ];
+            $this->historiqueAchats[] = $achat;
+            
+            // Ajouter des points de fidélité (1 point par euro)
+            $pointsGagnes = floor($montant);
+            $this->pointsFidelite += $pointsGagnes;
+            
+            echo "✅ Paiement réussi !\n";
+            echo "🌟 Vous avez gagné {$pointsGagnes} points de fidélité\n";
+            echo "🏆 Total points : {$this->pointsFidelite}\n";
+            
+            return true;
+        } else {
+            echo "❌ Montant invalide\n";
+            return false;
+        }
+    }
+    
+    /**
+     * 📜 MÉTHODE : Consulter l'historique des achats
+     * 
+     * Analogie : Regarder ses anciens tickets de caisse
+     */
+    public function consulterHistorique() 
+    {
+        echo "📜 Historique des achats de {$this->nom} :\n";
+        
+        if (empty($this->historiqueAchats)) {
+            echo "Aucun achat pour le moment\n";
+            return;
+        }
+        
+        $totalDepense = 0;
+        foreach ($this->historiqueAchats as $index => $achat) {
+            echo "🛍️ Achat #" . ($index + 1) . " :\n";
+            echo "   📅 Date : {$achat['date']}\n";
+            echo "   💰 Montant : {$achat['montant']}€\n";
+            echo "   📦 Produits : " . count($achat['produits']) . " articles\n";
+            echo "   ---\n";
+            $totalDepense += $achat['montant'];
+        }
+        
+        echo "💎 Total dépensé : {$totalDepense}€\n";
+        echo "🌟 Points de fidélité : {$this->pointsFidelite}\n";
+    }
+    
+    /**
+     * 🎁 MÉTHODE : Utiliser les points de fidélité
+     * 
+     * Analogie : Échanger ses points contre une réduction
+     */
+    public function utiliserPoints($pointsAUtiliser) 
+    {
+        if ($pointsAUtiliser <= $this->pointsFidelite) {
+            $this->pointsFidelite -= $pointsAUtiliser;
+            $reduction = $pointsAUtiliser * 0.1; // 1 point = 0.10€
+            
+            echo "🎁 {$pointsAUtiliser} points utilisés\n";
+            echo "💸 Réduction obtenue : {$reduction}€\n";
+            echo "🌟 Points restants : {$this->pointsFidelite}\n";
+            
+            return $reduction;
+        } else {
+            echo "❌ Pas assez de points (vous avez {$this->pointsFidelite} points)\n";
+            return 0;
+        }
+    }
+    
+    /**
+     * 📋 MÉTHODE : Afficher le profil client (OVERRIDE de la méthode parent)
+     * 
+     * Analogie : Montrer sa carte de fidélité avec toutes les infos
+     */
+    public function afficherProfil() 
+    {
+        // 🔗 Appeler la méthode du parent d'abord
+        parent::afficherProfil();
+        
+        // ➕ Puis ajouter les infos spécifiques au client
+        echo "🏠 Adresse : {$this->adresse}\n";
+        echo "💳 Carte : {$this->carteCredit}\n";
+        echo "🌟 Points de fidélité : {$this->pointsFidelite}\n";
+        echo "🛍️ Nombre d'achats : " . count($this->historiqueAchats) . "\n";
+        echo "-------------------\n";
+    }
+}
+
+// 🧪 EXEMPLE D'UTILISATION :
+/*
+// Créer un client (qui est aussi un utilisateur !)
+$client = new Client(
+    "Bob Joueur", 
+    "bob@email.com", 
+    30, 
+    "password123", 
+    "123 Rue des Gamers, 75001 Paris",
+    "1234567890123456"
+);
+
+// Le client peut faire tout ce qu'un utilisateur fait
+$client->seConnecter("bob@email.com", "password123");
+$client->modifierProfil("Bob Pro-Joueur");
+
+// PLUS les actions spécifiques aux clients
+$jeu = new JeuVideo("FIFA 24", 59.99, 10, "PS5", "Sport", 3, "EA Sports");
+$client->ajouterAuPanier($jeu);
+$client->payer(59.99, [$jeu]);
+$client->consulterHistorique();
+$client->afficherProfil(); // Version "améliorée" avec infos client
+
+// Utiliser les points
+$client->utiliserPoints(50);
+*/
