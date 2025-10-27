@@ -50,8 +50,8 @@ final class HomeController extends AbstractController
                 'example' => 'class Voiture { private $marque; public function __construct($marque) { $this->marque = $marque; } public function demarrer() { return "La " . $this->marque . " démarre"; } }',
             ],
             'interaction_avec_les_bases_de_donnees' => [
-                'description' => 'PHP peut interagir avec des bases de données comme MySQL, PostgreSQL, et SQLite en utilisant des extensions comme PDO ou MySQLi pour exécuter des requêtes SQL.',
-                'example' => '$pdo = new PDO("mysql:host=localhost;dbname=testdb", "user", "password");',
+                'description' => 'Apprenez à interagir avec les bases de données en PHP : connexions PDO sécurisées, requêtes préparées, transactions, jointures, ORM Doctrine, migrations et optimisation des performances.',
+                'example' => '$pdo = new PDO("mysql:host=localhost;dbname=boutique", "user", "password"); $stmt = $pdo->prepare("SELECT * FROM produits WHERE prix > ?"); $stmt->execute([100]);',
             ],
         ];
         return $this->render('home/index.html.twig', [

@@ -11,7 +11,7 @@
 				<h1 class="header-title">// FORMATION PHP</h1>
 				<p class="header-subtitle">
 					Explorez les concepts fondamentaux du PHP dans un environnement Matrix. 
-										                Chaque notion est une porte vers la maîtrise du développement web.
+															                Chaque notion est une porte vers la maîtrise du développement web.
 				</p>
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 		<div class="container">
 			<div class="grid">
 				{% for key, concept in data %}
-					<article id="{{ key }}" class="concept-card" onclick="window.open('#', '_blank')">
+					<article id="{{ key }}" class="concept-card" onclick="navigateToModule('{{ key }}')">
 						<h2 class="concept-card-title">
 							{{ key|replace({'_': ' '})|title }}
 						</h2>
@@ -43,7 +43,26 @@
 	<div class="matrix-bg" id="matrix-canvas"></div>
 
 	<script>
-		// Script pour l'effet Matrix de fond (optionnel et léger)
+		// Navigation function for module cards
+function navigateToModule(moduleKey) {
+const moduleRoutes = {
+'variables': '{{ path('app_variables') }}',
+'programmation_orientee_objet': '{{ path('app_poo') }}',
+'interaction_avec_les_bases_de_donnees': '{{ path('app_bdd') }}',
+'operateurs': '{{ path('app_operateurs') }}',
+'structures_de_controle': '{{ path('app_structure_controle') }}',
+'fonctions': '{{ path('app_fonction_p_h_p') }}',
+'types_de_donnees': '{{ path('app_typages') }}'
+};
+
+if (moduleRoutes[moduleKey]) {
+window.location.href = moduleRoutes[moduleKey];
+} else { // For modules not yet implemented, show a message
+alert('Module "' + moduleKey.replace(/_/g, ' ') + '" en cours de développement...');
+}
+}
+
+// Script pour l'effet Matrix de fond (optionnel et léger)
 document.addEventListener('DOMContentLoaded', function () { // Ajout d'un léger effet de scintillement pour les cartes
 const cards = document.querySelectorAll('.concept-card');
 
