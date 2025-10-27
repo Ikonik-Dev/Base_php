@@ -1,0 +1,254 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours PHP - Terminologie & Concepts
+{% endblock %}
+
+{% block body %}
+	<!-- Header spécifique au glossaire -->
+	<header class="header">
+		<div class="container">
+			<div class="header-content">
+				<h1 class="header-title">// TERMINOLOGIE & CONCEPTS</h1>
+				<p class="header-subtitle">
+					Découvrez le vocabulaire essentiel du développement PHP. 
+										Chaque terme est expliqué avec des analogies simples pour une compréhension parfaite.
+				</p>
+			</div>
+		</div>
+	</header>
+
+	<!-- Barre de recherche -->
+	<section class="search-section">
+		<div class="container">
+			<div class="search-box">
+				<input type="text" id="searchInput" placeholder="🔍 Rechercher un terme ou concept..." class="search-input">
+				<div class="search-stats" id="searchStats">
+					{{ glossaire|length }}
+					termes disponibles
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Index alphabétique -->
+	<section class="alphabet-section">
+		<div class="container">
+			<div
+				class="alphabet-nav" id="alphabetNav"><!-- Généré dynamiquement par JavaScript -->
+			</div>
+		</div>
+	</section>
+
+	<!-- Contenu principal - Glossaire -->
+	<main class="main-content">
+		<div class="container">
+			<div class="glossaire-grid" id="glossaireGrid">
+				{% for terme, definition in glossaire %}
+					<article class="glossaire-item" data-terme="{{ terme|lower }}" data-letter="{{ terme|first|upper }}">
+						<div class="terme-header">
+							<h3 class="terme-title">{{ terme }}</h3>
+							<span class="terme-category">Concept PHP</span>
+						</div>
+
+						<div class="terme-definition">
+							<h4>📖 Définition</h4>
+							<p>{{ definition.definition }}</p>
+						</div>
+
+						<div class="terme-explication">
+							<h4>💡 Explication simple</h4>
+							<p>{{ definition.explication }}</p>
+						</div>
+
+						<div class="terme-exemple">
+							<h4>⚡ Exemple de code</h4>
+							<pre><code>{{ definition.exemple }}</code></pre>
+						</div>
+
+						<div class="terme-footer">
+							<button class="btn-copy" onclick="copyToClipboard('{{ definition.exemple|e('js') }}')">
+								📋 Copier l'exemple
+							</button>
+						</div>
+					</article>
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+
+	<!-- Section liens utiles -->
+	<section class="links-section">
+		<div class="container">
+			<h2 class="section-title">Ressources complémentaires</h2>
+			<div class="links-grid">
+				<div class="link-card">
+					<h3>📚 Documentation officielle PHP</h3>
+					<p>La référence complète du langage PHP</p>
+					<a href="https://www.php.net/manual/fr/" target="_blank" class="btn-external">
+						Consulter →
+					</a>
+				</div>
+
+				<div class="link-card">
+					<h3>🎯 PHP Standards Recommendations</h3>
+					<p>Les bonnes pratiques et standards PHP</p>
+					<a href="https://www.php-fig.org/psr/" target="_blank" class="btn-external">
+						Découvrir →
+					</a>
+				</div>
+
+				<div class="link-card">
+					<h3>🔧 Composer - Gestionnaire de dépendances</h3>
+					<p>L'outil indispensable pour gérer les bibliothèques</p>
+					<a href="https://getcomposer.org/" target="_blank" class="btn-external">
+						Installer →
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Effet Matrix de fond -->
+	<div class="matrix-bg" id="matrix-canvas"></div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () { // Éléments DOM
+const searchInput = document.getElementById('searchInput');
+const searchStats = document.getElementById('searchStats');
+const glossaireGrid = document.getElementById('glossaireGrid');
+const alphabetNav = document.getElementById('alphabetNav');
+const glossaireItems = document.querySelectorAll('.glossaire-item');
+
+// Génération de l'index alphabétique
+function generateAlphabetNav() {
+const letters = [...new Set(Array.from(glossaireItems).map(item => item.dataset.letter))].sort();
+
+letters.forEach(letter => {
+const letterBtn = document.createElement('button');
+letterBtn.textContent = letter;
+letterBtn.className = 'alphabet-btn';
+letterBtn.onclick = () => filterByLetter(letter);
+alphabetNav.appendChild(letterBtn);
+});
+
+// Bouton "Tous"
+const allBtn = document.createElement('button');
+allBtn.textContent = 'Tous';
+allBtn.className = 'alphabet-btn active';
+allBtn.onclick = () => showAll();
+alphabetNav.insertBefore(allBtn, alphabetNav.firstChild);
+}
+
+// Recherche en temps réel
+searchInput.addEventListener('input', function () {
+const searchTerm = this.value.toLowerCase();
+let visibleCount = 0;
+
+glossaireItems.forEach(item => {
+const terme = item.dataset.terme;
+const content = item.textContent.toLowerCase();
+
+if (terme.includes(searchTerm) || content.includes(searchTerm)) {
+item.style.display = 'block';
+item.style.animation = 'fadeInUp 0.3s ease-out';
+visibleCount++;
+} else {
+item.style.display = 'none';
+}
+});
+
+updateSearchStats(visibleCount, searchTerm);
+updateAlphabetButtons();
+});
+
+// Filtrage par lettre
+function filterByLetter(letter) {
+let visibleCount = 0;
+
+glossaireItems.forEach(item => {
+if (item.dataset.letter === letter) {
+item.style.display = 'block';
+visibleCount++;
+} else {
+item.style.display = 'none';
+}
+});
+
+updateSearchStats(visibleCount, `lettre "${letter}"`);
+updateAlphabetButtons(letter);
+searchInput.value = '';
+}
+
+// Afficher tous
+function showAll() {
+glossaireItems.forEach(item => {
+item.style.display = 'block';
+});
+updateSearchStats(glossaireItems.length, '');
+updateAlphabetButtons();
+searchInput.value = '';
+}
+
+// Mise à jour des statistiques
+function updateSearchStats(count, searchTerm) {
+if (searchTerm) {
+searchStats.textContent = `${count} terme(s) trouvé(s) pour "${searchTerm}"`;
+} else {
+searchStats.textContent = `${count} termes disponibles`;
+}
+}
+
+// Mise à jour des boutons alphabet
+function updateAlphabetButtons(activeLetter = null) {
+document.querySelectorAll('.alphabet-btn').forEach(btn => {
+btn.classList.remove('active');
+if (activeLetter && btn.textContent === activeLetter) {
+btn.classList.add('active');
+} else if (! activeLetter && btn.textContent === 'Tous') {
+btn.classList.add('active');
+}
+});
+}
+
+// Animation d'apparition des cartes
+function animateCards() {
+glossaireItems.forEach((item, index) => {
+item.style.animationDelay = `${
+index * 0.05
+}s`;
+item.style.animation = 'fadeInUp 0.6s ease-out forwards';
+});
+}
+
+// Initialisation
+generateAlphabetNav();
+animateCards();
+});
+
+// Copier dans le presse-papier
+function copyToClipboard(text) {
+navigator.clipboard.writeText(text).then(() => { // Feedback visuel
+event.target.textContent = '✅ Copié !';
+setTimeout(() => {
+event.target.textContent = '📋 Copier l\'exemple';
+}, 2000);
+}).catch(() => {
+alert('Impossible de copier le texte');
+});
+}
+
+// Smooth scroll pour l'index alphabétique
+document.addEventListener('click', function (e) {
+if (e.target.classList.contains('alphabet-btn')) {
+e.preventDefault();
+const targetLetter = e.target.textContent;
+if (targetLetter !== 'Tous') {
+const firstItemWithLetter = document.querySelector (`[data-letter="${targetLetter}"]`);
+if (firstItemWithLetter) {
+firstItemWithLetter.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+}
+}
+});
+	</script>
+{% endblock %}

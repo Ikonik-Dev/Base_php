@@ -19,12 +19,38 @@
 		<div class="sidebar" id="sidebar">
 			<h2>LES BASES</h2>
 			<ul>
-				<li><a href="{{ path('app_home') }}"class="{{ app.request.get('_route') == 'app_home' ? 'active' : '' }}" data-turbo="false">Accueil</a></li>
-				<li><a href="{{ path('app_variables') }}"class="{{ app.request.get('_route') == 'app_variables' ? 'active' : '' }}" data-turbo="false">Variables</a></li>
-				<li><a href="{{ path('app_typages') }}"class="{{ app.request.get('_route') == 'app_typages' ? 'active' : '' }}" data-turbo="false">Types de données</a></li>
-				<li><a href="{{ path('app_operateurs') }}"class="{{ app.request.get('_route') == 'app_operateurs' ? 'active' : '' }}" data-turbo="false">Opérateurs</a></li>
-				<li><a href="{{ path('app_structure_controle') }}"class="{{ app.request.get('_route') == 'app_structure_controle' ? 'active' : '' }}" data-turbo="false">Structures de contrôle</a></li>
-				<li><a href="{{ path('app_fonction_p_h_p') }}"class="{{ app.request.get('_route') == 'app_fonction_p_h_p' ? 'active' : '' }}" data-turbo="false">Fonctions</a></li>
+				<li>
+					<a href="{{ path('app_home') }}" class="{{ app.request.get('_route') == 'app_home' ? 'active' : '' }}" data-turbo="false">Accueil</a>
+				</li>
+				<li>
+					<a href="{{ path('app_variables') }}" class="{{ app.request.get('_route') == 'app_variables' ? 'active' : '' }}" data-turbo="false">Variables</a>
+				</li>
+				<li>
+					<a href="{{ path('app_typages') }}" class="{{ app.request.get('_route') == 'app_typages' ? 'active' : '' }}" data-turbo="false">Types de données</a>
+				</li>
+				<li>
+					<a href="{{ path('app_operateurs') }}" class="{{ app.request.get('_route') == 'app_operateurs' ? 'active' : '' }}" data-turbo="false">Opérateurs</a>
+				</li>
+				<li>
+					<a href="{{ path('app_structure_controle') }}" class="{{ app.request.get('_route') == 'app_structure_controle' ? 'active' : '' }}" data-turbo="false">Structures de contrôle</a>
+				</li>
+				<li>
+					<a href="{{ path('app_fonction_p_h_p') }}" class="{{ app.request.get('_route') == 'app_fonction_p_h_p' ? 'active' : '' }}" data-turbo="false">Fonctions</a>
+				</li>
+				<li>
+					<a href="{{ path('app_poo') }}" class="{{ app.request.get('_route') == 'app_poo' ? 'active' : '' }}" data-turbo="false">POO</a>
+				</li>
+			</ul>
+
+			<hr class="sidebar-separator">
+
+			<h3>RÉFÉRENCE</h3>
+			<ul>
+				<li class="glossaire-item">
+					<a href="{{ path('app_glossaire') }}" class="glossaire-link {{ app.request.get('_route') == 'app_glossaire' ? 'active' : '' }}" data-turbo="false">
+						📚 Terminologie & Concepts
+					</a>
+				</li>
 			</ul>
 		</div>
 		<!-- Navigation composant -->
@@ -34,31 +60,41 @@
 
 		{% block javascripts %}
 			<script>
-				// Toggle sidebar pour mobile
+				// Toggle sidebar pour toutes les résolutions
 function toggleSidebar() {
 const sidebar = document.getElementById('sidebar');
 sidebar.classList.toggle('open');
+
+// Sauvegarde de l'état dans localStorage
+localStorage.setItem('sidebarOpen', sidebar.classList.contains('open'));
 }
 
-// Fermer la sidebar quand on clique en dehors (mobile)
+// Restaurer l'état de la sidebar au chargement
+document.addEventListener('DOMContentLoaded', function () {
+const sidebar = document.getElementById('sidebar');
+const sidebarState = localStorage.getItem('sidebarOpen');
+
+// Si l'utilisateur avait ouvert la sidebar, la remettre
+if (sidebarState === 'true') {
+sidebar.classList.add('open');
+}
+});
+
+// Fermer la sidebar quand on clique en dehors (toutes résolutions)
 document.addEventListener('click', function (event) {
 const sidebar = document.getElementById('sidebar');
 const toggle = document.querySelector('.sidebar-toggle');
 
-if (window.innerWidth<= 768 && 
-						!sidebar.contains(event.target) && 
-						!toggle.contains(event.target) && 
-						sidebar.classList.contains('open')) {
-						sidebar.classList.remove('open');
-					}
-				});
-
-				// Gestion du redimensionnement
-				window.addEventListener('resize', function() {
-					const sidebar = document.getElementById('sidebar');
-					if (window.innerWidth> 768) {
+// Fermer si on clique en dehors ET que la sidebar est ouverte
+if (! sidebar.contains(event.target) && ! toggle.contains(event.target) && sidebar.classList.contains('open')) {
 sidebar.classList.remove('open');
+localStorage.setItem('sidebarOpen', 'false');
 }
+});
+
+// Gestion du redimensionnement (optionnel - garde l'état)
+window.addEventListener('resize', function () { // Plus de fermeture automatique, on garde l'état utilisateur
+console.log('Resize détecté, état sidebar maintenu');
 });
 			</script>
 		{% endblock %}

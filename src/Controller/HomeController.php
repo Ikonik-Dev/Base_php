@@ -46,8 +46,8 @@ final class HomeController extends AbstractController
                 'example' => 'try { // code qui peut générer une exception } catch (Exception $e) { echo "Erreur : " . $e->getMessage(); }',
             ],
             'programmation_orientee_objet' => [
-                'description' => 'PHP supporte la programmation orientée objet (POO), permettant la création de classes, d\'objets, l\'héritage, et l\'encapsulation.',
-                'example' => 'class Voiture { public $couleur; function demarrer() { echo "La voiture démarre"; } }',
+                'description' => 'La POO en PHP permet d\'organiser le code en classes et objets. Maîtrisez l\'encapsulation, l\'héritage, le polymorphisme et l\'abstraction pour créer des applications robustes et maintenables.',
+                'example' => 'class Voiture { private $marque; public function __construct($marque) { $this->marque = $marque; } public function demarrer() { return "La " . $this->marque . " démarre"; } }',
             ],
             'interaction_avec_les_bases_de_donnees' => [
                 'description' => 'PHP peut interagir avec des bases de données comme MySQL, PostgreSQL, et SQLite en utilisant des extensions comme PDO ou MySQLi pour exécuter des requêtes SQL.',
