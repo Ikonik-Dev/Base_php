@@ -12,6 +12,20 @@
 							<a href="#{{ key }}" class="nav-link">{{ key|replace({'_': ' '})|title }}</a>
 						</li>
 					{% endfor %}
+				{% else %}
+					{# Navigation par défaut si pas de data #}
+					<li>
+						<a href="{{ path('app_home') }}" class="nav-link">Accueil</a>
+					</li>
+					<li>
+						<a href="{{ path('app_variables') }}" class="nav-link">Variables</a>
+					</li>
+					<li>
+						<a href="{{ path('app_poo') }}" class="nav-link">POO</a>
+					</li>
+					<li>
+						<a href="{{ path('app_glossaire') }}" class="nav-link">Glossaire</a>
+					</li>
 				{% endif %}
 			</ul>
 		</div>

@@ -8,14 +8,25 @@
 
 /* Navigation */
 .navbar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
     background-color: var(--matrix-dark);
     border-bottom: 1px solid var(--matrix-border);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     padding: var(--space-md) 0;
+    transform: translateY(-100%); /* Cachée complètement par défaut */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 20px rgba(0, 255, 65, 0.1);
+    will-change: transform; /* Optimisation performance */
+}
+
+.navbar.visible {
+    transform: translateY(0); /* Visible complètement */
+    box-shadow: 0 4px 30px rgba(0, 255, 65, 0.2);
 }
 .navbar-container {
     display: flex;
@@ -149,6 +160,36 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
+/* Zone de détection pour la navbar */
+.navbar-trigger {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 999;
+    background: transparent;
+    pointer-events: none; /* Permet aux clics de passer au travers */
+}
+
+/* Animation du contenu de la navbar */
+.navbar-brand {
+    transition: all 0.3s ease-out;
+}
+
+.navbar.visible .navbar-brand {
+    text-shadow: 0 0 15px var(--matrix-green);
+}
+
+.nav-link {
+    transition: all 0.3s ease-out;
+    opacity: 0.8;
+}
+
+.navbar.visible .nav-link {
+    opacity: 1;
+}
+
 @media (max-width: 768px) {
     .navbar-container {
         flex-direction: column;
@@ -165,5 +206,9 @@
 
     .grid {
         grid-template-columns: 1fr;
+    }
+
+    .navbar-trigger {
+        height: 30px; /* Zone plus petite sur mobile */
     }
 }

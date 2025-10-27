@@ -12,8 +12,11 @@
 		{% endblock %}
 	</head>
 	<body>
+		{# Zone de détection pour faire apparaître la navbar #}
+		<div class="navbar-trigger" id="navbarTrigger"></div>
+
 		{# Bouton toggle pour mobile #}
-		<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+		<button class="sidebar-toggle" onclick="toggleSidebar()"></button>
 
 		{# navigation principale #}
 		<div class="sidebar" id="sidebar">
@@ -48,7 +51,7 @@
 			<ul>
 				<li class="glossaire-item">
 					<a href="{{ path('app_glossaire') }}" class="glossaire-link {{ app.request.get('_route') == 'app_glossaire' ? 'active' : '' }}" data-turbo="false">
-						📚 Terminologie & Concepts
+						🥏 Terminologie & Concepts
 					</a>
 				</li>
 			</ul>
@@ -95,6 +98,103 @@ localStorage.setItem('sidebarOpen', 'false');
 // Gestion du redimensionnement (optionnel - garde l'état)
 window.addEventListener('resize', function () { // Plus de fermeture automatique, on garde l'état utilisateur
 console.log('Resize détecté, état sidebar maintenu');
+});
+
+// Gestion de l'apparition de la navbar au hover
+document.addEventListener('DOMContentLoaded', function () {
+const navbar = document.querySelector('.navbar');
+const navbarTrigger = document.getElementById('navbarTrigger');
+let isNavbarVisible = false;
+let navbarTimeout;
+let navbarHeight = 0;
+
+// Vérification que les éléments existent
+if (! navbar) {
+console.error('Navbar non trouvée !');
+return;
+}
+console.log('Navbar trouvée, initialisation...');
+
+// Calculer la hauteur réelle de la navbar après chargement
+function calculateNavbarHeight() {
+console.log('Tentative de calcul de hauteur navbar...');
+// Temporairement forcer l'affichage pour mesurer
+navbar.classList.add('visible');
+navbar.style.visibility = 'hidden'; // Invisible mais prend l'espace
+navbarHeight = navbar.offsetHeight;
+console.log('Hauteur navbar calculée:', navbarHeight + 'px');
+console.log('Navbar HTML:', navbar.innerHTML.substring(0, 100) + '...');
+// Remettre en état caché
+navbar.classList.remove('visible');
+navbar.style.visibility = 'visible';
+}
+
+// Fonction pour afficher la navbar
+function showNavbar() {
+if (! isNavbarVisible) {
+navbar.classList.add('visible');
+isNavbarVisible = true;
+clearTimeout(navbarTimeout);
+console.log('Navbar affichée');
+}
+}
+
+// Fonction pour cacher la navbar avec délai
+function hideNavbar() {
+navbarTimeout = setTimeout(() => {
+navbar.classList.remove('visible');
+isNavbarVisible = false;
+console.log('Navbar cachée');
+}, 300); // Délai de 300ms avant de cacher
+}
+
+// Calculer la hauteur au chargement avec plusieurs tentatives
+setTimeout(calculateNavbarHeight, 100);
+setTimeout(calculateNavbarHeight, 500);
+// Deuxième tentative si la première échoue
+
+// Détection de la souris en haut de l'écran
+document.addEventListener('mousemove', function (e) {
+const triggerZone = Math.max(50, navbarHeight > 0 ? navbarHeight * 0.5 : 50); // Zone adaptative avec fallback
+if (e.clientY<= triggerZone) { // Souris dans la zone de déclenchement
+showNavbar();
+} else if (e.clientY>(navbarHeight + 20) && isNavbarVisible) {
+// Souris plus bas et navbar visible
+// Vérifier si la souris n'est pas sur la navbar elle-même
+const navbarRect = navbar.getBoundingClientRect();
+if (e.clientY > navbarRect.bottom + 10) {
+hideNavbar();
+}
+}
+});
+
+// Garder la navbar visible quand on la survole
+navbar.addEventListener('mouseenter', function () {
+showNavbar();
+});
+
+navbar.addEventListener('mouseleave', function (event) { // Vérifier la position de la souris avant de cacher
+setTimeout(() => {
+if (event.clientY > (navbarHeight + 20)) {
+hideNavbar();
+}
+}, 100);
+});
+
+// Recalculer la hauteur si la fenêtre est redimensionnée
+window.addEventListener('resize', function () {
+setTimeout(calculateNavbarHeight, 100);
+});
+
+// Test initial: afficher brièvement la navbar pour indiquer sa présence
+setTimeout(() => {
+console.log('Test initial navbar...');
+showNavbar();
+setTimeout(() => {
+console.log('Masquage automatique navbar...');
+hideNavbar();
+}, 3000); // Cache après 3 secondes
+}, 500);
 });
 			</script>
 		{% endblock %}
