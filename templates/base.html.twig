@@ -7,6 +7,10 @@
 			{% endblock %}
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('php-logo.png') }}">
+		<link rel="apple-touch-icon" href="{{ asset('php-logo.png') }}">
+		<meta name="theme-color" content="#777BB4">
 		{% block stylesheets %}
 			{{ importmap('app') }}
 		{% endblock %}
@@ -63,6 +67,11 @@
 				<li>
 					<a href="{{ path('app_projet_poo') }}" class="{{ app.request.get('_route') == 'app_projet_poo' ? 'active' : '' }}" data-turbo="false">
 						🎮 Projet POO Progressif
+					</a>
+				</li>
+				<li>
+					<a href="{{ path('app_symfony') }}" class="{{ app.request.get('_route') == 'app_symfony' ? 'active' : '' }}" data-turbo="false">
+						🎵 Framework Symfony
 					</a>
 				</li>
 			</ul>

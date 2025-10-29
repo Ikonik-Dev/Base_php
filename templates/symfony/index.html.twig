@@ -1,0 +1,853 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ pageTitle }}
+	- Cours PHP Matrix
+{% endblock %}
+
+{% block body %}
+	<div
+		class="symfony-page">
+		<!-- Header avec style spécifique Symfony -->
+		<header class="symfony-header">
+			<div class="container">
+				<h1 class="page-title">
+					<span class="icon">🎵</span>
+					{{ presentation.title }}
+				</h1>
+				<p class="page-subtitle">
+					{{ presentation.description }}
+				</p>
+				<div class="symfony-stats">
+					<div class="stat-item">
+						<strong>Version :</strong>
+						{{ presentation.version_actuelle }}
+					</div>
+					<div class="stat-item">
+						<strong>Depuis :</strong>
+						{{ presentation.depuis }}
+					</div>
+					<div class="stat-item">
+						<strong>Créateur :</strong>
+						{{ presentation.createur }}
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Navigation rapide -->
+		<nav class="quick-nav">
+			<div class="container">
+				<div class="nav-pills">
+					<a href="#presentation" class="nav-pill">Présentation</a>
+					<a href="#concepts" class="nav-pill">Concepts</a>
+					<a href="#architecture" class="nav-pill">Architecture</a>
+					<a href="#ecosysteme" class="nav-pill">Écosystème</a>
+					<a href="#workflow" class="nav-pill">Workflow</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Contenu principal -->
+		<main class="main-content">
+			<div
+				class="container">
+
+				<!-- Section Présentation -->
+				<section id="presentation" class="concept-section">
+					<h2>🎯 Philosophie Symfony</h2>
+					<div class="philosophy-grid">
+						{% for principe in presentation.philosophie %}
+							<div class="philosophy-card">
+								<div class="card-icon">💡</div>
+								<h3>{{ principe }}</h3>
+								<p>{{ principe == 'Convention over Configuration' ? 'Privilégier les conventions plutôt que la configuration manuelle' :
+									principe == 'Don\'t Repeat Yourself (DRY)' ? 'Éviter la duplication de code en favorisant la réutilisabilité' :
+									principe == 'Séparation des préoccupations' ? 'Chaque composant a une responsabilité unique et bien définie' :
+									principe == 'Architecture MVC' ? 'Organisation claire entre Model, View et Controller' :
+									'Tests automatisés pour garantir la qualité et la fiabilité du code' }}
+								</p>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Concepts de Base -->
+				<section id="concepts" class="concept-section">
+					<h2>🏗️ Concepts Fondamentaux</h2>
+					
+					<!-- MVC Pattern -->
+					<div class="concept-detail">
+						<h3>{{ concepts_base.mvc_pattern.title }}</h3>
+						<p class="concept-description">{{ concepts_base.mvc_pattern.description }}</p>
+						
+						<div class="mvc-diagram">
+							<div class="mvc-component model">
+								<div class="component-icon">🗃️</div>
+								<h4>MODEL</h4>
+								<p>{{ concepts_base.mvc_pattern.composants.Model }}</p>
+								<div class="component-details">
+									<ul>
+										<li>Entités Doctrine</li>
+										<li>Repositories</li>
+										<li>Logique métier</li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="mvc-arrow">⬇️</div>
+							
+							<div class="mvc-component controller">
+								<div class="component-icon">🎮</div>
+								<h4>CONTROLLER</h4>
+								<p>{{ concepts_base.mvc_pattern.composants.Controller }}</p>
+								<div class="component-details">
+									<ul>
+										<li>Traitement requêtes</li>
+										<li>Logique application</li>
+										<li>Coordination services</li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="mvc-arrow">⬇️</div>
+							
+							<div class="mvc-component view">
+								<div class="component-icon">🎨</div>
+								<h4>VIEW</h4>
+								<p>{{ concepts_base.mvc_pattern.composants.View }}</p>
+								<div class="component-details">
+									<ul>
+										<li>Templates Twig</li>
+										<li>Interface utilisateur</li>
+										<li>Présentation données</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Dependency Injection -->
+					<div class="concept-detail">
+						<h3>{{ concepts_base.dependency_injection.title }}</h3>
+						<p class="concept-description">{{ concepts_base.dependency_injection.description }}</p>
+						
+						<div class="di-example">
+							<div class="code-block">
+								<h4>📝 Exemple d'Injection de Dépendances</h4>
+								<pre><code>{{ concepts_base.dependency_injection.exemple_code }}</p>
+							</code>
+						</pre>
+					</div>
+
+					<div class="di-benefits">
+						<h4>✅ Avantages</h4>
+						<ul>
+							{% for avantage in concepts_base.dependency_injection.avantages %}
+								<li>{{ avantage }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Routing -->
+			<div class="concept-detail">
+				<h3>{{ concepts_base.routing.title }}</h3>
+				<p class="concept-description">{{ concepts_base.routing.description }}</p>
+
+				<div class="routing-examples">
+					{% for type, exemple in concepts_base.routing.types %}
+						<div class="routing-card">
+							<h4>{{ type }}</h4>
+							<code>{{ exemple }}</code>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<!-- Twig -->
+			<div class="concept-detail">
+				<h3>{{ concepts_base.twig_templating.title }}</h3>
+				<p class="concept-description">{{ concepts_base.twig_templating.description }}</p>
+
+				<div class="twig-syntax">
+					{% for syntaxe, description in concepts_base.twig_templating.syntaxe_exemple %}
+						<div class="syntax-item">
+							<code>{{ syntaxe }}</code>
+							<span>{{ description }}</span>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+
+		<!-- Section Architecture -->
+		<section id="architecture" class="concept-section">
+			<h2>⚙️ Architecture Symfony</h2>
+			<div class="architecture-diagram">
+				{% for key, component in architecture %}
+					<div class="arch-component">
+						<div class="component-header">
+							<div class="arch-icon">{{ key == 'kernel' ? '🔧' : key == 'container' ? '📦' : '📡' }}</div>
+							<h3>{{ component.nom }}</h3>
+						</div>
+						<p class="component-role">{{ component.role }}</p>
+						<div class="component-list">
+							{% if component.responsabilites is defined %}
+								{% for responsabilite in component.responsabilites %}
+									<div class="list-item">{{ responsabilite }}</div>
+								{% endfor %}
+							{% endif %}
+							{% if component.fonctions is defined %}
+								{% for fonction in component.fonctions %}
+									<div class="list-item">{{ fonction }}</div>
+								{% endfor %}
+							{% endif %}
+							{% if component.utilisation is defined %}
+								{% for utilisation in component.utilisation %}
+									<div class="list-item">{{ utilisation }}</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</section>
+
+		<!-- Section Écosystème -->
+		<section id="ecosysteme" class="concept-section">
+			<h2>🌐 Écosystème Symfony</h2>
+
+			<div class="ecosystem-tabs">
+				<div class="tab-headers">
+					<button class="tab-header active" data-tab="bundles">Bundles Principaux</button>
+					<button class="tab-header" data-tab="composants">Composants</button>
+					<button class="tab-header" data-tab="outils">Outils Dev</button>
+				</div>
+
+				<div class="tab-content active" id="bundles">
+					<div class="ecosystem-grid">
+						{% for bundle, description in ecosysteme.bundles_principaux %}
+							<div class="ecosystem-card">
+								<h4>{{ bundle }}</h4>
+								<p>{{ description }}</p>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="tab-content" id="composants">
+					<div class="ecosystem-grid">
+						{% for composant, description in ecosysteme.composants_standalone %}
+							<div class="ecosystem-card">
+								<h4>{{ composant }}</h4>
+								<p>{{ description }}</p>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="tab-content" id="outils">
+					<div class="ecosystem-grid">
+						{% for outil, description in ecosysteme.outils_dev %}
+							<div class="ecosystem-card">
+								<h4>{{ outil }}</h4>
+								<p>{{ description }}</p>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section Workflow -->
+		<section id="workflow" class="concept-section">
+			<h2>🔄 Workflow de Développement</h2>
+
+			<div class="workflow-steps">
+				<div class="workflow-step">
+					<div class="step-icon">🚀</div>
+					<h3>{{ workflow.creation_projet.etape }}</h3>
+					<code>{{ workflow.creation_projet.commande }}</code>
+					<p>{{ workflow.creation_projet.description }}</p>
+				</div>
+
+				<div class="workflow-step">
+					<div class="step-icon">📁</div>
+					<h3>Structure du Projet</h3>
+					<div class="folder-structure">
+						{% for dossier, description in workflow.structure_dossiers %}
+							<div class="folder-item">
+								<span class="folder-name">{{ dossier }}</span>
+								<span class="folder-desc">{{ description }}</span>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="workflow-step">
+					<div class="step-icon">⚡</div>
+					<h3>Commandes Utiles</h3>
+					<div class="commands-list">
+						{% for commande, description in workflow.commandes_utiles %}
+							<div class="command-item">
+								<code>{{ commande }}</code>
+								<span>{{ description }}</span>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Call to action -->
+		<section class="cta-section">
+			<div class="cta-content">
+				<h2>🎯 Prêt à maîtriser Symfony ?</h2>
+				<p>Symfony offre une architecture robuste et des outils puissants pour développer des applications web modernes et performantes.</p>
+				<div class="cta-buttons">
+					<a href="#concepts" class="btn-primary">Revoir les Concepts</a>
+					<a href="https://symfony.com/doc/current/index.html" target="_blank" class="btn-secondary">Documentation Officielle</a>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</main></div><style>
+/* ===== ANIMATIONS KEYFRAMES ===== */
+@keyframes pulse {
+	0,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+	}
+}
+
+@keyframes slideInLeft {
+	from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideInRight {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideInUp {
+	from {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInScale {
+	from {
+		transform: scale(0.8);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes bounce {
+	0,
+	20%,
+	53%,
+	80%,
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
+	40%,
+	43% {
+		transform: translate3d(0, -15px, 0);
+	}
+	70% {
+		transform: translate3d(0, -8px, 0);
+	}
+}
+
+@keyframes glow {
+	0,
+	100% {
+		box-shadow: 0 0 20px rgba(95, 39, 205, 0.3);
+	}
+	50% {
+		box-shadow: 0 0 40px rgba(95, 39, 205, 0.6);
+	}
+}
+
+/* ===== STYLES SYMFONY ===== */
+.symfony-page {
+	--symfony-primary: #5f27cd;
+	--symfony-secondary: #341f97;
+	--symfony-accent: #8854d0;
+	--symfony-light: #a55eea;
+	--symfony-gradient: linear-gradient(135deg, var(--symfony-primary), var(--symfony-secondary));
+}
+
+.symfony-header {
+	background: var(--symfony-gradient);
+	color: white;
+	padding: 3rem 0;
+	margin-bottom: 2rem;
+	position: relative;
+	animation: slideInUp 1s ease-out;
+}
+
+.symfony-header::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>') repeat;
+	background-size: 50px 50px;
+}
+
+.page-title .icon {
+	font-size: 3rem;
+	animation: bounce 2s infinite;
+}
+
+.symfony-stats {
+	display: flex;
+	gap: 2rem;
+	margin-top: 1.5rem;
+	flex-wrap: wrap;
+}
+
+.stat-item {
+	background: rgba(255, 255, 255, 0.1);
+	padding: 0.75rem 1.5rem;
+	border-radius: 25px;
+	backdrop-filter: blur(10px);
+	animation: slideInUp 1s ease-out;
+}
+
+.stat-item:nth-child(1) {
+	animation-delay: 0.2s;
+}
+.stat-item:nth-child(2) {
+	animation-delay: 0.4s;
+}
+.stat-item:nth-child(3) {
+	animation-delay: 0.6s;
+}
+
+.quick-nav {
+	background: rgba(95, 39, 205, 0.1);
+	padding: 1rem 0;
+	margin-bottom: 2rem;
+	border-top: 2px solid var(--symfony-primary);
+	border-bottom: 2px solid var(--symfony-primary);
+}
+
+.nav-pills {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.nav-pill {
+	padding: 0.5rem 1rem;
+	background: var(--symfony-gradient);
+	color: white;
+	text-decoration: none;
+	border-radius: 25px;
+	transition: all 0.3s ease;
+	font-weight: 500;
+	animation: slideInUp 0.8s ease-out;
+}
+
+.nav-pill:nth-child(1) {
+	animation-delay: 0.1s;
+}
+.nav-pill:nth-child(2) {
+	animation-delay: 0.2s;
+}
+.nav-pill:nth-child(3) {
+	animation-delay: 0.3s;
+}
+.nav-pill:nth-child(4) {
+	animation-delay: 0.4s;
+}
+.nav-pill:nth-child(5) {
+	animation-delay: 0.5s;
+}
+
+.nav-pill:hover {
+	background: linear-gradient(135deg, var(--symfony-secondary), var(--symfony-primary));
+	transform: translateY(-3px) scale(1.05);
+	box-shadow: 0 8px 25px rgba(95, 39, 205, 0.4);
+}
+
+.concept-section {
+	margin: 3rem 0;
+	animation: fadeInScale 1.2s ease-out;
+}
+
+.concept-section h2 {
+	color: var(--symfony-primary);
+	margin-bottom: 2rem;
+	animation: slideInLeft 1s ease-out;
+}
+
+/* Grille de philosophie */
+.philosophy-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 2rem;
+	margin: 2rem 0;
+}
+
+.philosophy-card {
+	background: white;
+	padding: 2rem;
+	border-radius: 15px;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+	border-top: 4px solid var(--symfony-accent);
+	transition: all 0.3s ease;
+	animation: slideInUp 1s ease-out;
+}
+
+.philosophy-card:nth-child(1) {
+	animation-delay: 0.1s;
+}
+.philosophy-card:nth-child(2) {
+	animation-delay: 0.2s;
+}
+.philosophy-card:nth-child(3) {
+	animation-delay: 0.3s;
+}
+.philosophy-card:nth-child(4) {
+	animation-delay: 0.4s;
+}
+.philosophy-card:nth-child(5) {
+	animation-delay: 0.5s;
+}
+
+.philosophy-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 15px 40px rgba(95, 39, 205, 0.2);
+	animation: glow 2s infinite;
+}
+
+.card-icon {
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+	animation: bounce 2s infinite;
+}
+
+/* Diagramme MVC */
+.mvc-diagram {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.5rem;
+	margin: 2rem 0;
+	padding: 2rem;
+	background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+	border-radius: 15px;
+}
+
+.mvc-component {
+	background: white;
+	padding: 2rem;
+	border-radius: 10px;
+	min-width: 250px;
+	text-align: center;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+	border: 3px solid var(--symfony-primary);
+	transition: all 0.3s ease;
+	animation: fadeInScale 1s ease-out;
+}
+
+.mvc-component.model {
+	animation-delay: 0.2s;
+}
+.mvc-component.controller {
+	animation-delay: 0.4s;
+}
+.mvc-component.view {
+	animation-delay: 0.6s;
+}
+
+.mvc-component:hover {
+	transform: scale(1.05);
+	box-shadow: 0 15px 40px rgba(95, 39, 205, 0.3);
+}
+
+.component-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+	animation: bounce 2s infinite;
+}
+
+.mvc-arrow {
+	font-size: 2rem;
+	color: var(--symfony-primary);
+	animation: pulse 2s infinite;
+}
+
+/* Architecture */
+.architecture-diagram {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 2rem;
+	margin: 2rem 0;
+}
+
+.arch-component {
+	background: white;
+	border-radius: 15px;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	transition: all 0.3s ease;
+	animation: slideInUp 1s ease-out;
+}
+
+.arch-component:nth-child(1) {
+	animation-delay: 0.2s;
+}
+.arch-component:nth-child(2) {
+	animation-delay: 0.4s;
+}
+.arch-component:nth-child(3) {
+	animation-delay: 0.6s;
+}
+
+.arch-component:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 15px 40px rgba(95, 39, 205, 0.2);
+}
+
+.component-header {
+	background: var(--symfony-gradient);
+	color: white;
+	padding: 1.5rem;
+	text-align: center;
+}
+
+.arch-icon {
+	font-size: 2.5rem;
+	margin-bottom: 0.5rem;
+	animation: bounce 2s infinite;
+}
+
+/* Écosystème avec onglets */
+.ecosystem-tabs {
+	margin: 2rem 0;
+}
+
+.tab-headers {
+	display: flex;
+	gap: 0.5rem;
+	margin-bottom: 2rem;
+	flex-wrap: wrap;
+}
+
+.tab-header {
+	padding: 1rem 2rem;
+	background: #f8f9fa;
+	border: none;
+	border-radius: 10px 10px 0 0;
+	cursor: pointer;
+	font-weight: 500;
+	transition: all 0.3s ease;
+}
+
+.tab-header.active {
+	background: var(--symfony-primary);
+	color: white;
+}
+
+.tab-header:hover {
+	background: var(--symfony-light);
+	color: white;
+}
+
+.tab-content {
+	display: none;
+	animation: fadeInScale 0.8s ease-out;
+}
+
+.tab-content.active {
+	display: block;
+}
+
+.ecosystem-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1.5rem;
+}
+
+.ecosystem-card {
+	background: white;
+	padding: 1.5rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	border-left: 4px solid var(--symfony-accent);
+	transition: all 0.3s ease;
+}
+
+.ecosystem-card:hover {
+	transform: translateX(5px);
+	box-shadow: 0 8px 25px rgba(95, 39, 205, 0.2);
+}
+
+/* Workflow */
+.workflow-steps {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	gap: 2rem;
+	margin: 2rem 0;
+}
+
+.workflow-step {
+	background: white;
+	padding: 2rem;
+	border-radius: 15px;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	animation: slideInUp 1s ease-out;
+}
+
+.workflow-step:nth-child(1) {
+	animation-delay: 0.2s;
+}
+.workflow-step:nth-child(2) {
+	animation-delay: 0.4s;
+}
+.workflow-step:nth-child(3) {
+	animation-delay: 0.6s;
+}
+
+.step-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+	animation: bounce 2s infinite;
+}
+
+/* Styles code et commandes */
+code {
+	background: #f8f9fa;
+	padding: 0.5rem;
+	border-radius: 5px;
+	font-family: 'Courier New', monospace;
+	color: var(--symfony-primary);
+}
+
+pre code {
+	display: block;
+	padding: 1rem;
+	background: #2d3748;
+	color: #e2e8f0;
+	border-radius: 8px;
+}
+
+/* CTA Section */
+.cta-section {
+	background: var(--symfony-gradient);
+	color: white;
+	padding: 3rem 2rem;
+	border-radius: 20px;
+	text-align: center;
+	margin: 3rem 0;
+	animation: slideInUp 1s ease-out;
+}
+
+.cta-buttons {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	margin-top: 2rem;
+	flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+	padding: 1rem 2rem;
+	border-radius: 25px;
+	text-decoration: none;
+	font-weight: 600;
+	transition: all 0.3s ease;
+}
+
+.btn-primary {
+	background: white;
+	color: var(--symfony-primary);
+}
+
+.btn-secondary {
+	background: transparent;
+	color: white;
+	border: 2px solid white;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+	.symfony-stats {
+		justify-content: center;
+	}
+
+	.nav-pills {
+		justify-content: center;
+	}
+
+	.mvc-diagram {
+		padding: 1rem;
+	}
+
+	.cta-buttons {
+		flex-direction: column;
+		align-items: center;
+	}
+}</style><script>
+// Gestion des onglets de l'écosystème
+document.addEventListener('DOMContentLoaded', function () {
+const tabHeaders = document.querySelectorAll('.tab-header');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabHeaders.forEach(header => {
+header.addEventListener('click', function () {
+const target = this.dataset.tab;
+
+// Supprimer les classes actives
+tabHeaders.forEach(h => h.classList.remove('active'));
+tabContents.forEach(c => c.classList.remove('active'));
+
+// Ajouter les classes actives
+this.classList.add('active');
+document.getElementById(target).classList.add('active');
+});
+});
+});</script>{% endblock %}
