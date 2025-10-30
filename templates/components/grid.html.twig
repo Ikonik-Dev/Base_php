@@ -1,0 +1,25 @@
+{# Composant Grid - Système de grille responsive #}
+{% set gridClass = 'grid' %}
+{% if cols is defined %}
+	{% set gridClass = gridClass ~ ' grid--cols-' ~ cols %}
+{% endif %}
+{% if gap is defined %}
+	{% set gridClass = gridClass ~ ' grid--gap-' ~ gap %}
+{% endif %}
+{% if responsive is defined %}
+	{% for breakpoint, value in responsive %}
+		{% set gridClass = gridClass ~ ' grid--' ~ breakpoint ~ '-' ~ value %}
+	{% endfor %}
+{% endif %}
+
+<div class="{{ gridClass }}">
+	{% for item in items %}
+		<div class="grid__item {{ item.class|default('') }}">
+			{% if item.component is defined %}
+				{% include 'components/' ~ item.component ~ '.html.twig' with item.data|default({}) %}
+			{% else %}
+				{{ item.content|default('')|raw }}
+			{% endif %}
+		</div>
+	{% endfor %}
+</div>

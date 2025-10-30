@@ -1,0 +1,136 @@
+/* ===================================
+   GRILLE RESPONSIVE
+   =================================== */
+
+/* Grille de base */
+.grid {
+    display: grid;
+    gap: var(--space-md);
+    width: 100%;
+}
+
+/* Colonnes */
+.grid--cols-1 {
+    grid-template-columns: 1fr;
+}
+.grid--cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+.grid--cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+.grid--cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+.grid--cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+.grid--cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+/* Espacement */
+.grid--gap-xs {
+    gap: var(--space-xs);
+}
+.grid--gap-sm {
+    gap: var(--space-sm);
+}
+.grid--gap-md {
+    gap: var(--space-md);
+}
+.grid--gap-lg {
+    gap: var(--space-lg);
+}
+.grid--gap-xl {
+    gap: var(--space-xl);
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+    .grid--sm-1 {
+        grid-template-columns: 1fr;
+    }
+    .grid--sm-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid--sm-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .grid--md-1 {
+        grid-template-columns: 1fr;
+    }
+    .grid--md-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid--md-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid--md-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .grid--lg-1 {
+        grid-template-columns: 1fr;
+    }
+    .grid--lg-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid--lg-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid--lg-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .grid--lg-5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .grid--lg-6 {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* Items de grille */
+.grid__item {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid__item--span-2 {
+    grid-column: span 2;
+}
+.grid__item--span-3 {
+    grid-column: span 3;
+}
+.grid__item--span-4 {
+    grid-column: span 4;
+}
+.grid__item--span-full {
+    grid-column: 1 / -1;
+}
+
+/* Alignement */
+.grid--center {
+    justify-items: center;
+}
+.grid--end {
+    justify-items: end;
+}
+.grid--stretch {
+    align-items: stretch;
+}
+
+.grid__item--center {
+    justify-self: center;
+}
+.grid__item--end {
+    justify-self: end;
+}
+.grid__item--stretch {
+    align-self: stretch;
+}

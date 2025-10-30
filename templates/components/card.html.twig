@@ -1,0 +1,68 @@
+{# Composant Card - Carte de concept réutilisable #}
+{% set cardClass = 'card' %}
+{% if type is defined %}
+	{% set cardClass = cardClass ~ ' card--' ~ type %}
+{% endif %}
+{% if size is defined %}
+	{% set cardClass = cardClass ~ ' card--' ~ size %}
+{% endif %}
+{% if interactive is defined and interactive %}
+	{% set cardClass = cardClass ~ ' card--interactive' %}
+{% endif %}
+
+<div class="{{ cardClass }}" {{ attributes|default('')|raw }}>
+	{% if badge is defined %}
+		<div class="card__badge card__badge--{{ badge.type|default('default') }}">
+			{{ badge.text }}
+		</div>
+	{% endif %}
+
+	{% if title is defined %}
+		<h3 class="card__title">
+			{% if icon is defined %}
+				<i class="card__icon {{ icon }}"></i>
+			{% endif %}
+			{{ title }}
+		</h3>
+	{% endif %}
+
+	{% if description is defined %}
+		<div class="card__description">
+			{{ description|raw }}
+		</div>
+	{% endif %}
+
+	{% if content is defined %}
+		<div class="card__content">
+			{{ content|raw }}
+		</div>
+	{% endif %}
+
+	{% if example is defined %}
+		<div class="card__example">
+			<div class="card__example-header">
+				<span class="card__example-label">{{ example.label|default('Exemple') }}</span>
+				{% if example.language is defined %}
+					<span class="card__example-lang">{{ example.language }}</span>
+				{% endif %}
+			</div>
+			<pre class="card__example-code"><code>{{ example.code }}</code></pre>
+		</div>
+	{% endif %}
+
+	{% if actions is defined %}
+		<div class="card__actions">
+			{% for action in actions %}
+				<a href="{{ action.url }}" class="card__action card__action--{{ action.type|default('primary') }}">
+					{{ action.label }}
+				</a>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{% if footer is defined %}
+		<div class="card__footer">
+			{{ footer|raw }}
+		</div>
+	{% endif %}
+</div>

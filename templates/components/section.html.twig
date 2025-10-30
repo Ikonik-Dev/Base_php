@@ -1,0 +1,35 @@
+{# Composant Section - Section de contenu avec titre et navigation #}
+<section class="section {{ class|default('') }}" {% if id is defined %} id="{{ id }}" {% endif %}>
+	{% if title is defined %}
+		<header class="section__header">
+			<h2 class="section__title">{{ title }}</h2>
+			{% if subtitle is defined %}
+				<p class="section__subtitle">{{ subtitle }}</p>
+			{% endif %}
+			{% if navigation is defined and navigation %}
+				<nav class="section__nav">
+					<button class="section__nav-prev" data-section-prev>
+						<i class="icon-arrow-left"></i>
+						Précédent
+					</button>
+					<button class="section__nav-next" data-section-next>
+						Suivant
+						<i class="icon-arrow-right"></i>
+					</button>
+				</nav>
+			{% endif %}
+		</header>
+	{% endif %}
+
+	<div class="section__content">
+		{% block section_content %}
+			{{ content|default('')|raw }}
+		{% endblock %}
+	</div>
+
+	{% if footer is defined %}
+		<footer class="section__footer">
+			{{ footer|raw }}
+		</footer>
+	{% endif %}
+</section>

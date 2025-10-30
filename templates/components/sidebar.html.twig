@@ -1,0 +1,44 @@
+{# Composant Sidebar - Navigation latérale #}
+<div class="sidebar" id="sidebar">
+	<div class="sidebar__header">
+		<h2 class="sidebar__title">{{ title|default('LES BASES') }}</h2>
+	</div>
+
+	<div class="sidebar__content">
+		{% if sections is defined %}
+			{% for section in sections %}
+				<div class="sidebar__section">
+					{% if section.title is defined %}
+						<h3 class="sidebar__section-title">{{ section.title }}</h3>
+					{% endif %}
+
+					{% if section.separator is defined and section.separator %}
+						<hr class="sidebar__separator">
+					{% endif %}
+
+					<ul class="sidebar__nav">
+						{% for item in section.items %}
+							<li class="sidebar__item {{ item.class|default('') }}">
+								<a href="{{ item.path }}" class="sidebar__link {{ item.route == app.request.get('_route') ? 'sidebar__link--active' : '' }}" data-turbo="false">
+									{{ item.label|raw }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endfor %}
+		{% else %}
+			{# Fallback: navigation par défaut #}
+			<div class="sidebar__section">
+				<ul class="sidebar__nav">
+					<li class="sidebar__item">
+						<a href="{{ path('app_home') }}" class="sidebar__link {{ app.request.get('_route') == 'app_home' ? 'sidebar__link--active' : '' }}" data-turbo="false">Accueil</a>
+					</li>
+					<li class="sidebar__item">
+						<a href="{{ path('app_variables') }}" class="sidebar__link {{ app.request.get('_route') == 'app_variables' ? 'sidebar__link--active' : '' }}" data-turbo="false">Variables</a>
+					</li>
+				</ul>
+			</div>
+		{% endif %}
+	</div>
+</div>

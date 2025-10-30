@@ -1,0 +1,30 @@
+{# Composant Button - Bouton réutilisable #}
+{% set buttonClass = 'btn' %}
+{% if variant is defined %}
+	{% set buttonClass = buttonClass ~ ' btn--' ~ variant %}
+{% endif %}
+{% if size is defined %}
+	{% set buttonClass = buttonClass ~ ' btn--' ~ size %}
+{% endif %}
+{% if fullwidth is defined and fullwidth %}
+	{% set buttonClass = buttonClass ~ ' btn--fullwidth' %}
+{% endif %}
+{% if disabled is defined and disabled %}
+	{% set buttonClass = buttonClass ~ ' btn--disabled' %}
+{% endif %}
+
+{% if href is defined %}
+	<a href="{{ href }}" class="{{ buttonClass }}" {% if target is defined %} target="{{ target }}" {% endif %} {% if disabled is defined and disabled %} aria-disabled="true" {% endif %} {{ attributes|default('')|raw }}>
+		{% if icon is defined %}
+			<i class="btn__icon {{ icon }}"></i>
+		{% endif %}
+		{{ label|raw }}
+	</a>
+{% else %}
+	<button type="{{ type|default('button') }}" class="{{ buttonClass }}" {% if disabled is defined and disabled %} disabled {% endif %} {{ attributes|default('')|raw }}>
+		{% if icon is defined %}
+			<i class="btn__icon {{ icon }}"></i>
+		{% endif %}
+		{{ label|raw }}
+	</button>
+{% endif %}

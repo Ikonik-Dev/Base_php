@@ -1,0 +1,164 @@
+{# Exemple d'utilisation des nouveaux composants #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Variables PHP -
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<main
+	class="main-content">
+	{# Section d'introduction avec le nouveau composant #}
+	{% include 'components/section.html.twig' with {
+        title: 'Les Variables PHP',
+        subtitle: 'Comprendre le stockage et la manipulation des données',
+        class: 'section--highlight'
+    } %}
+
+	{# Grille de concepts avec les nouvelles cartes #}
+	{% include 'components/grid.html.twig' with {
+        cols: 2,
+        gap: 'lg',
+        responsive: { 'sm': 1, 'md': 2 },
+        items: [
+            {
+                component: 'card',
+                data: {
+                    type: 'concept',
+                    interactive: true,
+                    title: 'Déclaration de Variables',
+                    description: 'En PHP, les variables commencent par le symbole $ suivi du nom de la variable.',
+                    example: {
+                        language: 'php',
+                        label: 'Syntaxe de base',
+                        code: '<?php
+$nom = "Jean";
+$age = 25;
+$actif = true;
+?>'
+                    },
+                    badge: { text: 'Essentiel', type: 'default' }
+                }
+            },
+            {
+                component: 'card',
+                data: {
+                    type: 'example',
+                    interactive: true,
+                    title: 'Types de Variables',
+                    description: 'PHP supporte plusieurs types de données pour les variables.',
+                    example: {
+                        language: 'php',
+                        label: 'Différents types',
+                        code: '<?php
+// Chaîne de caractères
+$nom = "Alice";
+
+// Entier
+$age = 30;
+
+// Décimal
+$prix = 19.99;
+
+// Booléen
+$actif = true;
+
+// Tableau
+$couleurs = ["rouge", "vert", "bleu"];
+?>'
+                    }
+                }
+            }
+        ]
+    } %}
+
+	{# Section avec navigation #}
+	{% include 'components/section.html.twig' with {
+        title: 'Pratique',
+        content: practice_content,
+        navigation: true
+    } %}
+
+	{# Grille d'exercices #}
+	{% include 'components/grid.html.twig' with {
+        cols: 3,
+        gap: 'md',
+        responsive: { 'sm': 1, 'md': 2, 'lg': 3 },
+        items: [
+            {
+                component: 'card',
+                data: {
+                    type: 'practice',
+                    title: 'Exercice 1',
+                    description: 'Créer des variables de différents types',
+                    actions: [
+                        { label: 'Commencer', url: '#ex1', type: 'primary' },
+                        { label: 'Solution', url: '#sol1', type: 'secondary' }
+                    ]
+                }
+            },
+            {
+                component: 'card',
+                data: {
+                    type: 'exercise',
+                    title: 'Exercice 2',
+                    description: 'Manipuler et afficher des variables',
+                    actions: [
+                        { label: 'Essayer', url: '#ex2', type: 'primary' }
+                    ]
+                }
+            },
+            {
+                content: '<div class="card card--interactive">
+                    <h3 class="card__title">Bonus</h3>
+                    <p class="card__description">Contenu HTML personnalisé</p>
+                </div>'
+            }
+        ]
+    } %}
+
+	{# Bloc de code avec le nouveau composant #}
+	{% include 'components/code-block.html.twig' with {
+        title: 'Exemple Complet',
+        language: 'php',
+        copyable: true,
+        filename: 'variables_exemple.php',
+        code: '<?php
+// Déclaration de variables
+$prenom = "Marie";
+$nom = "Dupont";
+$age = 28;
+$salaire = 3500.50;
+
+// Concaténation
+$nom_complet = $prenom . " " . $nom;
+
+// Affichage
+echo "Bonjour " . $nom_complet . "!<br>";
+echo "Vous avez " . $age . " ans.<br>";
+echo "Votre salaire est de " . $salaire . "€.<br>";
+
+// Modification de variable
+$age = $age + 1;
+echo "L\'année prochaine vous aurez " . $age . " ans.";
+?>'
+    } %}
+
+    {# Boutons de navigation #}
+    <div class="btn-group btn-group--center" style="margin-top: 2rem;">
+        {% include 'components/button.html.twig' with {
+            variant: 'secondary',
+            href: path('app_home'),
+            label: 'Retour Accueil',
+            icon: 'icon-arrow-left'
+        } %}
+        
+        {% include 'components/button.html.twig' with {
+            variant: 'primary',
+            href: path('app_typages'),
+            label: 'Types de Données',
+            icon: 'icon-arrow-right'
+        } %}
+    </div>
+</main>
+{% endblock %}

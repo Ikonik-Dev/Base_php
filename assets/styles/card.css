@@ -1,0 +1,249 @@
+/* ===================================
+   COMPOSANT CARD
+   =================================== */
+
+/* Base card */
+.card {
+    background: linear-gradient(
+        145deg,
+        var(--matrix-dark) 0%,
+        var(--matrix-black) 100%
+    );
+    border: 1px solid var(--matrix-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    height: fit-content;
+}
+
+/* Animation d'effet lumineux */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--matrix-green),
+        transparent
+    );
+    transition: var(--transition-slow);
+}
+
+/* Variantes de card */
+.card--interactive {
+    cursor: pointer;
+}
+
+.card--interactive:hover {
+    transform: translateY(-4px);
+    border-color: var(--matrix-green);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    background: linear-gradient(
+        145deg,
+        var(--matrix-dark) 0%,
+        rgba(0, 255, 65, 0.05) 100%
+    );
+}
+
+.card--interactive:hover::before {
+    left: 100%;
+}
+
+.card--concept {
+    border-left: 3px solid var(--matrix-green);
+}
+
+.card--example {
+    border-left: 3px solid var(--matrix-green-light);
+}
+
+.card--practice {
+    border-left: 3px solid #ff9500;
+}
+
+.card--exercise {
+    border-left: 3px solid #ff6b6b;
+}
+
+/* Tailles */
+.card--small {
+    padding: var(--space-md);
+}
+
+.card--large {
+    padding: var(--space-xl);
+}
+
+/* Badge */
+.card__badge {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card__badge--default {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+}
+
+.card__badge--warning {
+    background: #ff9500;
+    color: var(--matrix-black);
+}
+
+.card__badge--error {
+    background: #ff6b6b;
+    color: white;
+}
+
+/* Titre */
+.card__title {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--matrix-green);
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.card__title::after {
+    content: ">";
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    transition: var(--transition-normal);
+    color: var(--matrix-green-light);
+}
+
+.card--interactive:hover .card__title::after {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+.card__icon {
+    font-size: var(--font-size-xl);
+    color: var(--matrix-green-light);
+}
+
+/* Description */
+.card__description {
+    color: var(--matrix-text);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+}
+
+/* Contenu */
+.card__content {
+    color: var(--matrix-text);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+}
+
+/* Exemple */
+.card__example {
+    margin-top: var(--space-md);
+}
+
+.card__example-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xs);
+}
+
+.card__example-label {
+    font-size: var(--font-size-xs);
+    color: var(--matrix-green);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.card__example-lang {
+    font-size: var(--font-size-xs);
+    color: var(--matrix-text-secondary);
+    background: rgba(0, 255, 65, 0.1);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+}
+
+.card__example-code {
+    background-color: rgba(0, 255, 65, 0.1);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    color: var(--matrix-green-light);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0;
+}
+
+/* Actions */
+.card__actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.card__action {
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    transition: var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.card__action--primary {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+}
+
+.card__action--primary:hover {
+    background: var(--matrix-green-light);
+    transform: translateY(-1px);
+}
+
+.card__action--secondary {
+    background: transparent;
+    color: var(--matrix-green);
+    border-color: var(--matrix-green);
+}
+
+.card__action--secondary:hover {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+}
+
+/* Footer */
+.card__footer {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--matrix-border);
+    font-size: var(--font-size-xs);
+    color: var(--matrix-text-secondary);
+}

@@ -1,0 +1,156 @@
+/* ===================================
+   COMPOSANT BUTTON
+   =================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    min-height: 40px;
+}
+
+.btn:focus {
+    outline: 2px solid var(--matrix-green);
+    outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Variantes */
+.btn--primary {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+    border-color: var(--matrix-green);
+}
+
+.btn--primary:hover {
+    background: var(--matrix-green-light);
+    border-color: var(--matrix-green-light);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn--secondary {
+    background: transparent;
+    color: var(--matrix-green);
+    border-color: var(--matrix-green);
+}
+
+.btn--secondary:hover {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+}
+
+.btn--outline {
+    background: transparent;
+    color: var(--matrix-text);
+    border-color: var(--matrix-border);
+}
+
+.btn--outline:hover {
+    background: var(--matrix-dark);
+    border-color: var(--matrix-green);
+    color: var(--matrix-green);
+}
+
+.btn--ghost {
+    background: transparent;
+    color: var(--matrix-text);
+    border: none;
+}
+
+.btn--ghost:hover {
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--matrix-green);
+}
+
+.btn--danger {
+    background: #ff6b6b;
+    color: white;
+    border-color: #ff6b6b;
+}
+
+.btn--danger:hover {
+    background: #ff5252;
+    border-color: #ff5252;
+    transform: translateY(-1px);
+}
+
+/* Tailles */
+.btn--small {
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--font-size-xs);
+    min-height: 32px;
+}
+
+.btn--large {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--font-size-lg);
+    min-height: 48px;
+}
+
+.btn--fullwidth {
+    width: 100%;
+}
+
+/* Icône */
+.btn__icon {
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+/* États d'animation */
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Groupe de boutons */
+.btn-group {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.btn-group--vertical {
+    flex-direction: column;
+}
+
+.btn-group--center {
+    justify-content: center;
+}
+
+.btn-group--end {
+    justify-content: flex-end;
+}

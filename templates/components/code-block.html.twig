@@ -1,0 +1,27 @@
+{# Composant Code Block - Bloc de code avec coloration syntaxique #}
+<div class="code-block {{ class|default('') }}">
+	{% if title is defined %}
+		<div class="code-block__header">
+			<span class="code-block__title">{{ title }}</span>
+			{% if language is defined %}
+				<span class="code-block__language">{{ language|upper }}</span>
+			{% endif %}
+			{% if copyable is defined and copyable %}
+				<button class="code-block__copy" data-copy-code>
+					<i class="icon-copy"></i>
+					Copier
+				</button>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<div class="code-block__content">
+		<pre class="code-block__pre"><code class="code-block__code {% if language is defined %}language-{{ language }}{% endif %}">{{ code|trim }}</code></pre>
+	</div>
+
+	{% if filename is defined %}
+		<div class="code-block__footer">
+			<span class="code-block__filename">{{ filename }}</span>
+		</div>
+	{% endif %}
+</div>

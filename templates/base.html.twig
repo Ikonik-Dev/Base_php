@@ -20,203 +20,44 @@
 		<div class="navbar-trigger" id="navbarTrigger"></div>
 
 		{# Bouton toggle pour mobile #}
-		<button class="sidebar-toggle" onclick="toggleSidebar()"></button>
+		<button class="sidebar-toggle"></button>
 
-		{# navigation principale #}
-		<div class="sidebar" id="sidebar">
-			<h2>LES BASES</h2>
-			<ul>
-				<li>
-					<a href="{{ path('app_home') }}" class="{{ app.request.get('_route') == 'app_home' ? 'active' : '' }}" data-turbo="false">Accueil</a>
-				</li>
-				<li>
-					<a href="{{ path('app_variables') }}" class="{{ app.request.get('_route') == 'app_variables' ? 'active' : '' }}" data-turbo="false">Variables</a>
-				</li>
-				<li>
-					<a href="{{ path('app_typages') }}" class="{{ app.request.get('_route') == 'app_typages' ? 'active' : '' }}" data-turbo="false">Types de données</a>
-				</li>
-				<li>
-					<a href="{{ path('app_operateurs') }}" class="{{ app.request.get('_route') == 'app_operateurs' ? 'active' : '' }}" data-turbo="false">Opérateurs</a>
-				</li>
-				<li>
-					<a href="{{ path('app_structure_controle') }}" class="{{ app.request.get('_route') == 'app_structure_controle' ? 'active' : '' }}" data-turbo="false">Structures de contrôle</a>
-				</li>
-				<li>
-					<a href="{{ path('app_fonction_p_h_p') }}" class="{{ app.request.get('_route') == 'app_fonction_p_h_p' ? 'active' : '' }}" data-turbo="false">Fonctions</a>
-				</li>
-				<li>
-					<a href="{{ path('app_poo') }}" class="{{ app.request.get('_route') == 'app_poo' ? 'active' : '' }}" data-turbo="false">POO</a>
-				</li>
-				<li>
-					<a href="{{ path('app_bdd') }}" class="{{ app.request.get('_route') == 'app_bdd' ? 'active' : '' }}" data-turbo="false">Bases de données</a>
-				</li>
-				<li>
-					<a href="{{ path('app_infrastructure') }}" class="{{ app.request.get('_route') == 'app_infrastructure' ? 'active' : '' }}" data-turbo="false">🌐 Infrastructure Web</a>
-				</li>
-			</ul>
+		{# Navigation principale avec le nouveau composant #}
+		{% include 'components/sidebar.html.twig' with {
+			title: 'LES BASES',
+			sections: [
+				{
+					items: [
+						{ label: 'Accueil', path: path('app_home'), route: 'app_home' },
+						{ label: 'Variables', path: path('app_variables'), route: 'app_variables' },
+						{ label: 'Types de données', path: path('app_typages'), route: 'app_typages' },
+						{ label: 'Opérateurs', path: path('app_operateurs'), route: 'app_operateurs' },
+						{ label: 'Structures de contrôle', path: path('app_structure_controle'), route: 'app_structure_controle' },
+						{ label: 'Fonctions', path: path('app_fonction_p_h_p'), route: 'app_fonction_p_h_p' },
+						{ label: 'POO', path: path('app_poo'), route: 'app_poo' },
+						{ label: 'Bases de données', path: path('app_bdd'), route: 'app_bdd' },
+						{ label: '🌐 Infrastructure Web', path: path('app_infrastructure'), route: 'app_infrastructure' }
+					]
+				},
+				{
+					separator: true,
+					title: 'RÉFÉRENCE',
+					items: [
+						{ label: '🥏 Terminologie & Concepts', path: path('app_glossaire'), route: 'app_glossaire', class: 'glossaire-item' },
+						{ label: '🎮 Projet POO Progressif', path: path('app_projet_poo'), route: 'app_projet_poo' },
+						{ label: '🎵 Framework Symfony', path: path('app_symfony'), route: 'app_symfony' }
+					]
+				}
+			]
+		} %}
 
-			<hr class="sidebar-separator">
-
-			<h3>RÉFÉRENCE</h3>
-			<ul>
-				<li class="glossaire-item">
-					<a href="{{ path('app_glossaire') }}" class="glossaire-link {{ app.request.get('_route') == 'app_glossaire' ? 'active' : '' }}" data-turbo="false">
-						🥏 Terminologie & Concepts
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('app_projet_poo') }}" class="{{ app.request.get('_route') == 'app_projet_poo' ? 'active' : '' }}" data-turbo="false">
-						🎮 Projet POO Progressif
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('app_symfony') }}" class="{{ app.request.get('_route') == 'app_symfony' ? 'active' : '' }}" data-turbo="false">
-						🎵 Framework Symfony
-					</a>
-				</li>
-			</ul>
-		</div>
-		<!-- Navigation composant -->
+		{# Navigation composant améliorée #}
 		{% include 'components/navigation.html.twig' %}
 
 		{% block body %}{% endblock %}
 
 		{% block javascripts %}
-			<script>
-				// Toggle sidebar pour toutes les résolutions
-function toggleSidebar() {
-const sidebar = document.getElementById('sidebar');
-sidebar.classList.toggle('open');
-
-// Sauvegarde de l'état dans localStorage
-localStorage.setItem('sidebarOpen', sidebar.classList.contains('open'));
-}
-
-// Restaurer l'état de la sidebar au chargement
-document.addEventListener('DOMContentLoaded', function () {
-const sidebar = document.getElementById('sidebar');
-const sidebarState = localStorage.getItem('sidebarOpen');
-
-// Si l'utilisateur avait ouvert la sidebar, la remettre
-if (sidebarState === 'true') {
-sidebar.classList.add('open');
-}
-});
-
-// Fermer la sidebar quand on clique en dehors (toutes résolutions)
-document.addEventListener('click', function (event) {
-const sidebar = document.getElementById('sidebar');
-const toggle = document.querySelector('.sidebar-toggle');
-
-// Fermer si on clique en dehors ET que la sidebar est ouverte
-if (! sidebar.contains(event.target) && ! toggle.contains(event.target) && sidebar.classList.contains('open')) {
-sidebar.classList.remove('open');
-localStorage.setItem('sidebarOpen', 'false');
-}
-});
-
-// Gestion du redimensionnement (optionnel - garde l'état)
-window.addEventListener('resize', function () { // Plus de fermeture automatique, on garde l'état utilisateur
-console.log('Resize détecté, état sidebar maintenu');
-});
-
-// Gestion de l'apparition de la navbar au hover
-document.addEventListener('DOMContentLoaded', function () {
-const navbar = document.querySelector('.navbar');
-const navbarTrigger = document.getElementById('navbarTrigger');
-let isNavbarVisible = false;
-let navbarTimeout;
-let navbarHeight = 0;
-
-// Vérification que les éléments existent
-if (! navbar) {
-console.error('Navbar non trouvée !');
-return;
-}
-console.log('Navbar trouvée, initialisation...');
-
-// Calculer la hauteur réelle de la navbar après chargement
-function calculateNavbarHeight() {
-console.log('Tentative de calcul de hauteur navbar...');
-// Temporairement forcer l'affichage pour mesurer
-navbar.classList.add('visible');
-navbar.style.visibility = 'hidden'; // Invisible mais prend l'espace
-navbarHeight = navbar.offsetHeight;
-console.log('Hauteur navbar calculée:', navbarHeight + 'px');
-console.log('Navbar HTML:', navbar.innerHTML.substring(0, 100) + '...');
-// Remettre en état caché
-navbar.classList.remove('visible');
-navbar.style.visibility = 'visible';
-}
-
-// Fonction pour afficher la navbar
-function showNavbar() {
-if (! isNavbarVisible) {
-navbar.classList.add('visible');
-isNavbarVisible = true;
-clearTimeout(navbarTimeout);
-console.log('Navbar affichée');
-}
-}
-
-// Fonction pour cacher la navbar avec délai
-function hideNavbar() {
-navbarTimeout = setTimeout(() => {
-navbar.classList.remove('visible');
-isNavbarVisible = false;
-console.log('Navbar cachée');
-}, 300); // Délai de 300ms avant de cacher
-}
-
-// Calculer la hauteur au chargement avec plusieurs tentatives
-setTimeout(calculateNavbarHeight, 100);
-setTimeout(calculateNavbarHeight, 500);
-// Deuxième tentative si la première échoue
-
-// Détection de la souris en haut de l'écran
-document.addEventListener('mousemove', function (e) {
-const triggerZone = Math.max(50, navbarHeight > 0 ? navbarHeight * 0.5 : 50); // Zone adaptative avec fallback
-if (e.clientY<= triggerZone) { // Souris dans la zone de déclenchement
-showNavbar();
-} else if (e.clientY>(navbarHeight + 20) && isNavbarVisible) {
-// Souris plus bas et navbar visible
-// Vérifier si la souris n'est pas sur la navbar elle-même
-const navbarRect = navbar.getBoundingClientRect();
-if (e.clientY > navbarRect.bottom + 10) {
-hideNavbar();
-}
-}
-});
-
-// Garder la navbar visible quand on la survole
-navbar.addEventListener('mouseenter', function () {
-showNavbar();
-});
-
-navbar.addEventListener('mouseleave', function (event) { // Vérifier la position de la souris avant de cacher
-setTimeout(() => {
-if (event.clientY > (navbarHeight + 20)) {
-hideNavbar();
-}
-}, 100);
-});
-
-// Recalculer la hauteur si la fenêtre est redimensionnée
-window.addEventListener('resize', function () {
-setTimeout(calculateNavbarHeight, 100);
-});
-
-// Test initial: afficher brièvement la navbar pour indiquer sa présence
-setTimeout(() => {
-console.log('Test initial navbar...');
-showNavbar();
-setTimeout(() => {
-console.log('Masquage automatique navbar...');
-hideNavbar();
-}, 3000); // Cache après 3 secondes
-}, 500);
-});
-			</script>
+			{# Le JavaScript est maintenant géré par les modules ES6 #}
 		{% endblock %}
 	</body>
 </html>
