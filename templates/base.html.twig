@@ -81,9 +81,96 @@
 
 		{% block body %}{% endblock %}
 
+		{# Inclusion du composant Modal #}
+		{% include 'components/modal.html.twig' %}
+
 		{% block javascripts %}
 			<script>
-				// Toggle sidebar pour toutes les résolutions
+				/**
+				 * Modal Component - Script inline pour éviter les problèmes de routing
+				 */
+class ConceptModal {
+constructor() {
+this.modal = null;
+this.modalTitle = null;
+this.modalContent = null;
+this.modalCategory = null;
+this.isOpen = false;
+
+this.init();
+}
+
+init() { // Recherche des éléments de la modal
+this.modal = document.getElementById('modal-overlay');
+this.modalTitle = document.getElementById('modal-title');
+this.modalContent = document.getElementById('modal-content');
+this.modalCategory = document.getElementById('modal-category');
+
+// Gestion de la fermeture avec Escape
+document.addEventListener('keydown', (e) => {
+if (e.key === 'Escape' && this.isOpen) {
+this.close();
+}
+});
+}
+
+open(title, content, category = '') {
+if (!this.modal) {
+console.error('Modal non trouvée. Assurez-vous que le composant modal est inclus.');
+return;
+}
+
+// Mise à jour du contenu
+this.modalTitle.textContent = title;
+this.modalContent.innerHTML = content;
+
+// Gestion de la catégorie
+if (category) {
+this.modalCategory.textContent = category;
+this.modalCategory.style.display = 'block';
+} else {
+this.modalCategory.style.display = 'none';
+}
+
+// Affichage de la modal
+this.modal.classList.add('active');
+this.isOpen = true;
+document.body.style.overflow = 'hidden';
+}
+
+close() {
+if (!this.modal) 
+return;
+
+
+this.modal.classList.remove('active');
+this.isOpen = false;
+document.body.style.overflow = '';
+}
+}
+
+// Instance globale de la modal
+let conceptModal;
+
+// Fonctions globales
+function openModal(title, content, category = '') {
+if (conceptModal) {
+conceptModal.open(title, content, category);
+}
+}
+
+function closeModal() {
+if (conceptModal) {
+conceptModal.close();
+}
+}
+
+// Initialisation quand le DOM est prêt
+document.addEventListener('DOMContentLoaded', function () {
+conceptModal = new ConceptModal();
+});
+
+// Toggle sidebar pour toutes les résolutions
 function toggleSidebar() {
 const sidebar = document.getElementById('sidebar');
 sidebar.classList.toggle('open');

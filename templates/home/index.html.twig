@@ -11,7 +11,7 @@
 				<h1 class="header-title">// FORMATION PHP</h1>
 				<p class="header-subtitle">
 					Explorez les concepts fondamentaux du PHP dans un environnement Matrix. 
-															                Chaque notion est une porte vers la maîtrise du développement web.
+																				                Chaque notion est une porte vers la maîtrise du développement web.
 				</p>
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 		<div class="container">
 			<div class="grid">
 				{% for key, concept in data %}
-					<article id="{{ key }}" class="concept-card" onclick="navigateToModule('{{ key }}')">
+					<article id="{{ key }}" class="concept-card" data-concept="true" data-concept-title="{{ key|replace({'_': ' '})|title }}" data-concept-type="{{ key == 'variables' ? 'variable' : (key == 'types_de_donnees' ? 'type' : (key == 'operateurs' ? 'operateur' : 'general')) }}" data-concept-category="PHP Fondamentaux" data-concept-description="{{ concept.description }}" onclick="openConceptModal('{{ key }}', '{{ concept.description }}', '{{ concept.example }}')">
 						<h2 class="concept-card-title">
 							{{ key|replace({'_': ' '})|title }}
 						</h2>
@@ -32,6 +32,10 @@
 						<div class="concept-card-example">
 							<strong>Exemple :</strong><br>
 							{{ concept.example }}
+						</div>
+						<div class="concept-card-action">
+							<span class="action-hint">Cliquez pour plus de détails</span>
+							<span class="action-icon">💡</span>
 						</div>
 					</article>
 				{% endfor %}
@@ -43,18 +47,125 @@
 	<div class="matrix-bg" id="matrix-canvas"></div>
 
 	<script>
-		// Navigation function for module cards
+		/**
+		 * Fonction pour ouvrir la modal avec les détails d'un concept spécifique
+		 */
+function openConceptModal(conceptKey, description, example) {
+const conceptDetails = {
+'variables': {
+title: '🔧 Variables PHP',
+content: `
+						<h3>Comprendre les Variables</h3>
+						<p>${description}</p>
+						
+						<h3>Syntaxe et Exemples</h3>
+						<pre><code>// Exemple de base
+${example}
+
+// Autres exemples
+$nom = "Alice";
+$age = 30;
+$actif = true;
+
+// Variables dynamiques
+$var = "nom";
+$$var = "Bob"; // Équivaut à $nom = "Bob"</code></pre>
+						
+						<h3>Bonnes Pratiques</h3>
+						<ul>
+							<li>Utilisez des noms descriptifs</li>
+							<li>Respectez la convention camelCase ou snake_case</li>
+							<li>Initialisez vos variables</li>
+							<li>Évitez les variables globales</li>
+						</ul>
+					`
+},
+'types_de_donnees': {
+title: '📊 Types de Données PHP',
+content: `
+						<h3>Types Primitifs</h3>
+						<p>${description}</p>
+						
+						<pre><code>${example}
+
+// Types scalaires
+$string = "Chaîne de caractères";
+$integer = 42;
+$float = 3.14159;
+$boolean = true;
+
+// Types composés
+$array = ["pomme", "banane", "orange"];
+$object = new stdClass();
+
+// Types spéciaux
+$resource = fopen("file.txt", "r");
+$null = null;</code></pre>
+						
+						<h3>Vérification des Types</h3>
+						<pre><code>// Fonctions is_*
+var_dump(is_string($string)); // bool(true)
+var_dump(is_int($integer));   // bool(true)
+var_dump(gettype($float));    // string(6) "double"</code></pre>
+					`
+},
+'operateurs': {
+title: '⚡ Opérateurs PHP',
+content: `
+						<h3>Manipulation des Données</h3>
+						<p>${description}</p>
+						
+						<h3>Opérateurs Arithmétiques</h3>
+						<pre><code>${example}
+
+$a = 10;
+$b = 3;
+
+echo $a + $b;  // 13 (Addition)
+echo $a - $b;  // 7  (Soustraction)
+echo $a * $b;  // 30 (Multiplication)
+echo $a / $b;  // 3.33... (Division)
+echo $a % $b;  // 1  (Modulo)</code></pre>
+						
+						<h3>Opérateurs de Comparaison</h3>
+						<pre><code>$x = 5;
+$y = "5";
+
+var_dump($x == $y);  // bool(true)  - Égalité
+var_dump($x === $y); // bool(false) - Identité stricte
+var_dump($x != $y);  // bool(false) - Différence
+var_dump($x !== $y); // bool(true)  - Non-identité stricte</code></pre>
+					`
+}
+};
+
+const concept = conceptDetails[conceptKey];
+if (concept) {
+openModal(concept.title, concept.content, 'PHP Fondamentaux');
+} else { // Contenu générique pour les concepts non définis
+openModal(conceptKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), `<h3>📚 ${
+conceptKey.replace(/_/g, ' ')
+}</h3>
+					<p>${description}</p>
+					<h3>Exemple</h3>
+					<pre><code>${example}</code></pre>
+					<p><em>Ce module sera bientôt développé avec plus de détails...</em></p>`, 'PHP Fondamentaux');
+}
+}
+
+// Navigation function for module cards (fallback)
 function navigateToModule(moduleKey) {
-			const moduleRoutes = {
-				'variables': '{{ path('app_variables') }}',
-				'programmation_orientee_objet': '{{ path('app_poo') }}',
-				'interaction_avec_les_bases_de_donnees': '{{ path('app_bdd') }}',
-				'infrastructure_web': '{{ path('app_infrastructure') }}',
-				'operateurs': '{{ path('app_operateurs') }}',
-				'structures_de_controle': '{{ path('app_structure_controle') }}',
-				'fonctions': '{{ path('app_fonction_p_h_p') }}',
-				'types_de_donnees': '{{ path('app_typages') }}'
-			};if (moduleRoutes[moduleKey]) {
+const moduleRoutes = {
+'variables': '{{ path('app_variables') }}',
+'programmation_orientee_objet': '{{ path('app_poo') }}',
+'interaction_avec_les_bases_de_donnees': '{{ path('app_bdd') }}',
+'infrastructure_web': '{{ path('app_infrastructure') }}',
+'operateurs': '{{ path('app_operateurs') }}',
+'structures_de_controle': '{{ path('app_structure_controle') }}',
+'fonctions': '{{ path('app_fonction_p_h_p') }}',
+'types_de_donnees': '{{ path('app_typages') }}'
+};
+if (moduleRoutes[moduleKey]) {
 window.location.href = moduleRoutes[moduleKey];
 } else { // For modules not yet implemented, show a message
 alert('Module "' + moduleKey.replace(/_/g, ' ') + '" en cours de développement...');

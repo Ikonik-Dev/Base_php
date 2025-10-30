@@ -1,0 +1,39 @@
+{#
+  Composant Modal Réutilisable
+  
+  Usage:
+  {% include 'components/modal.html.twig' %}
+  
+  Puis en JavaScript:
+  openModal('Titre', 'Contenu HTML', 'category-optional');
+#}
+
+<div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
+	<div
+		class="modal-container" onclick="event.stopPropagation()">
+		{# Header de la modal #}
+		<div class="modal-header">
+			<h2 id="modal-title" class="modal-title">Titre du Concept</h2>
+			<button class="modal-close" onclick="closeModal()" aria-label="Fermer la modal">
+				<span>&times;</span>
+			</button>
+		</div>
+
+		{# Corps de la modal #}
+		<div class="modal-body">
+			<div
+				id="modal-content" class="modal-content"><!-- Le contenu sera injecté dynamiquement ici -->
+			</div>
+		</div>
+
+		{# Footer de la modal (optionnel) #}
+		<div class="modal-footer">
+			<div
+				class="modal-category" id="modal-category"><!-- Catégorie du concept -->
+			</div>
+			<button class="modal-btn modal-btn-primary" onclick="closeModal()">
+				Compris !
+			</button>
+		</div>
+	</div>
+</div>
