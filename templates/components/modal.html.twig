@@ -1,0 +1,133 @@
+{# Composant Modal - Fenêtre modale détaillée pour concepts #}
+{% set modalClass = 'modal' %}
+{% if size is defined %}
+	{% set modalClass = modalClass ~ ' modal--' ~ size %}
+{% endif %}
+
+<div class="{{ modalClass }}" id="modal-{{ id }}" data-modal="{{ id }}" role="dialog" aria-hidden="true" aria-labelledby="modal-title-{{ id }}">
+	<div class="modal__overlay" data-modal-close></div>
+
+	<div
+		class="modal__container">
+		{# Header #}
+		<header class="modal__header">
+			<h2 class="modal__title" id="modal-title-{{ id }}">
+				{% if icon is defined %}
+					<i class="modal__icon {{ icon }}"></i>
+				{% endif %}
+				{{ title }}
+			</h2>
+			<button class="modal__close" data-modal-close aria-label="Fermer la modale">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</header>
+
+		{# Body #}
+		<div class="modal__body">
+			{% if description is defined %}
+				<div class="modal__description">
+					<h3 class="modal__section-title">📖 Description</h3>
+					<p>{{ description|raw }}</p>
+				</div>
+			{% endif %}
+
+			{% if details is defined %}
+				<div class="modal__details">
+					<h3 class="modal__section-title">🔍 Détails</h3>
+					<div class="modal__details-content">
+						{{ details|raw }}
+					</div>
+				</div>
+			{% endif %}
+
+			{% if example is defined %}
+				<div class="modal__example">
+					<h3 class="modal__section-title">💡 Exemple</h3>
+					<div class="modal__code-block">
+						<div class="modal__code-header">
+							<span class="modal__code-lang">{{ example.language is defined ? example.language : 'php' }}</span>
+							<button class="modal__code-copy" data-copy-target="modal-code-{{ id }}">
+								<span class="modal__code-copy-text">Copier</span>
+								<span class="modal__code-copy-icon">📋</span>
+							</button>
+						</div>
+						<pre class="modal__code" id="modal-code-{{ id }}"><code>{{ example.code is defined ? example.code : example }}</code></pre>
+					</div>
+				</div>
+			{% endif %}
+
+			{% if useCases is defined %}
+				<div class="modal__use-cases">
+					<h3 class="modal__section-title">🎯 Cas d'utilisation</h3>
+					<ul class="modal__list">
+						{% for useCase in useCases %}
+							<li class="modal__list-item">{{ useCase|raw }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+
+			{% if warnings is defined %}
+				<div class="modal__warnings">
+					<h3 class="modal__section-title">⚠️ Points d'attention</h3>
+					<ul class="modal__list modal__list--warning">
+						{% for warning in warnings %}
+							<li class="modal__list-item">{{ warning|raw }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+
+			{% if bestPractices is defined %}
+				<div class="modal__best-practices">
+					<h3 class="modal__section-title">✅ Bonnes pratiques</h3>
+					<ul class="modal__list modal__list--success">
+						{% for practice in bestPractices %}
+							<li class="modal__list-item">{{ practice|raw }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+
+			{% if resources is defined %}
+				<div class="modal__resources">
+					<h3 class="modal__section-title">📚 Ressources</h3>
+					<div class="modal__resources-grid">
+						{% for resource in resources %}
+							<a href="{{ resource.url }}" class="modal__resource-link" target="_blank" rel="noopener">
+								<span class="modal__resource-icon">{{ resource.icon|default('🔗') }}</span>
+								<span class="modal__resource-title">{{ resource.label }}</span>
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+
+			{% if relatedTopics is defined %}
+				<div class="modal__related">
+					<h3 class="modal__section-title">🔗 Notions liées</h3>
+					<div class="modal__related-grid">
+						{% for topic in relatedTopics %}
+							<button class="modal__related-tag" data-open-modal="{{ topic.id }}">
+								{{ topic.label }}
+							</button>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		{# Footer #}
+		{% if actions is defined %}
+			<footer class="modal__footer">
+				<div class="modal__actions">
+					{% for action in actions %}
+						<a href="{{ action.url }}" class="modal__action modal__action--{{ action.type|default('primary') }}">
+							{{ action.label }}
+						</a>
+					{% endfor %}
+				</div>
+			</footer>
+		{% endif %}
+	</div>
+</div>

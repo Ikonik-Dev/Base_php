@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test - Système de Modales
+{% endblock %}
+
+{% block body %}
+	<header class="header">
+		<div class="container">
+			<div class="header-content">
+				<h1 class="header-title">// TEST SYSTÈME DE MODALES</h1>
+				<p class="header-subtitle">
+					Page de test pour valider le fonctionnement des modales détaillées.
+										Cliquez sur une carte pour ouvrir la modale correspondante.
+				</p>
+			</div>
+		</div>
+	</header>
+
+	<main class="main-content">
+		<div class="container">
+			<h2 class="section-title">🧪 Concepts de test</h2>
+
+			{# Instructions de test #}
+			<div style="background: rgba(0, 255, 65, 0.1); border: 2px solid var(--matrix-green); border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+				<h3 style="color: var(--matrix-green); margin-top: 0;">✅ Checklist de validation</h3>
+				<ul style="color: var(--text-secondary); line-height: 1.8;">
+					<li>✓ Cliquer sur chaque carte pour ouvrir la modale</li>
+					<li>✓ Vérifier que toutes les sections s'affichent (description, détails, exemple, cas d'usage, warnings, bonnes pratiques, ressources)</li>
+					<li>✓ Tester le bouton "Copier" sur les exemples de code</li>
+					<li>✓ Cliquer sur les "Notions liées" pour naviguer entre modales</li>
+					<li>✓ Fermer avec le bouton X, l'overlay ou la touche Échap</li>
+					<li>✓ Tester la navigation au clavier (Tab, Shift+Tab)</li>
+					<li>✓ Vérifier le responsive (réduire la fenêtre ou F12 → mode mobile)</li>
+				</ul>
+			</div>
+
+			{# Grid avec les cards utilisant le composant card.html.twig #}
+			<div class="grid grid--cols-3 grid--gap-lg grid--sm-1 grid--md-2 grid--lg-3">
+				{% for key, concept in testData %}
+					{# Card utilisant le composant réutilisable #}
+					{% include 'components/card.html.twig' with {
+						type: 'concept',
+						interactive: true,
+						modalId: 'modal-' ~ key,
+						title: key|replace({'exemple_': '', '_': ' '})|title,
+						icon: key == 'exemple_variables' ? '📦' : (key == 'exemple_types' ? '🔢' : '⚡'),
+						description: concept.description,
+						example: {
+							language: 'php',
+							label: 'Exemple',
+							code: concept.example
+						}
+					} %}
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+
+	{# Modales pour chaque concept #}
+	{% for key, concept in testData %}
+		{% include 'components/modal.html.twig' with {
+			id: 'modal-' ~ key,
+			size: 'default',
+			title: key|replace({'exemple_': '', '_': ' '})|title,
+			icon: key == 'exemple_variables' ? '📦' : (key == 'exemple_types' ? '🔢' : '⚡'),
+			
+			description: concept.description,
+			
+			details: concept.details,
+			
+			example: {
+				language: 'php',
+				code: concept.example
+			},
+			
+			useCases: concept.useCases,
+			
+			warnings: concept.warnings,
+			
+			bestPractices: concept.bestPractices,
+			
+			resources: concept.resources,
+			
+			relatedTopics: concept.relatedTopics
+		} %}
+	{% endfor %}
+
+	{# Effet Matrix de fond #}
+	<div class="matrix-bg" id="matrix-canvas"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		console.log('✅ Page de test des modales chargée');
+console.log('👉 Cliquez sur les cartes pour ouvrir les modales');
+
+// Log des événements modales pour debug
+document.addEventListener('modal:opened', (e) => {
+console.log('✅ Modale ouverte:', e.detail.modalId);
+});
+
+document.addEventListener('modal:closed', (e) => {
+console.log('✅ Modale fermée:', e.detail.modalId);
+});
+	</script>
+{% endblock %}

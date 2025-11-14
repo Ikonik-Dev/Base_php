@@ -10,6 +10,7 @@ import "./styles/card.css";
 import "./styles/button.css";
 import "./styles/code-block.css";
 import "./styles/section.css";
+import "./styles/modal.css";
 import "./styles/components.css";
 import "./styles/app.css";
 
@@ -17,6 +18,7 @@ import "./styles/app.css";
 import "./js/sidebar-manager.js";
 import "./js/navbar-manager.js";
 import "./js/code-block-manager.js";
+import "./js/modal-manager.js";
 
 console.log("Cours PHP - Architecture modulaire chargée! 🎉");
 console.log("Modules JavaScript initialisés");

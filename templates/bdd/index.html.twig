@@ -1,361 +1,161 @@
-{% extends 'base.html.twig' %}
+﻿{% extends 'base.html.twig' %}
 
 {% block title %}Cours PHP - Interaction Avec Les Bases De Données
 {% endblock %}
 
 {% block body %}
-<!-- Header spécifique aux bases de données -->
-<header class="header">
-	<div class="container">
-		<div class="header-content">
-			<h1 class="header-title">// BASES DE DONNÉES & PHP</h1>
-			<p class="header-subtitle">
-				Maîtrisez l'interaction avec les bases de données : PDO, requêtes sécurisées, transactions et optimisations.
-									De la connexion simple aux techniques avancées comme Doctrine ORM.
-			</p>
-		</div>
-	</div>
-</header>
-
-<!-- Contenu principal - Concepts BDD -->
-<main class="main-content">
-	<div class="container">
-		<h2 class="section-title">Bases de données - Concepts fondamentaux</h2>
-		<div class="grid">
-			{% for key, concept in data %}
-				<article id="{{ key }}" class="concept-card">
-					<h3 class="concept-card-title">
-						{{ key|replace({'_': ' '})|title }}
-					</h3>
-					<p class="concept-card-description">
-						{{ concept.description }}
-					</p>
-					<div class="concept-card-example">
-						<strong>Exemple :</strong>
-						<pre><code>{{ concept.example }}</code></pre>
-					</div>
-				</article>
-			{% endfor %}
-		</div>
-	</div>
-</main>
-
-<!-- Section projets pratiques -->
-<section class="examples-section">
-	<div class="container">
-		<h2 class="section-title">Projets pratiques avec bases de données</h2>
-		<div class="examples-grid">
-			<div class="example-card">
-				<h3>🛒 E-commerce Simple</h3>
-				<p>Créez un système de boutique avec gestion des produits, commandes et utilisateurs.</p>
-				<pre><code>// Structure des tables principales
-CREATE TABLE products (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(255) NOT NULL,
-    prix DECIMAL(10,2) NOT NULL,
-    stock INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE orders (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
-    total DECIMAL(10,2),
-    status ENUM('pending', 'completed', 'cancelled'),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-// Exemple d'insertion de commande avec transaction
-try {
-    $pdo->beginTransaction();
-    
-    // Créer la commande
-    $stmt1 = $pdo->prepare("INSERT INTO orders (user_id, total, status) VALUES (?, ?, 'pending')");
-    $stmt1->execute([$userId, $total]);
-    $orderId = $pdo->lastInsertId();
-    
-    // Réduire le stock
-    $stmt2 = $pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
-    $stmt2->execute([$quantity, $productId]);
-    
-    $pdo->commit();
-    echo "Commande créée avec succès !";
-} catch (Exception $e) {
-    $pdo->rollback();
-    echo "Erreur : " . $e->getMessage();
-}</code></pre>
-				</div>
-
-				<div class="example-card">
-					<h3>👥 Système de Blog</h3>
-					<p>Blog avec gestion des articles, commentaires, catégories et utilisateurs.</p>
-					<pre><code>// Requête complexe avec jointures multiples
-$sql = "
-    SELECT 
-        p.id,
-        p.titre,
-        p.contenu,
-        p.created_at,
-        u.nom as auteur,
-        c.nom as categorie,
-        COUNT(com.id) as nb_commentaires
-    FROM posts p
-    INNER JOIN users u ON p.user_id = u.id
-    LEFT JOIN categories c ON p.category_id = c.id
-    LEFT JOIN comments com ON p.id = com.post_id
-    WHERE p.published = 1
-    GROUP BY p.id
-    ORDER BY p.created_at DESC
-    LIMIT 10
-";
-
-$stmt = $pdo->query($sql);
-$posts = $stmt->fetchAll();
-
-foreach ($posts as $post) {
-    echo "<h2>" . htmlspecialchars($post['titre']) . "</h2>";
-    echo "<p>Par " . htmlspecialchars($post['auteur']) . "</p>";
-    echo "<p>" . $post['nb_commentaires'] . " commentaires</p>";
-}</code></pre>
-				</div>
-
-				<div class="example-card">
-					<h3>📊 Système de Statistiques</h3>
-					<p>Analysez les données avec des requêtes d'agrégation et des graphiques.</p>
-					<pre><code>// Requêtes d'analyse et statistiques
-class StatsController {
-    
-    public function getMonthlyStats($year) {
-        $sql = "
-            SELECT 
-                MONTH(created_at) as mois,
-                COUNT(*) as nb_commandes,
-                SUM(total) as chiffre_affaires,
-                AVG(total) as panier_moyen
-            FROM orders 
-            WHERE YEAR(created_at) = ? AND status = 'completed'
-            GROUP BY MONTH(created_at)
-            ORDER BY mois
-        ";
-        
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$year]);
-        return $stmt->fetchAll();
-    }
-    
-    public function getTopProducts($limit = 10) {
-        $sql = "
-            SELECT 
-                p.nom,
-                SUM(oi.quantity) as total_vendu,
-                SUM(oi.quantity * oi.price) as revenus
-            FROM products p
-            INNER JOIN order_items oi ON p.id = oi.product_id
-            INNER JOIN orders o ON oi.order_id = o.id
-            WHERE o.status = 'completed'
-            GROUP BY p.id
-            ORDER BY total_vendu DESC
-            LIMIT ?
-        ";
-        
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$limit]);
-        return $stmt->fetchAll();
-    }
-}</code></pre>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Section bonnes pratiques -->
-	<section class="best-practices-section">
+	<header class="header">
 		<div class="container">
-			<h2 class="section-title">Bonnes pratiques avec les bases de données</h2>
-			<div class="practices-grid">
-				<div class="practice-card">
-					<h3>🔒 Sécurité Avant Tout</h3>
-					<ul>
-						<li>Toujours utiliser des requêtes préparées</li>
-						<li>Valider et nettoyer les données utilisateur</li>
-						<li>Hasher les mots de passe avec <code>password_hash()</code></li>
-						<li>Utiliser des connexions chiffrées (SSL)</li>
-						<li>Principe du moindre privilège pour les utilisateurs DB</li>
-					</ul>
-				</div>
-				
-				<div class="practice-card">
-					<h3>⚡ Performance & Optimisation</h3>
-					<ul>
-						<li>Créer des index sur les colonnes fréquemment utilisées</li>
-						<li>Utiliser LIMIT pour la pagination</li>
-						<li>Éviter les requêtes N+1 avec des jointures</li>
-						<li>Mettre en cache les requêtes coûteuses</li>
-						<li>Analyser les requêtes lentes avec EXPLAIN</li>
-					</ul>
-				</div>
-				
-				<div class="practice-card">
-					<h3>🏗️ Architecture & Design</h3>
-					<ul>
-						<li>Normaliser la structure des tables</li>
-						<li>Utiliser des clés étrangères pour l'intégrité</li>
-						<li>Séparer lecture et écriture si nécessaire</li>
-						<li>Versioning avec les migrations</li>
-						<li>Sauvegardes régulières et automatisées</li>
-					</ul>
-				</div>
-				
-				<div class="practice-card">
-					<h3">🧪 Tests & Debugging</h3>
-					<ul>
-						<li>Tester les requêtes avec des données réelles</li>
-						<li>Logger les erreurs et requêtes lentes</li>
-						<li>Utiliser des transactions pour l'intégrité</li>
-						<li>Environnements séparés (dev/test/prod)</li>
-						<li>Monitoring des performances en production</li>
-					</ul>
-				</div>
+			<div class="header-content">
+				<h1 class="header-title">// BASES DE DONNÉES & PHP</h1>
+				<p class="header-subtitle">
+					Maîtrisez l'interaction avec les bases de données : PDO, requêtes sécurisées, transactions et optimisations.
+					De la connexion simple aux techniques avancées comme Doctrine ORM.
+				</p>
 			</div>
 		</div>
-	</section>
+	</header>
 
-	<!-- Section outils et ressources -->
-	<section class="tools-section">
+	<main class="main-content">
 		<div class="container">
-			<h2 class="section-title">Outils et extensions populaires</h2>
-			<div class="tools-grid">
-				<div class="tool-card">
-					<h3>🐘 PDO (PHP Data Objects)</h3>
-					<p>Extension native PHP pour l'accès aux bases de données</p>
-					<div class="tool-features">
-						<span class="feature">✅ Multi-SGBD</span>
-						<span class="feature">✅ Requêtes préparées</span>
-						<span class="feature">✅ Gestion d'erreurs</span>
-					</div>
-				</div>
-				
-				<div class="tool-card">
-					<h3>📚 Doctrine ORM</h3>
-					<p>Mappeur objet-relationnel complet pour PHP</p>
-					<div class="tool-features">
-						<span class="feature">✅ Entities & Repositories</span>
-						<span class="feature">✅ Migrations automatiques</span>
-						<span class="feature">✅ QueryBuilder avancé</span>
-					</div>
-				</div>
-				
-				<div class="tool-card">
-					<h3>🔥 Laravel Eloquent</h3>
-					<p>ORM ActiveRecord simple et élégant</p>
-					<div class="tool-features">
-						<span class="feature">✅ Syntaxe intuitive</span>
-						<span class="feature">✅ Relations automatiques</span>
-						<span class="feature">✅ Soft deletes</span>
-					</div>
-				</div>
-				
-				<div class="tool-card">
-					<h3">⚡ Redis / Memcached</h3>
-					<p>Cache en mémoire pour optimiser les performances</p>
-					<div class="tool-features">
-						<span class="feature">✅ Cache de session</span>
-						<span class="feature">✅ Cache de requêtes</span>
-						<span class="feature">✅ Pub/Sub messaging</span>
-					</div>
-				</div>
+			<h2 class="section-title">Introduction & Connexion</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-introduction_bdd',
+'title': 'Introduction BDD',
+'description': data.introduction_bdd.description,
+'example': data.introduction_bdd.example,
+'iconClass': 'fa-solid fa-database'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-pdo_introduction',
+'title': 'PDO Introduction',
+'description': data.pdo_introduction.description,
+'example': data.pdo_introduction.example,
+'iconClass': 'fa-solid fa-plug'
+} %}
+			</div>
+
+			<h2 class="section-title">Requêtes & Sécurité</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-requetes_select',
+'title': 'Requêtes SELECT',
+'description': data.requetes_select.description,
+'example': data.requetes_select.example,
+'iconClass': 'fa-solid fa-magnifying-glass'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-requetes_preparees',
+'title': 'Requêtes Préparées',
+'description': data.requetes_preparees.description,
+'example': data.requetes_preparees.example,
+'iconClass': 'fa-solid fa-shield-halved'
+} %}
+			</div>
+
+			<h2 class="section-title">Manipulation Données (CRUD)</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-insertion_donnees',
+'title': 'Insertion Données',
+'description': data.insertion_donnees.description,
+'example': data.insertion_donnees.example,
+'iconClass': 'fa-solid fa-plus'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-mise_a_jour_donnees',
+'title': 'Mise À Jour',
+'description': data.mise_a_jour_donnees.description,
+'example': data.mise_a_jour_donnees.example,
+'iconClass': 'fa-solid fa-pen-to-square'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-suppression_donnees',
+'title': 'Suppression Données',
+'description': data.suppression_donnees.description,
+'example': data.suppression_donnees.example,
+'iconClass': 'fa-solid fa-trash'
+} %}
+			</div>
+
+			<h2 class="section-title">Transactions & Jointures</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-transactions',
+'title': 'Transactions',
+'description': data.transactions.description,
+'example': data.transactions.example,
+'iconClass': 'fa-solid fa-arrows-rotate'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-jointures',
+'title': 'Jointures',
+'description': data.jointures.description,
+'example': data.jointures.example,
+'iconClass': 'fa-solid fa-link'
+} %}
+			</div>
+
+			<h2 class="section-title">Gestion Erreurs & Outils Avancés</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-gestion_erreurs',
+'title': 'Gestion Erreurs',
+'description': data.gestion_erreurs.description,
+'example': data.gestion_erreurs.example,
+'iconClass': 'fa-solid fa-triangle-exclamation'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-orm_doctrine',
+'title': 'ORM Doctrine',
+'description': data.orm_doctrine.description,
+'example': data.orm_doctrine.example,
+'iconClass': 'fa-solid fa-cubes'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-migrations',
+'title': 'Migrations',
+'description': data.migrations.description,
+'example': data.migrations.example,
+'iconClass': 'fa-solid fa-code-branch'
+} %}
+			</div>
+
+			<h2 class="section-title">Performance & Sécurité</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-optimisation_requetes',
+'title': 'Optimisation Requêtes',
+'description': data.optimisation_requetes.description,
+'example': data.optimisation_requetes.example,
+'iconClass': 'fa-solid fa-gauge-high'
+} %}
+				{% include 'components/card.html.twig' with {
+'modalId': 'modal-securite_bdd',
+'title': 'Sécurité BDD',
+'description': data.securite_bdd.description,
+'example': data.securite_bdd.example,
+'iconClass': 'fa-solid fa-lock'
+} %}
 			</div>
 		</div>
-	</section>
+	</main>
 
-	<!-- Exercices pratiques -->
-	<section class="exercises-section">
-		<div class="container">
-			<h2 class="section-title">Exercices pratiques</h2>
-			<div class="exercises-grid">
-				<div class="exercise-card">
-					<h3>🎯 Exercice 1 : CRUD Basique</h3>
-					<p>Créez un système complet de gestion d'utilisateurs (Create, Read, Update, Delete) avec PDO.</p>
-					<div class="exercise-requirements">
-						<h4>Exigences :</h4>
-						<ul>
-							<li>Connexion PDO sécurisée</li>
-							<li>Requêtes préparées uniquement</li>
-							<li>Validation des données</li>
-							<li>Gestion des erreurs</li>
-						</ul>
-					</div>
-					<button class="btn-primary" onclick="alert('Créez une classe UserManager avec toutes les méthodes CRUD!')">Commencer</button>
-				</div>
-				
-				<div class="exercise-card">
-					<h3">🎯 Exercice 2 : Système de Login</h3>
-					<p>Implémentez un système d'authentification sécurisé avec hashage des mots de passe.</p>
-					<div class="exercise-requirements">
-						<h4>Exigences :</h4>
-						<ul>
-							<li>Hashage avec <code>password_hash()</code></li>
-							<li>Vérification avec <code>password_verify()</code></li>
-							<li>Sessions utilisateur</li>
-							<li>Protection contre le brute force</li>
-						</ul>
-					</div>
-					<button class="btn-primary" onclick="alert('Pensez à la sécurité : hash, sessions, et limitations!')">Commencer</button>
-				</div>
-				
-				<div class="exercise-card">
-					<h3>🎯 Exercice 3 : Pagination Avancée</h3>
-					<p>Créez un système de pagination efficace avec tri et filtres.</p>
-					<div class="exercise-requirements">
-						<h4>Exigences :</h4>
-						<ul>
-							<li>Pagination avec LIMIT/OFFSET</li>
-							<li>Comptage total d'éléments</li>
-							<li>Tri par colonnes</li>
-							<li>Filtres de recherche</li>
-						</ul>
-					</div>
-					<button class="btn-primary" onclick="alert('Optimisez avec des index et pensez UX!')">Commencer</button>
-				</div>
-			</div>
-		</div>
-	</section>
+	{% for key, concept in data %}
+		{% include 'components/modal.html.twig' with {
+'id': 'modal-' ~ key,
+'title': key|replace({'_': ' '})|title,
+'description': concept.description,
+'example': concept.example,
+'details': concept.details|default(null),
+'useCases': concept.useCases|default([]),
+'warnings': concept.warnings|default([]),
+'bestPractices': concept.bestPractices|default([]),
+'resources': concept.resources|default([]),
+'relatedTopics': concept.relatedTopics|default([])
+} %}
+	{% endfor %}
 
-	<!-- Effet Matrix de fond -->
 	<div class="matrix-bg" id="matrix-canvas"></div>
-
-	<script>
-		// Animation pour les cartes
-		document.addEventListener('DOMContentLoaded', function () {
-			const cards = document.querySelectorAll('.concept-card, .example-card, .practice-card, .tool-card, .exercise-card');
-			
-			cards.forEach((card, index) => {
-				card.style.animationDelay = `${index * 0.1}s`;
-				card.style.animation = 'fadeInUp 0.6s ease-out forwards';
-				
-				card.addEventListener('mouseenter', function () {
-					this.style.transform = 'translateY(-8px) scale(1.02)';
-				});
-				
-				card.addEventListener('mouseleave', function () {
-					this.style.transform = 'translateY(0) scale(1)';
-				});
-			});
-		});
-
-		// Copier le code des exemples
-		document.addEventListener('click', function(e) {
-			if (e.target.tagName === 'CODE') {
-				navigator.clipboard.writeText(e.target.textContent).then(() => {
-					// Feedback visuel
-					const originalBg = e.target.style.backgroundColor;
-					e.target.style.backgroundColor = 'rgba(0, 255, 65, 0.2)';
-					setTimeout(() => {
-						e.target.style.backgroundColor = originalBg;
-					}, 300);
-				});
-			}
-		});
-	</script>
 {% endblock %}

@@ -4,225 +4,156 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Header spécifique à la POO -->
+	<!-- Header POO -->
 	<header class="header">
 		<div class="container">
 			<div class="header-content">
 				<h1 class="header-title">// PROGRAMMATION ORIENTÉE OBJET</h1>
 				<p class="header-subtitle">
 					Découvrez la puissance de la POO en PHP : classes, objets, héritage, encapsulation et polymorphisme.
-										Organisez votre code de manière professionnelle et maintenable.
+															Organisez votre code de manière professionnelle et maintenable.
 				</p>
 			</div>
 		</div>
 	</header>
 
-	<!-- Contenu principal - POO -->
 	<main class="main-content">
-		<div class="container">
-			<h2 class="section-title">POO - Concepts fondamentaux</h2>
+		<div
+			class="container">
+			<!-- Section 1 : Concepts Fondamentaux -->
+			<h2 class="section-title">Concepts Fondamentaux</h2>
 			<div class="grid">
-				{% for key, concept in data %}
-					<article id="{{ key }}" class="concept-card">
-						<h3 class="concept-card-title">
-							{{ key|replace({'_': ' '})|title }}
-						</h3>
-						<p class="concept-card-description">
-							{{ concept.description }}
-						</p>
-						<div class="concept-card-example">
-							<strong>Exemple :</strong>
-							<pre><code>{{ concept.example }}</code></pre>
-						</div>
-					</article>
-				{% endfor %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-introduction',
+					'title': 'Introduction',
+					'description': data.introduction.description,
+					'example': data.introduction.example,
+					'iconClass': 'fa-solid fa-circle-info'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-classes_et_objets',
+					'title': 'Classes Et Objets',
+					'description': data.classes_et_objets.description,
+					'example': data.classes_et_objets.example,
+					'iconClass': 'fa-solid fa-cube'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-proprietes_et_methodes',
+					'title': 'Propriétés Et Méthodes',
+					'description': data.proprietes_et_methodes.description,
+					'example': data.proprietes_et_methodes.example,
+					'iconClass': 'fa-solid fa-cubes'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-constructeur_destructeur',
+					'title': 'Constructeur Destructeur',
+					'description': data.constructeur_destructeur.description,
+					'example': data.constructeur_destructeur.example,
+					'iconClass': 'fa-solid fa-hammer'
+				} %}
+			</div>
+
+			<!-- Section 2 : Encapsulation et Visibilité -->
+			<h2 class="section-title">Encapsulation et Visibilité</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-visibilite_encapsulation',
+					'title': 'Visibilité Encapsulation',
+					'description': data.visibilite_encapsulation.description,
+					'example': data.visibilite_encapsulation.example,
+					'iconClass': 'fa-solid fa-lock'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-proprietes_methodes_statiques',
+					'title': 'Propriétés Méthodes Statiques',
+					'description': data.proprietes_methodes_statiques.description,
+					'example': data.proprietes_methodes_statiques.example,
+					'iconClass': 'fa-solid fa-arrows-to-dot'
+				} %}
+			</div>
+
+			<!-- Section 3 : Héritage et Abstraction -->
+			<h2 class="section-title">Héritage et Abstraction</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-heritage',
+					'title': 'Héritage',
+					'description': data.heritage.description,
+					'example': data.heritage.example,
+					'iconClass': 'fa-solid fa-diagram-project'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-abstraction',
+					'title': 'Abstraction',
+					'description': data.abstraction.description,
+					'example': data.abstraction.example,
+					'iconClass': 'fa-solid fa-layer-group'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-interfaces',
+					'title': 'Interfaces',
+					'description': data.interfaces.description,
+					'example': data.interfaces.example,
+					'iconClass': 'fa-solid fa-plug'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-polymorphisme',
+					'title': 'Polymorphisme',
+					'description': data.polymorphisme.description,
+					'example': data.polymorphisme.example,
+					'iconClass': 'fa-solid fa-shapes'
+				} %}
+			</div>
+
+			<!-- Section 4 : Réutilisation du Code -->
+			<h2 class="section-title">Réutilisation du Code</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-traits',
+					'title': 'Traits',
+					'description': data.traits.description,
+					'example': data.traits.example,
+					'iconClass': 'fa-solid fa-puzzle-piece'
+				} %}
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-namespaces',
+					'title': 'Namespaces',
+					'description': data.namespaces.description,
+					'example': data.namespaces.example,
+					'iconClass': 'fa-solid fa-folder-tree'
+				} %}
+			</div>
+
+			<!-- Section 5 : Gestion des Erreurs -->
+			<h2 class="section-title">Gestion des Erreurs</h2>
+			<div class="grid">
+				{% include 'components/card.html.twig' with {
+					'modalId': 'modal-exceptions_poo',
+					'title': 'Exceptions POO',
+					'description': data.exceptions_poo.description,
+					'example': data.exceptions_poo.example,
+					'iconClass': 'fa-solid fa-triangle-exclamation'
+				} %}
 			</div>
 		</div>
 	</main>
 
-	<!-- Section exemples pratiques -->
-	<section class="examples-section">
-		<div class="container">
-			<h2 class="section-title">Exemples pratiques et projets</h2>
-			<div class="examples-grid">
-				<div class="example-card">
-					<h3>🏠 Système de Gestion Immobilière</h3>
-					<p>Créez des classes pour gérer des biens immobiliers avec héritage et polymorphisme.</p>
-					<pre><code>abstract class BienImmobilier {
-    protected $prix;
-    abstract public function calculerTaxe();
-}
+	<!-- Modales -->
+	{% for key, concept in data %}
+		{% include 'components/modal.html.twig' with {
+			'id': 'modal-' ~ key,
+			'title': key|replace({'_': ' '})|title,
+			'description': concept.description,
+			'example': concept.example,
+			'details': concept.details|default(null),
+			'useCases': concept.useCases|default([]),
+			'warnings': concept.warnings|default([]),
+			'bestPractices': concept.bestPractices|default([]),
+			'resources': concept.resources|default([]),
+			'relatedTopics': concept.relatedTopics|default([])
+		} %}
+	{% endfor %}
 
-class Maison extends BienImmobilier {
-    private $jardin;
-    
-    public function calculerTaxe() {
-        return $this->prix * 0.02;
-    }
-}
-
-class Appartement extends BienImmobilier {
-    private $etage;
-    
-    public function calculerTaxe() {
-        return $this->prix * 0.015;
-    }
-}</code></pre>
-				</div>
-
-				<div class="example-card">
-					<h3>📚 Système de Bibliothèque</h3>
-					<p>Utilisez interfaces et traits pour créer un système de gestion de livres.</p>
-					<pre><code>interface Empruntable {
-    public function emprunter();
-    public function retourner();
-}
-
-trait Timestampable {
-    public function setDateEmprunt() {
-        $this->dateEmprunt = new DateTime();
-    }
-}
-
-class Livre implements Empruntable {
-    use Timestampable;
-    
-    private $titre;
-    private $auteur;
-    private $disponible = true;
-    
-    public function emprunter() {
-        if ($this->disponible) {
-            $this->disponible = false;
-            $this->setDateEmprunt();
-            return true;
-        }
-        return false;
-    }
-}</code></pre>
-				</div>
-
-				<div class="example-card">
-					<h3>🎮 Système de Jeu RPG</h3>
-					<p>Créez des personnages avec des classes abstraites et du polymorphisme.</p>
-					<pre><code>abstract class Personnage {
-    protected $nom;
-    protected $pointsVie;
-    protected $niveau;
-    
-    abstract public function attaquer();
-    
-    public function recevoirDegats($degats) {
-        $this->pointsVie -= $degats;
-    }
-}
-
-class Guerrier extends Personnage {
-    public function attaquer() {
-        return $this->niveau * 10; // Attaque physique
-    }
-    
-    public function bloquer() {
-        return "Le guerrier bloque l'attaque!";
-    }
-}
-
-class Mage extends Personnage {
-    public function attaquer() {
-        return $this->niveau * 8; // Attaque magique
-    }
-    
-    public function lancerSort($sort) {
-        return "Le mage lance : $sort";
-    }
-}</code></pre>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Section bonnes pratiques -->
-	<section class="best-practices-section">
-		<div class="container">
-			<h2 class="section-title">Bonnes pratiques POO</h2>
-			<div class="practices-grid">
-				<div class="practice-card">
-					<h3>🔒 Principe d'Encapsulation</h3>
-					<ul>
-						<li>Utilisez
-							<code>private</code>
-							pour les données sensibles</li>
-						<li>Créez des méthodes
-							<code>getter/setter</code>
-							pour l'accès contrôlé</li>
-						<li>Validez les données dans les setters</li>
-					</ul>
-				</div>
-
-				<div class="practice-card">
-					<h3>🏗️ Responsabilité Unique</h3>
-					<ul>
-						<li>Une classe = une responsabilité</li>
-						<li>Évitez les "God Classes" (classes qui font tout)</li>
-						<li>Décomposez les classes complexes</li>
-					</ul>
-				</div>
-
-				<div class="practice-card">
-					<h3">📐PrincipeDRY</h3><ul><li>Don'tRepeatYourself</li><li>Utilisezl'héritagepouréviterladuplication</li><li>Exploitezlestraitspourlaréutilisabilité</li></ul></div><divclass="practice-card"><h3>🔄SOLIDPrinciples</h3><ul><li><strong>S</strong>ingleResponsibility</li><li><strong>O</strong>pen/Closed</li><li><strong>L</strong>iskovSubstitution</li><li><strong>I</strong>nterfaceSegregation</li><li><strong>D</strong>ependencyInversion</li></ul></div></div></div></section><!--Exercicesinteractifs--><sectionclass="exercises-section"><divclass="container"><h2class="section-title">Exercicespratiques</h2><divclass="exercises-grid"><divclass="exercise-card"><h3>🎯Exercice1:Créeruneclasse</h3><p>Créezuneclasse<code>Produit</code>avecnom,prixetquantité.Ajoutezdesméthodespourcalculerlavaleurtotaledustock.</p><buttonclass="btn-primary"onclick="alert('ImplémentezlaclasseProduitdansvotreIDE!')">Commencer</button></div><divclass="exercise-card"><h3">🎯 Exercice 2 : Héritage</h3>
-					<p>Créez une hiérarchie
-						<code>Vehicule → Voiture → VoitureSport</code>
-						avec des propriétés et méthodes spécifiques.</p>
-					<button class="btn-primary" onclick="alert('Pensez aux propriétés communes et spécifiques!')">Commencer</button>
-				</div>
-
-				<div class="exercise-card">
-					<h3>🎯 Exercice 3 : Interface</h3>
-					<p>Créez une interface
-						<code>Payable</code>
-						et implémentez-la dans différentes classes (Facture, Salaire, etc.).</p>
-					<button class="btn-primary" onclick="alert('Définissez le contrat de paiement!')">Commencer</button>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Effet Matrix de fond -->
+	<!-- Effet Matrix -->
 	<div class="matrix-bg" id="matrix-canvas"></div>
-
-	<script>
-		// Animation pour les cartes de concepts
-document.addEventListener('DOMContentLoaded', function () {
-const cards = document.querySelectorAll('.concept-card, .example-card, .practice-card, .exercise-card');
-
-cards.forEach((card, index) => {
-card.style.animationDelay = `${
-index * 0.1
-}s`;
-card.style.animation = 'fadeInUp 0.6s ease-out forwards';
-
-card.addEventListener('mouseenter', function () {
-this.style.transform = 'translateY(-8px) scale(1.02)';
-});
-
-card.addEventListener('mouseleave', function () {
-this.style.transform = 'translateY(0) scale(1)';
-});
-});
-});
-
-// Effet de frappe pour les exemples de code
-function typewriterEffect(element, text, speed = 50) {
-let i = 0;
-element.innerHTML = '';
-function type() {
-if (i < text.length) {
-element.innerHTML += text.charAt(i);
-i++;
-setTimeout(type, speed);
-}
-}
-type();
-}
-	</script>
 {% endblock %}

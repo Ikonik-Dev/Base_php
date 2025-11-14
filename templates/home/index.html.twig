@@ -1,140 +1,119 @@
-{% extends 'base.html.twig' %}
+﻿{% extends 'base.html.twig' %}
 
-{% block title %}Cours PHP - Matrix Style
-{% endblock %}
+{% block title %}Cours PHP - Formation Complète{% endblock %}
 
 {% block body %}
-	<!-- Header -->
-	<header class="header">
-		<div class="container">
-			<div class="header-content">
-				<h1 class="header-title">// FORMATION PHP</h1>
-				<p class="header-subtitle">
-					Explorez les concepts fondamentaux du PHP dans un environnement Matrix. 
-															                Chaque notion est une porte vers la maîtrise du développement web.
-				</p>
-			</div>
-		</div>
-	</header>
+<header class="header">
+<div class="container">
+<div class="header-content">
+<h1 class="header-title">// FORMATION PHP</h1>
+<p class="header-subtitle">
+Explorez les concepts fondamentaux du PHP dans un environnement Matrix.
+Chaque notion est une porte vers la maîtrise du développement web.
+</p>
+</div>
+</div>
+</header>
 
-	<!-- Contenu principal -->
-	<main class="main-content">
-		<div class="container">
-			<div class="grid">
-				{% for key, concept in data %}
-					<article id="{{ key }}" class="concept-card" onclick="navigateToModule('{{ key }}')">
-						<h2 class="concept-card-title">
-							{{ key|replace({'_': ' '})|title }}
-						</h2>
-						<p class="concept-card-description">
-							{{ concept.description }}
-						</p>
-						<div class="concept-card-example">
-							<strong>Exemple :</strong><br>
-							{{ concept.example }}
-						</div>
-					</article>
-				{% endfor %}
-			</div>
-		</div>
-	</main>
+<main class="main-content">
+<div class="container">
+<h2 class="section-title">Modules de Formation</h2>
+<div class="grid">
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-variables',
+'title': 'Variables',
+'description': data.variables.description,
+'example': data.variables.example,
+'iconClass': 'fa-solid fa-dollar-sign'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-types_de_donnees',
+'title': 'Types de Données',
+'description': data.types_de_donnees.description,
+'example': data.types_de_donnees.example,
+'iconClass': 'fa-solid fa-list-check'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-operateurs',
+'title': 'Opérateurs',
+'description': data.operateurs.description,
+'example': data.operateurs.example,
+'iconClass': 'fa-solid fa-plus-minus'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-structures_de_controle',
+'title': 'Structures de Contrôle',
+'description': data.structures_de_controle.description,
+'example': data.structures_de_controle.example,
+'iconClass': 'fa-solid fa-code-branch'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-fonctions',
+'title': 'Fonctions',
+'description': data.fonctions.description,
+'example': data.fonctions.example,
+'iconClass': 'fa-solid fa-function'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-tableaux',
+'title': 'Tableaux',
+'description': data.tableaux.description,
+'example': data.tableaux.example,
+'iconClass': 'fa-solid fa-table'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-manipulation_de_chaines',
+'title': 'Manipulation de Chaînes',
+'description': data.manipulation_de_chaines.description,
+'example': data.manipulation_de_chaines.example,
+'iconClass': 'fa-solid fa-text-width'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-gestion_des_erreurs',
+'title': 'Gestion des Erreurs',
+'description': data.gestion_des_erreurs.description,
+'example': data.gestion_des_erreurs.example,
+'iconClass': 'fa-solid fa-triangle-exclamation'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-programmation_orientee_objet',
+'title': 'POO',
+'description': data.programmation_orientee_objet.description,
+'example': data.programmation_orientee_objet.example,
+'iconClass': 'fa-solid fa-cube'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-interaction_avec_les_bases_de_donnees',
+'title': 'Bases de Données',
+'description': data.interaction_avec_les_bases_de_donnees.description,
+'example': data.interaction_avec_les_bases_de_donnees.example,
+'iconClass': 'fa-solid fa-database'
+} %}
+{% include 'components/card.html.twig' with {
+'modalId': 'modal-infrastructure_web',
+'title': 'Infrastructure Web',
+'description': data.infrastructure_web.description,
+'example': data.infrastructure_web.example,
+'iconClass': 'fa-solid fa-server'
+} %}
+</div>
+</div>
+</main>
 
-	<!-- Effet Matrix de fond (optionnel) -->
-	<div class="matrix-bg" id="matrix-canvas"></div>
+{% for key, concept in data %}
+{% include 'components/modal.html.twig' with {
+'id': 'modal-' ~ key,
+'title': key|replace({'_': ' '})|title,
+'description': concept.description,
+'example': concept.example,
+'details': concept.details|default(null),
+'useCases': concept.useCases|default([]),
+'warnings': concept.warnings|default([]),
+'bestPractices': concept.bestPractices|default([]),
+'resources': concept.resources|default([]),
+'relatedTopics': concept.relatedTopics|default([])
+} %}
+{% endfor %}
 
-	<script>
-		// Navigation function for module cards
-function navigateToModule(moduleKey) {
-			const moduleRoutes = {
-				'variables': '{{ path('app_variables') }}',
-				'programmation_orientee_objet': '{{ path('app_poo') }}',
-				'interaction_avec_les_bases_de_donnees': '{{ path('app_bdd') }}',
-				'infrastructure_web': '{{ path('app_infrastructure') }}',
-				'operateurs': '{{ path('app_operateurs') }}',
-				'structures_de_controle': '{{ path('app_structure_controle') }}',
-				'fonctions': '{{ path('app_fonction_p_h_p') }}',
-				'types_de_donnees': '{{ path('app_typages') }}'
-			};if (moduleRoutes[moduleKey]) {
-window.location.href = moduleRoutes[moduleKey];
-} else { // For modules not yet implemented, show a message
-alert('Module "' + moduleKey.replace(/_/g, ' ') + '" en cours de développement...');
-}
-}
-
-// Script pour l'effet Matrix de fond (optionnel et léger)
-document.addEventListener('DOMContentLoaded', function () { // Ajout d'un léger effet de scintillement pour les cartes
-const cards = document.querySelectorAll('.concept-card');
-
-cards.forEach((card, index) => { // Animation d'apparition décalée
-card.style.animationDelay = `${
-index * 0.1
-}s`;
-card.style.animation = 'fadeInUp 0.6s ease-out forwards';
-
-// Effet de hover avancé
-card.addEventListener('mouseenter', function () {
-this.style.transform = 'translateY(-8px) scale(1.02)';
-});
-
-card.addEventListener('mouseleave', function () {
-this.style.transform = 'translateY(0) scale(1)';
-});
-});
-
-// Smooth scroll pour la navigation
-document.querySelectorAll('.nav-link').forEach(link => {
-link.addEventListener('click', function (e) {
-e.preventDefault();
-const targetId = this.getAttribute('href').substring(1);
-const targetElement = document.getElementById(targetId);
-
-if (targetElement) {
-targetElement.scrollIntoView({behavior: 'smooth', block: 'center'});
-
-// Effet de highlight temporaire
-targetElement.style.boxShadow = '0 0 20px var(--matrix-glow)';
-setTimeout(() => {
-targetElement.style.boxShadow = '';
-}, 2000);
-}
-});
-});
-});
-	</script>
-
-	<style>
-		/* Animations personnalisées pour cette page */
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		/* Style initial pour les cartes avant animation */
-		.concept-card {
-			opacity: 0;
-		}
-
-		/* Style pour l'effet de focus sur les cartes */
-		.concept-card:focus {
-			outline: 2px solid var(--matrix-green);
-			outline-offset: 2px;
-		}
-
-		/* Amélioration du contraste pour l'accessibilité */
-		.concept-card-example {
-			position: relative;
-		}
-
-		.concept-card-example::before {
-			content: '$ ';
-			color: var(--matrix-green);
-			font-weight: bold;
-		}
-	</style>
+<div class="matrix-bg" id="matrix-canvas"></div>
 {% endblock %}

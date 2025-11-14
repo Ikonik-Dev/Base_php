@@ -23,18 +23,12 @@
 			<h2 class="section-title">Variables - Concepts fondamentaux</h2>
 			<div class="grid">
 				{% for key, concept in data %}
-					<article id="{{ key }}" class="concept-card">
-						<h3 class="concept-card-title">
-							{{ key|replace({'_': ' '})|title }}
-						</h3>
-						<p class="concept-card-description">
-							{{ concept.description }}
-						</p>
-						<div class="concept-card-example">
-							<strong>Exemple :</strong><br>
-							<pre><code>{{ concept.example }}</code></pre>
-						</div>
-					</article>
+					{% include 'components/card.html.twig' with {
+						'title': key|replace({'_': ' '})|title,
+						'description': concept.description,
+						'icon': '💾',
+						'modalId': 'modal-' ~ key
+					} %}
 				{% endfor %}
 			</div>
 
@@ -42,67 +36,53 @@
 			<h2 class="section-title">Variables superglobales PHP</h2>
 			<div class="grid">
 				{% for key, concept in dataGlobales %}
-					<article id="global_{{ key|replace({'$': '', '_': ''}) }}" class="concept-card superglobal-card">
-						<h3 class="concept-card-title">
-							{{ key }}
-						</h3>
-						<p class="concept-card-description">
-							{{ concept.description }}
-						</p>
-						<div class="concept-card-example">
-							<strong>Exemple :</strong><br>
-							<pre><code>{{ concept.example }}</code></pre>
-						</div>
-					</article>
+					{% include 'components/card.html.twig' with {
+						'title': key,
+						'description': concept.description,
+						'icon': '🌐',
+						'modalId': 'modal-global_' ~ key|replace({'$': '', '_': ''})
+					} %}
 				{% endfor %}
 			</div>
 		</div>
 	</main>
 
+	<!-- Modales pour les concepts de base -->
+	{% for key, concept in data %}
+		{% include 'components/modal.html.twig' with {
+			'id': 'modal-' ~ key,
+			'title': key|replace({'_': ' '})|title,
+			'icon': '💾',
+			'description': concept.description,
+			'details': concept.details ?? null,
+			'example': concept.example ?? null,
+			'useCases': concept.useCases ?? null,
+			'warnings': concept.warnings ?? null,
+			'bestPractices': concept.bestPractices ?? null,
+			'resources': concept.resources ?? null,
+			'relatedTopics': concept.relatedTopics ?? null
+		} %}
+	{% endfor %}
+
+	<!-- Modales pour les variables superglobales -->
+	{% for key, concept in dataGlobales %}
+		{% include 'components/modal.html.twig' with {
+			'id': 'modal-global_' ~ key|replace({'$': '', '_': ''}),
+			'title': key,
+			'icon': '🌐',
+			'description': concept.description,
+			'details': concept.details ?? null,
+			'example': concept.example ?? null,
+			'useCases': concept.useCases ?? null,
+			'warnings': concept.warnings ?? null,
+			'bestPractices': concept.bestPractices ?? null,
+			'resources': concept.resources ?? null,
+			'relatedTopics': concept.relatedTopics ?? null
+		} %}
+	{% endfor %}
+
 	<!-- Effet Matrix de fond -->
 	<div class="matrix-bg" id="matrix-canvas"></div>
-
-	<script>
-		// Script pour l'effet Matrix et animations
-document.addEventListener('DOMContentLoaded', function () { // Animation d'apparition des cartes
-const cards = document.querySelectorAll('.concept-card');
-
-cards.forEach((card, index) => {
-card.style.animationDelay = `${
-index * 0.1
-}s`;
-card.style.animation = 'fadeInUp 0.6s ease-out forwards';
-
-// Effet de hover avancé
-card.addEventListener('mouseenter', function () {
-this.style.transform = 'translateY(-8px) scale(1.02)';
-});
-
-card.addEventListener('mouseleave', function () {
-this.style.transform = 'translateY(0) scale(1)';
-});
-});
-
-// Smooth scroll pour la navigation (si présente)
-document.querySelectorAll('.nav-link').forEach(link => {
-link.addEventListener('click', function (e) {
-e.preventDefault();
-const targetId = this.getAttribute('href').substring(1);
-const targetElement = document.getElementById(targetId);
-
-if (targetElement) {
-targetElement.scrollIntoView({behavior: 'smooth', block: 'center'});
-
-// Effet de highlight temporaire
-targetElement.style.boxShadow = '0 0 20px var(--matrix-glow)';
-setTimeout(() => {
-targetElement.style.boxShadow = '';
-}, 2000);
-}
-});
-});
-});
-	</script>
 
 	<style>
 		/* Styles spécifiques à la page Variables */
@@ -117,72 +97,10 @@ targetElement.style.boxShadow = '';
 			padding-bottom: 1rem;
 		}
 
-		/* Animations personnalisées */
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		/* Style initial pour les cartes avant animation */
-		.concept-card {
-			opacity: 0;
-		}
-
-		/* Style spécial pour les variables superglobales */
-		.superglobal-card {
-			border-left: 4px solid var(--matrix-green);
-		}
-
-		.superglobal-card .concept-card-title {
-			color: var(--matrix-green);
-			font-family: 'Courier New', monospace;
-		}
-
-		/* Style pour l'effet de focus sur les cartes */
-		.concept-card:focus {
-			outline: 2px solid var(--matrix-green);
-			outline-offset: 2px;
-		}
-
-		/* Amélioration des exemples de code */
-		.concept-card-example pre {
-			background: rgba(0, 0, 0, 0.3);
-			border: 1px solid var(--matrix-green);
-			border-radius: 4px;
-			padding: 1rem;
-			margin-top: 0.5rem;
-			overflow-x: auto;
-		}
-
-		.concept-card-example code {
-			color: var(--matrix-green);
-			font-family: 'Courier New', monospace;
-			font-size: 0.9rem;
-			line-height: 1.4;
-			white-space: pre;
-		}
-
-		.concept-card-example::before {
-			content: '$ ';
-			color: var(--matrix-green);
-			font-weight: bold;
-		}
-
 		/* Responsiveness améliorée */
 		@media(max-width: 768px) {
 			.section-title {
 				font-size: 1.5rem;
-			}
-
-			.concept-card-example pre {
-				font-size: 0.8rem;
-				padding: 0.5rem;
 			}
 		}
 	</style>

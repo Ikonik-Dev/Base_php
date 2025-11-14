@@ -11,7 +11,7 @@
 				<h1 class="header-title">// FONCTIONS PHP</h1>
 				<p class="header-subtitle">
 					Maîtrisez les fonctions PHP : déclaration, paramètres, types, closures et fonctionnalités modernes PHP 7/8.
-										Créez du code réutilisable, modulaire et élégant avec les techniques avancées des fonctions.
+															Créez du code réutilisable, modulaire et élégant avec les techniques avancées des fonctions.
 				</p>
 			</div>
 		</div>
@@ -24,18 +24,12 @@
 			<div class="grid">
 				{% for key, concept in data %}
 					{% if key in ['declaration_fonctions', 'parametres_arguments', 'parametres_variables', 'valeurs_retour'] %}
-						<article id="{{ key }}" class="concept-card basic-function-card">
-							<h3 class="concept-card-title">
-								{{ key|replace({'_': ' '})|title }}
-							</h3>
-							<p class="concept-card-description">
-								{{ concept.description }}
-							</p>
-							<div class="concept-card-example">
-								<strong>Exemple :</strong><br>
-								<pre><code>{{ concept.example }}</code></pre>
-							</div>
-						</article>
+						{% include 'components/card.html.twig' with {
+							'modalId': 'modal-' ~ key,
+							'title': key|replace({'_': ' '})|title,
+							'description': concept.description,
+							'example': concept.example
+						} %}
 					{% endif %}
 				{% endfor %}
 			</div>
@@ -45,18 +39,12 @@
 			<div class="grid">
 				{% for key, concept in data %}
 					{% if key in ['types_parametres_php7', 'types_union_php8', 'named_arguments_php8', 'first_class_callable_php81'] %}
-						<article id="{{ key }}" class="concept-card modern-function-card">
-							<h3 class="concept-card-title">
-								{{ key|replace({'_': ' ', 'php7': 'PHP 7', 'php8': 'PHP 8', 'php81': 'PHP 8.1'})|title }}
-							</h3>
-							<p class="concept-card-description">
-								{{ concept.description }}
-							</p>
-							<div class="concept-card-example">
-								<strong>Exemple :</strong><br>
-								<pre><code>{{ concept.example }}</code></pre>
-							</div>
-						</article>
+						{% include 'components/card.html.twig' with {
+							'modalId': 'modal-' ~ key,
+							'title': key|replace({'_': ' ', 'php7': 'PHP 7', 'php8': 'PHP 8', 'php81': 'PHP 8.1'})|title,
+							'description': concept.description,
+							'example': concept.example
+						} %}
 					{% endif %}
 				{% endfor %}
 			</div>
@@ -66,18 +54,12 @@
 			<div class="grid">
 				{% for key, concept in data %}
 					{% if key in ['portee_variables', 'fonctions_anonymes', 'fonctions_flechees_php74', 'fonctions_callback'] %}
-						<article id="{{ key }}" class="concept-card closure-function-card">
-							<h3 class="concept-card-title">
-								{{ key|replace({'_': ' ', 'php74': 'PHP 7.4'})|title }}
-							</h3>
-							<p class="concept-card-description">
-								{{ concept.description }}
-							</p>
-							<div class="concept-card-example">
-								<strong>Exemple :</strong><br>
-								<pre><code>{{ concept.example }}</code></pre>
-							</div>
-						</article>
+						{% include 'components/card.html.twig' with {
+							'modalId': 'modal-' ~ key,
+							'title': key|replace({'_': ' ', 'php74': 'PHP 7.4'})|title,
+							'description': concept.description,
+							'example': concept.example
+						} %}
 					{% endif %}
 				{% endfor %}
 			</div>
@@ -87,173 +69,48 @@
 			<div class="grid">
 				{% for key, concept in data %}
 					{% if key in ['generateurs_yield', 'recursivite', 'fonctions_variables', 'attributes_php8'] %}
-						<article id="{{ key }}" class="concept-card advanced-function-card">
-							<h3 class="concept-card-title">
-								{{ key|replace({'_': ' ', 'php8': 'PHP 8'})|title }}
-							</h3>
-							<p class="concept-card-description">
-								{{ concept.description }}
-							</p>
-							<div class="concept-card-example">
-								<strong>Exemple :</strong><br>
-								<pre><code>{{ concept.example }}</code></pre>
-							</div>
-						</article>
+						{% include 'components/card.html.twig' with {
+						'modalId': 'modal-' ~ key,
+						'title': key|replace({'_': ' ', 'php8': 'PHP 8'})|title,
+						'description': concept.description,
+						'example': concept.example
+					} %}
+					{% endif %}
+				{% endfor %}
+			</div>
+
+			<!-- Section Comparaison -->
+			<h2 class="section-title">Comparaison inter-langages</h2>
+			<div class="grid">
+				{% for key, concept in data %}
+					{% if key == 'comparaison_php_javascript' %}
+						{% include 'components/card.html.twig' with {
+						'modalId': 'modal-' ~ key,
+						'title': 'PHP vs JavaScript',
+						'description': concept.description,
+						'example': concept.example,
+						'icon': '⚖️'
+					} %}
 					{% endif %}
 				{% endfor %}
 			</div>
 		</div>
 	</main>
 
-	<!-- Effet Matrix de fond -->
-	<div class="matrix-bg" id="matrix-canvas"></div>
+	<!-- Modales -->
+	{% for key, concept in data %}
+		{% include 'components/modal.html.twig' with {
+			'id': 'modal-' ~ key,
+			'title': key|replace({'_': ' ', 'php7': 'PHP 7', 'php74': 'PHP 7.4', 'php8': 'PHP 8', 'php81': 'PHP 8.1'})|title,
+			'description': concept.description,
+			'example': concept.example,
+			'details': concept.details|default(null),
+			'useCases': concept.useCases|default([]),
+			'warnings': concept.warnings|default([]),
+			'bestPractices': concept.bestPractices|default([]),
+			'resources': concept.resources|default([]),
+			'relatedTopics': concept.relatedTopics|default([])
+		} %}
+	{% endfor %}
 
-	<script>
-		// Script pour l'effet Matrix et animations
-document.addEventListener('DOMContentLoaded', function () { // Animation d'apparition des cartes
-const cards = document.querySelectorAll('.concept-card');
-
-cards.forEach((card, index) => {
-card.style.animationDelay = `${
-index * 0.1
-}s`;
-card.style.animation = 'fadeInUp 0.6s ease-out forwards';
-
-// Effet de hover avancé
-card.addEventListener('mouseenter', function () {
-this.style.transform = 'translateY(-8px) scale(1.02)';
-});
-
-card.addEventListener('mouseleave', function () {
-this.style.transform = 'translateY(0) scale(1)';
-});
-});
-
-// Smooth scroll pour la navigation (si présente)
-document.querySelectorAll('.nav-link').forEach(link => {
-link.addEventListener('click', function (e) {
-e.preventDefault();
-const targetId = this.getAttribute('href').substring(1);
-const targetElement = document.getElementById(targetId);
-
-if (targetElement) {
-targetElement.scrollIntoView({behavior: 'smooth', block: 'center'});
-
-// Effet de highlight temporaire
-targetElement.style.boxShadow = '0 0 20px var(--matrix-glow)';
-setTimeout(() => {
-targetElement.style.boxShadow = '';
-}, 2000);
-}
-});
-});
-});
-	</script>
-
-	<style>
-		/* Styles spécifiques à la page Fonctions */
-		.section-title {
-			color: var(--matrix-green);
-			font-size: 2rem;
-			margin: 3rem 0 2rem;
-			text-align: center;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			border-bottom: 2px solid var(--matrix-green);
-			padding-bottom: 1rem;
-		}
-
-		/* Animations personnalisées */
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		/* Style initial pour les cartes avant animation */
-		.concept-card {
-			opacity: 0;
-		}
-
-		/* Styles spéciaux par catégorie de fonctions */
-		.basic-function-card {
-			border-left: 4px solid #00ff41; /* Vert Matrix pour les bases */
-		}
-
-		.modern-function-card {
-			border-left: 4px solid #0041ff; /* Bleu pour PHP moderne */
-		}
-
-		.closure-function-card {
-			border-left: 4px solid #41ff00; /* Vert clair pour closures */
-		}
-
-		.advanced-function-card {
-			border-left: 4px solid #ff4100; /* Orange pour avancées */
-		}
-
-		/* Titres colorés par catégorie */
-		.basic-function-card .concept-card-title {
-			color: #00ff41;
-		}
-
-		.modern-function-card .concept-card-title {
-			color: #0041ff;
-		}
-
-		.closure-function-card .concept-card-title {
-			color: #41ff00;
-		}
-
-		.advanced-function-card .concept-card-title {
-			color: #ff4100;
-		}
-
-		/* Style pour l'effet de focus sur les cartes */
-		.concept-card:focus {
-			outline: 2px solid var(--matrix-green);
-			outline-offset: 2px;
-		}
-
-		/* Amélioration des exemples de code */
-		.concept-card-example pre {
-			background: rgba(0, 0, 0, 0.3);
-			border: 1px solid var(--matrix-green);
-			border-radius: 4px;
-			padding: 1rem;
-			margin-top: 0.5rem;
-			overflow-x: auto;
-		}
-
-		.concept-card-example code {
-			color: var(--matrix-green);
-			font-family: 'Courier New', monospace;
-			font-size: 0.9rem;
-			line-height: 1.4;
-			white-space: pre;
-		}
-
-		.concept-card-example::before {
-			content: '$ ';
-			color: var(--matrix-green);
-			font-weight: bold;
-		}
-
-		/* Responsiveness améliorée */
-		@media(max-width: 768px) {
-			.section-title {
-				font-size: 1.5rem;
-			}
-
-			.concept-card-example pre {
-				font-size: 0.8rem;
-				padding: 0.5rem;
-			}
-		}
-	</style>
 {% endblock %}

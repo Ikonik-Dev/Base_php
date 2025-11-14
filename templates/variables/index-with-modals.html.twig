@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours PHP - Variables (avec modales)
+{% endblock %}
+
+{% block body %}
+<header class="header">
+	<div class="container">
+		<div class="header-content">
+			<h1 class="header-title">// VARIABLES PHP</h1>
+			<p class="header-subtitle">
+				Maîtrisez les fondamentaux des variables en PHP. Cliquez sur une carte pour voir les détails.
+			</p>
+		</div>
+	</div>
+</header>
+
+<main class="main-content">
+	<div class="container">
+		<h2 class="section-title">Variables - Concepts fondamentaux</h2>
+
+		{# Utilisation du composant Grid avec Cards #}
+		{% include 'components/grid.html.twig' with {
+				cols: 3,
+				gap: 'lg',
+				responsive: { 'sm': 1, 'md': 2, 'lg': 3 },
+				items: [
+					{% for key, concept in data %}
+		{
+									component: 'card',
+									data: {
+										type: 'concept',
+										interactive: true,
+										modalId: 'modal-' ~ key,
+										title: key|replace({'_': ' '})|title,
+										description: concept.description|slice(0, 150) ~ '...',
+										example: {
+											language: 'php',
+											code: concept.example|slice(0, 100) ~ '...'
+										}
+									}
+								}
+		{% if not loop.last %},
+		{% endif %}
+	{% endfor %}
+	]
+				} %}
+</div></main>{# Modales détaillées pour chaque concept #}{% for key, concept in data %}
+{% include 'components/modal.html.twig' with {
+			id: 'modal-' ~ key,
+			title: key|replace({'_': ' '})|title,
+			icon: '📌',
+			description: concept.description,
+			details: concept.details|default('Plus de détails sur ' ~ key ~ '...'),
+			example: {
+				language: 'php',
+				code: concept.example
+			},
+			useCases: concept.useCases|default([
+				'Cas d\'utilisation 1',
+				'Cas d\'utilisation 2'
+			]),
+			warnings: concept.warnings|default([
+				'Point d\'attention important'
+			]),
+			bestPractices: concept.bestPractices|default([
+				'Utilisez des noms de variables explicites',
+				'Initialisez toujours vos variables'
+			]),
+			resources: concept.resources|default([
+				{ title: 'Documentation PHP', url: 'https://www.php.net', icon: '📖' }
+			]),
+			relatedTopics: concept.relatedTopics|default([])
+		} %}
+	{% endfor %}
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="module">
+		import ModalManager from '{{ asset('js/modal-manager.js') }}';
+		
+		// Le ModalManager s'initialise automatiquement
+		console.log('✅ Page avec modales chargée');
+	</script>
+{% endblock %}
