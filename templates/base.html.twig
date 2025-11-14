@@ -12,6 +12,10 @@
 		<link rel="apple-touch-icon" href="{{ asset('php-logo.png') }}">
 		<meta name="theme-color" content="#777BB4">
 		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+		{% endblock %}
+
+		{% block javascripts %}
 			{{ importmap('app') }}
 		{% endblock %}
 	</head>
@@ -41,11 +45,19 @@
 				},
 				{
 					separator: true,
+					title: 'PRATIQUE',
+					items: [
+						{ label: '🎮 Projet POO Progressif', path: path('app_projet_poo'), route: 'app_projet_poo' },
+						{ label: '🏗️ Intro MVC Pratique', path: path('app_intro_mvc'), route: 'app_intro_mvc' },
+						{ label: '🛒 E-commerce Symfony', path: path('app_ecommerce'), route: 'app_ecommerce' }
+					]
+				},
+				{
+					separator: true,
 					title: 'RÉFÉRENCE',
 					items: [
-						{ label: '🥏 Terminologie & Concepts', path: path('app_glossaire'), route: 'app_glossaire', class: 'glossaire-item' },
-						{ label: '🎮 Projet POO Progressif', path: path('app_projet_poo'), route: 'app_projet_poo' },
-						{ label: '🎵 Framework Symfony', path: path('app_symfony'), route: 'app_symfony' }
+						{ label: '🎵 Framework Symfony', path: path('app_symfony'), route: 'app_symfony' },
+						{ label: '🥏 Terminologie & Concepts', path: path('app_glossaire'), route: 'app_glossaire', class: 'glossaire-item' }
 					]
 				}
 			]
@@ -56,8 +68,6 @@
 
 		{% block body %}{% endblock %}
 
-		{% block javascripts %}
-			{# Le JavaScript est maintenant géré par les modules ES6 #}
-		{% endblock %}
+		{# Le JavaScript est maintenant géré par les modules ES6 via importmap dans le head #}
 	</body>
 </html>

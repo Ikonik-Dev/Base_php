@@ -1,0 +1,334 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ pageTitle }}
+	- Cours PHP Matrix
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/ecommerce.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div
+		class="ecommerce-page">
+		<!-- Header avec style spécifique E-commerce -->
+		<header class="ecommerce-header">
+			<div class="container">
+				<h1 class="page-title">
+					<span class="icon">🛒</span>
+					{{ presentation.title }}
+				</h1>
+				<p class="page-subtitle">
+					{{ presentation.description }}
+				</p>
+				<div class="ecommerce-stats">
+					<div class="stat-item">
+						<strong>Niveau :</strong>
+						{{ presentation.niveau }}
+					</div>
+					<div class="stat-item">
+						<strong>Durée :</strong>
+						{{ presentation.duree_estimee }}
+					</div>
+					<div class="stat-item">
+						<strong>Étapes :</strong>
+						{{ etapes|length }}
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Navigation rapide -->
+		<nav class="quick-nav">
+			<div class="container">
+				<div class="nav-pills">
+					<a href="#presentation" class="nav-pill">Introduction</a>
+					<a href="#roadmap" class="nav-pill">Roadmap</a>
+					<a href="#concepts" class="nav-pill">Concepts</a>
+					<a href="#technologies" class="nav-pill">Technologies</a>
+					<a href="#commencer" class="nav-pill">Commencer</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Contenu principal -->
+		<main class="main-content">
+			<div
+				class="container">
+
+				<!-- Section Introduction -->
+				<section id="presentation" class="concept-section">
+					<h2>🎯 À propos de ce Tutoriel</h2>
+					<div class="intro-grid">
+						<div class="intro-card">
+							<div class="card-icon">🎓</div>
+							<h3>Approche Pédagogique</h3>
+							<p>Construction progressive d'un site e-commerce complet en appliquant les concepts Symfony. Chaque étape builds sur la précédente avec des explications détaillées.</p>
+						</div>
+						<div class="intro-card">
+							<div class="card-icon">💼</div>
+							<h3>Projet Concret</h3>
+							<p>Développement d'une boutique en ligne fonctionnelle avec catalogue produits, panier, commandes et interface d'administration.</p>
+						</div>
+						<div class="intro-card">
+							<div class="card-icon">🚀</div>
+							<h3>Bonnes Pratiques</h3>
+							<p>Application des design patterns, sécurité, tests et optimisations selon les standards Symfony et l'industrie.</p>
+						</div>
+					</div>
+
+					<!-- Prérequis -->
+					<div class="prerequisites-section">
+						<h3>📋 Prérequis</h3>
+						<div class="prerequisites-grid">
+							{% for prerequis in presentation.prerequis %}
+								<div class="prerequis-item">
+									<span class="prerequis-icon">✓</span>
+									<span>{{ prerequis }}</span>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</section>
+
+				<!-- Section Roadmap -->
+				<section id="roadmap" class="concept-section">
+					<h2>🗺️ Plan de Développement</h2>
+					<div class="roadmap-container">
+						{% for etape in etapes %}
+							<div class="roadmap-step {% if loop.index is odd %}step-left{% else %}step-right{% endif %}">
+								<div class="step-number">{{ etape.numero }}</div>
+								<div class="step-content">
+									<div class="step-header">
+										<h3>{{ etape.titre }}</h3>
+										<span class="step-duration">⏱️
+											{{ etape.duree }}</span>
+									</div>
+									<p class="step-description">{{ etape.description }}</p>
+
+									<!-- Concepts abordés -->
+									<div class="step-concepts">
+										<h4>🧠 Concepts :</h4>
+										<div class="concept-tags">
+											{% for concept in etape.concepts %}
+												<span class="concept-tag">{{ concept }}</span>
+											{% endfor %}
+										</div>
+									</div>
+
+									<!-- Objectifs -->
+									<div class="step-objectives">
+										<h4>🎯 Objectifs :</h4>
+										<ul>
+											{% for objectif in etape.objectifs %}
+												<li>{{ objectif }}</li>
+											{% endfor %}
+										</ul>
+									</div>
+
+									<!-- Livrables -->
+									<div class="step-deliverables">
+										<h4>📦 Livrables :</h4>
+										<ul>
+											{% for livrable in etape.livrables %}
+												<li>{{ livrable }}</li>
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							{% if not loop.last %}
+								<div class="roadmap-connector">
+									<div class="connector-line"></div>
+									<div class="connector-arrow">⬇️</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Concepts Techniques -->
+				<section id="concepts" class="concept-section">
+					<h2>🏗️ Concepts Techniques</h2>
+
+					<!-- Architecture -->
+					<div class="concept-detail">
+						<h3>{{ concepts_techniques.architecture.title }}</h3>
+						<p class="concept-description">{{ concepts_techniques.architecture.description }}</p>
+
+						<div class="architecture-diagram">
+							{% for nom, description in concepts_techniques.architecture.composants %}
+								<div class="architecture-component">
+									<div class="component-icon">
+										{% if nom == 'Frontend' %}🖥️
+											{% elseif nom == 'Backend' %}⚙️
+											{% elseif nom == 'Database' %}🗄️
+											{% else %}🔐
+										{% endif %}
+									</div>
+									<h4>{{ nom }}</h4>
+									<p>{{ description }}</p>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+
+					<!-- Design Patterns -->
+					<div class="concept-detail">
+						<h3>{{ concepts_techniques.patterns.title }}</h3>
+						<p class="concept-description">{{ concepts_techniques.patterns.description }}</p>
+
+						<div class="patterns-grid">
+							{% for pattern, description in concepts_techniques.patterns.liste %}
+								<div class="pattern-card">
+									<h4>{{ pattern }}</h4>
+									<p>{{ description }}</p>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+
+					<!-- Sécurité -->
+					<div class="concept-detail">
+						<h3>{{ concepts_techniques.securite.title }}</h3>
+						<p class="concept-description">{{ concepts_techniques.securite.description }}</p>
+
+						<div class="security-grid">
+							{% for mesure, description in concepts_techniques.securite.mesures %}
+								<div class="security-item">
+									<div class="security-icon">🛡️</div>
+									<h4>{{ mesure }}</h4>
+									<p>{{ description }}</p>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</section>
+
+				<!-- Section Technologies -->
+				<section id="technologies" class="concept-section">
+					<h2>🛠️ Stack Technologique</h2>
+
+					<div
+						class="tech-stack">
+						<!-- Backend -->
+						<div class="tech-category">
+							<h3>⚙️ Backend</h3>
+							<div class="tech-grid">
+								{% for tech, description in technologies.backend %}
+									<div class="tech-item">
+										<h4>{{ tech }}</h4>
+										<p>{{ description }}</p>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+
+						<!-- Frontend -->
+						<div class="tech-category">
+							<h3>🖥️ Frontend</h3>
+							<div class="tech-grid">
+								{% for tech, description in technologies.frontend %}
+									<div class="tech-item">
+										<h4>{{ tech }}</h4>
+										<p>{{ description }}</p>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+
+						<!-- Outils -->
+						<div class="tech-category">
+							<h3>🔧 Outils de Développement</h3>
+							<div class="tech-grid">
+								{% for tech, description in technologies.outils %}
+									<div class="tech-item">
+										<h4>{{ tech }}</h4>
+										<p>{{ description }}</p>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Section Commencer -->
+				<section id="commencer" class="concept-section">
+					<h2>🚀 Prêt à Commencer ?</h2>
+
+					<div class="getting-started">
+						<div class="start-card">
+							<div class="start-icon">📚</div>
+							<h3>1. Préparez votre Environnement</h3>
+							<p>Assurez-vous d'avoir PHP 8.1+, Composer, et une base de données (MySQL/PostgreSQL) installés.</p>
+						</div>
+
+						<div class="start-card">
+							<div class="start-icon">💻</div>
+							<h3>2. Suivez le Guide</h3>
+							<p>Chaque étape contient le code complet avec explications. Prenez le temps de comprendre avant de passer à la suite.</p>
+						</div>
+
+						<div class="start-card">
+							<div class="start-icon">🎯</div>
+							<h3>3. Pratiquez</h3>
+							<p>Implémentez chaque fonctionnalité et n'hésitez pas à expérimenter avec vos propres améliorations.</p>
+						</div>
+					</div>
+
+					<!-- Bouton de démarrage -->
+					<div class="start-action">
+						<div class="action-card">
+							<h3>🎪 Commencer le Tutoriel</h3>
+							<p>Prêt à construire votre site e-commerce ? Commençons par l'étape 1 !</p>
+							<button class="btn-primary btn-large" onclick="scrollToSection('roadmap')">
+								Démarrer l'Étape 1 🚀
+							</button>
+						</div>
+					</div>
+				</section>
+
+				<!-- Tips et Best Practices -->
+				<section class="tips-section">
+					<h2>💡 Conseils pour Réussir</h2>
+
+					<div class="tips-grid">
+						<div class="tip-card">
+							<div class="tip-icon">🔄</div>
+							<h3>Développement Itératif</h3>
+							<p>Testez chaque fonctionnalité avant de passer à la suivante. Un code qui fonctionne vaut mieux qu'un code parfait non testé.</p>
+						</div>
+
+						<div class="tip-card">
+							<div class="tip-icon">📖</div>
+							<h3>Documentation</h3>
+							<p>Consultez la documentation officielle Symfony pour approfondir vos connaissances sur chaque composant utilisé.</p>
+						</div>
+
+						<div class="tip-card">
+							<div class="tip-icon">🐛</div>
+							<h3>Debug</h3>
+							<p>Utilisez le Symfony Profiler et les logs pour identifier et résoudre rapidement les problèmes.</p>
+						</div>
+
+						<div class="tip-card">
+							<div class="tip-icon">🔒</div>
+							<h3>Sécurité</h3>
+							<p>Pensez sécurité dès le début : validation des données, protection CSRF, et gestion des permissions.</p>
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</main>
+	</div>
+
+	<script>
+		function scrollToSection(sectionId) {
+document.getElementById(sectionId).scrollIntoView({behavior: 'smooth'});
+}
+	</script>
+{% endblock %}

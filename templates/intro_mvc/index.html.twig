@@ -1,0 +1,334 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ pageTitle }}
+	- Cours PHP Matrix
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/intro-mvc.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div
+		class="intro-mvc-page">
+		<!-- Header avec style spécifique MVC -->
+		<header class="mvc-header">
+			<div class="container">
+				<h1 class="page-title">
+					<span class="icon">🏗️</span>
+					{{ presentation.title }}
+				</h1>
+				<p class="page-subtitle">
+					{{ presentation.description }}
+				</p>
+				<div class="mvc-stats">
+					<div class="stat-item">
+						<strong>Niveau :</strong>
+						{{ presentation.niveau }}
+					</div>
+					<div class="stat-item">
+						<strong>Durée :</strong>
+						{{ presentation.duree_estimee }}
+					</div>
+					<div class="stat-item">
+						<strong>Type :</strong>
+						Exercice Pratique
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Navigation rapide -->
+		<nav class="quick-nav">
+			<div class="container">
+				<div class="nav-pills">
+					<a href="#objectif" class="nav-pill">Objectif</a>
+					<a href="#mvc-pattern" class="nav-pill">Pattern MVC</a>
+					<a href="#exercice" class="nav-pill">Exercice</a>
+					<a href="#avantages" class="nav-pill">Avantages</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Contenu principal -->
+		<main class="main-content">
+			<div
+				class="container">
+
+				<!-- Section Objectif -->
+				<section id="objectif" class="concept-section">
+					<h2>🎯 Objectif de l'Exercice</h2>
+					<div class="objectif-card">
+						<div class="objectif-content">
+							<h3>{{ presentation.objectif }}</h3>
+							<p>Cet exercice vous guide dans la création d'une mini-boutique en ligne pour comprendre concrètement comment fonctionne le pattern MVC avec Symfony. Vous allez :</p>
+							<ul class="objectif-list">
+								<li>
+									<strong>Créer des entités</strong>
+									pour modéliser vos données</li>
+								<li>
+									<strong>Utiliser des fixtures</strong>
+									pour alimenter votre base</li>
+								<li>
+									<strong>Développer des contrôleurs</strong>
+									pour la logique métier</li>
+								<li>
+									<strong>Concevoir des templates</strong>
+									pour l'affichage</li>
+								<li>
+									<strong>Comprendre l'interaction</strong>
+									entre tous ces composants</li>
+							</ul>
+						</div>
+						<div class="objectif-visual">
+							<div class="mvc-diagram-simple">
+								<div class="mvc-box model">MODEL</div>
+								<div class="mvc-arrow">↕️</div>
+								<div class="mvc-box controller">CONTROLLER</div>
+								<div class="mvc-arrow">↕️</div>
+								<div class="mvc-box view">VIEW</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Section MVC Pattern -->
+				<section id="mvc-pattern" class="concept-section">
+					<h2>🏗️ Comprendre le Pattern MVC</h2>
+
+					<div class="mvc-explanation">
+						{% for key, concept in concepts_mvc %}
+							<div class="mvc-component-card">
+								<div class="component-header {{ key }}">
+									<h3>{{ concept.title }}</h3>
+									<p class="component-role">{{ concept.role }}</p>
+								</div>
+
+								<div class="component-body">
+									<p class="component-description">{{ concept.description }}</p>
+
+									<div class="component-details">
+										<div class="component-composants">
+											<h4>🔧 Composants :</h4>
+											<ul>
+												{% for nom, desc in concept.composants %}
+													<li>
+														<strong>{{ nom }}</strong>
+														:
+														{{ desc }}</li>
+												{% endfor %}
+											</ul>
+										</div>
+
+										<div class="component-responsabilites">
+											<h4>📋 Responsabilités :</h4>
+											<ul>
+												{% for resp in concept.responsabilites %}
+													<li>{{ resp }}</li>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Exercice Pratique -->
+				<section id="exercice" class="concept-section">
+					<h2>💻 Exercice Pratique - Mini-Boutique</h2>
+
+					<div class="exercice-intro">
+						<div class="projet-card">
+							<div class="projet-icon">🛍️</div>
+							<h3>Projet : Mini-Boutique en Ligne</h3>
+							<p>Vous allez créer une boutique simple avec :</p>
+							<div class="features-grid">
+								<div class="feature">✅ Liste de produits</div>
+								<div class="feature">✅ Détail d'un produit</div>
+								<div class="feature">✅ Données persistantes</div>
+								<div class="feature">✅ Interface utilisateur</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="exercice-steps">
+						{% for etape in etapes_exercice %}
+							<div class="step-card">
+								<div class="step-header">
+									<div class="step-number">{{ etape.numero }}</div>
+									<div class="step-info">
+										<h3>{{ etape.titre }}</h3>
+										<div class="step-meta">
+											<span class="step-component {{ etape.composant_mvc|lower }}">{{ etape.composant_mvc }}</span>
+											<span class="step-duration">⏱️
+												{{ etape.duree }}</span>
+											<span class="step-level">🎯
+												{{ etape.niveau }}</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="step-content">
+									<p class="step-description">{{ etape.description }}</p>
+
+									<!-- Objectifs -->
+									<div class="step-objectives">
+										<h4>🎯 Objectifs :</h4>
+										<ul>
+											{% for objectif in etape.objectifs %}
+												<li>{{ objectif }}</li>
+											{% endfor %}
+										</ul>
+									</div>
+
+									<!-- Code exemple -->
+									{% if etape.code_exemple is defined %}
+										<div class="code-example">
+											<h4>💻 Code Exemple :</h4>
+											<div class="code-header">
+												<span class="file-name">{{ etape.code_exemple.fichier }}</span>
+											</div>
+											<pre class="code-block"><code>{{ etape.code_exemple.contenu }}</code></pre>
+										</div>
+									{% endif %}
+
+									<!-- Commandes -->
+									{% if etape.commandes is defined %}
+										<div class="commands-section">
+											<h4>⚡ Commandes à exécuter :</h4>
+											<div class="commands-list">
+												{% for commande in etape.commandes %}
+													<div class="command-item">
+														<code>{{ commande }}</code>
+														<button class="copy-btn" onclick="copyCommand('{{ commande }}')">📋</button>
+													</div>
+												{% endfor %}
+											</div>
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Avantages MVC -->
+				<section id="avantages" class="concept-section">
+					<h2>✨ Pourquoi Utiliser le Pattern MVC ?</h2>
+
+					<div class="avantages-grid">
+						{% for key, avantage in avantages_mvc %}
+							<div class="avantage-card">
+								<div class="avantage-icon">
+									{% if key == 'separation' %}🎯
+										{% elseif key == 'maintenabilite' %}🔧
+										{% elseif key == 'testabilite' %}🧪
+										{% else %}♻️
+									{% endif %}
+								</div>
+								<h3>{{ avantage.titre }}</h3>
+								<p>{{ avantage.description }}</p>
+								<div class="exemple-section">
+									<strong>Exemple :</strong>
+									<p class="exemple-text">{{ avantage.exemple }}</p>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+
+				<!-- Section Récapitulatif -->
+				<section class="recap-section">
+					<h2>📝 Récapitulatif de l'Exercice</h2>
+
+					<div class="recap-content">
+						<div class="recap-card">
+							<h3>🎓 Ce que vous avez appris</h3>
+							<div class="learnings-grid">
+								<div class="learning-item">
+									<div class="learning-icon">📊</div>
+									<h4>Entités & Doctrine</h4>
+									<p>Modélisation des données avec des entités PHP</p>
+								</div>
+								<div class="learning-item">
+									<div class="learning-icon">🗄️</div>
+									<h4>Fixtures & Données</h4>
+									<p>Alimentation de la base avec des données de test</p>
+								</div>
+								<div class="learning-item">
+									<div class="learning-icon">⚙️</div>
+									<h4>Contrôleurs</h4>
+									<p>Logique métier et gestion des requêtes HTTP</p>
+								</div>
+								<div class="learning-item">
+									<div class="learning-icon">🎨</div>
+									<h4>Templates Twig</h4>
+									<p>Affichage dynamique des données</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="next-steps-card">
+							<h3>🚀 Prochaines Étapes</h3>
+							<p>Maintenant que vous maîtrisez les bases du MVC, vous pouvez :</p>
+							<ul>
+								<li>Ajouter de nouvelles fonctionnalités (recherche, catégories)</li>
+								<li>Implémenter un système d'authentification</li>
+								<li>Créer un panier d'achat</li>
+								<li>Passer au tutoriel e-commerce complet</li>
+							</ul>
+							<div class="cta-section">
+								<a href="{{ path('app_ecommerce') }}" class="btn-primary">
+									Passer au Tutoriel E-commerce Avancé 🛒
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Section Aide & Resources -->
+				<section class="help-section">
+					<h2>🆘 Besoin d'Aide ?</h2>
+
+					<div class="help-grid">
+						<div class="help-card">
+							<div class="help-icon">📚</div>
+							<h3>Documentation</h3>
+							<p>Consultez la documentation officielle Symfony pour approfondir</p>
+							<a href="https://symfony.com/doc" target="_blank" class="help-link">Voir la doc →</a>
+						</div>
+
+						<div class="help-card">
+							<div class="help-icon">🐛</div>
+							<h3>Debugging</h3>
+							<p>Utilisez le Symfony Profiler pour diagnostiquer les problèmes</p>
+							<code>php bin/console debug:router</code>
+						</div>
+
+						<div class="help-card">
+							<div class="help-icon">💡</div>
+							<h3>Conseils</h3>
+							<p>Prenez le temps de comprendre chaque étape avant de passer à la suivante</p>
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</main>
+	</div>
+
+	<script>
+		function copyCommand(command) {
+navigator.clipboard.writeText(command).then(function () { // Feedback visuel
+event.target.textContent = '✅';
+setTimeout(() => {
+event.target.textContent = '📋';
+}, 1000);
+});
+}
+	</script>
+{% endblock %}

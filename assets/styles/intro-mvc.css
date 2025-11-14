@@ -1,0 +1,700 @@
+/* ===============================================
+   STYLES SPÉCIFIQUES INTRO MVC 
+   =============================================== */
+
+/* Page Intro MVC - Header */
+.intro-mvc-page .mvc-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d3a2d 100%);
+    border-bottom: 2px solid var(--matrix-green);
+    padding: 2rem 0;
+    margin-bottom: 0;
+}
+
+.intro-mvc-page .mvc-header .page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 0 0 10px var(--matrix-green);
+}
+
+.intro-mvc-page .mvc-header .page-title .icon {
+    margin-right: 1rem;
+    font-size: 3rem;
+}
+
+.intro-mvc-page .mvc-header .page-subtitle {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #cccccc;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.intro-mvc-page .mvc-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.intro-mvc-page .mvc-stats .stat-item {
+    background: rgba(0, 255, 65, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--matrix-green);
+    font-size: 0.9rem;
+}
+
+/* Objectif Section */
+.objectif-card {
+    background: rgba(0, 255, 65, 0.05);
+    border: 2px solid var(--matrix-green);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.objectif-content h3 {
+    color: var(--matrix-green);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.objectif-list {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.objectif-list li {
+    margin-bottom: 0.8rem;
+    color: #cccccc;
+    line-height: 1.5;
+}
+
+.mvc-diagram-simple {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mvc-box {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+}
+
+.mvc-arrow {
+    font-size: 1.5rem;
+    color: var(--matrix-green);
+}
+
+/* MVC Explanation */
+.mvc-explanation {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.mvc-component-card {
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px solid var(--matrix-green);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.mvc-component-card:hover {
+    background: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+}
+
+.component-header {
+    padding: 1.5rem;
+    position: relative;
+}
+
+.component-header.model {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 100, 100, 0.2) 0%,
+        rgba(255, 50, 50, 0.1) 100%
+    );
+    border-left: 4px solid #ff6464;
+}
+
+.component-header.view {
+    background: linear-gradient(
+        135deg,
+        rgba(100, 150, 255, 0.2) 0%,
+        rgba(50, 100, 255, 0.1) 100%
+    );
+    border-left: 4px solid #6496ff;
+}
+
+.component-header.controller {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 200, 100, 0.2) 0%,
+        rgba(255, 150, 50, 0.1) 100%
+    );
+    border-left: 4px solid #ffc864;
+}
+
+.component-header h3 {
+    color: var(--matrix-green);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.4rem;
+}
+
+.component-role {
+    color: #cccccc;
+    font-style: italic;
+    margin: 0;
+}
+
+.component-body {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.component-description {
+    margin-bottom: 1.5rem;
+    color: #cccccc;
+    line-height: 1.6;
+}
+
+.component-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.component-composants h4,
+.component-responsabilites h4 {
+    color: var(--matrix-green);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.component-composants ul,
+.component-responsabilites ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.component-composants li,
+.component-responsabilites li {
+    margin-bottom: 0.5rem;
+    color: #cccccc;
+    line-height: 1.4;
+}
+
+/* Exercice Section */
+.exercice-intro {
+    margin: 2rem 0;
+}
+
+.projet-card {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 65, 0.1) 0%,
+        rgba(0, 255, 65, 0.05) 100%
+    );
+    border: 2px solid var(--matrix-green);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+}
+
+.projet-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.projet-card h3 {
+    color: var(--matrix-green);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.feature {
+    background: rgba(0, 255, 65, 0.1);
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: 1px solid var(--matrix-green);
+    font-weight: bold;
+}
+
+/* Steps */
+.exercice-steps {
+    margin: 3rem 0;
+}
+
+.step-card {
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px solid var(--matrix-green);
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.step-card:hover {
+    background: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+}
+
+.step-header {
+    background: rgba(0, 255, 65, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.step-number {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+}
+
+.step-info h3 {
+    color: var(--matrix-green);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
+}
+
+.step-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.step-component {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.step-component.model {
+    background: rgba(255, 100, 100, 0.3);
+    color: #ff6464;
+    border: 1px solid #ff6464;
+}
+
+.step-component.view {
+    background: rgba(100, 150, 255, 0.3);
+    color: #6496ff;
+    border: 1px solid #6496ff;
+}
+
+.step-component.controller {
+    background: rgba(255, 200, 100, 0.3);
+    color: #ffc864;
+    border: 1px solid #ffc864;
+}
+
+.step-component.data,
+.step-component.all {
+    background: rgba(0, 255, 65, 0.3);
+    color: var(--matrix-green);
+    border: 1px solid var(--matrix-green);
+}
+
+.step-duration,
+.step-level {
+    background: rgba(0, 255, 65, 0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid var(--matrix-green);
+}
+
+.step-content {
+    padding: 1.5rem;
+}
+
+.step-description {
+    margin-bottom: 1.5rem;
+    color: #cccccc;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.step-objectives h4 {
+    color: var(--matrix-green);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.step-objectives ul {
+    margin: 0 0 1.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.step-objectives li {
+    margin-bottom: 0.5rem;
+    color: #cccccc;
+    line-height: 1.4;
+}
+
+/* Code Example */
+.code-example {
+    background: #1a1a1a;
+    border: 1px solid var(--matrix-green);
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+}
+
+.code-example h4 {
+    color: var(--matrix-green);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.code-header {
+    background: rgba(0, 255, 65, 0.2);
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--matrix-green);
+}
+
+.file-name {
+    font-family: "Courier New", monospace;
+    color: var(--matrix-green);
+    font-weight: bold;
+}
+
+.code-block {
+    background: #0a0a0a;
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #cccccc;
+}
+
+/* Commands */
+.commands-section {
+    margin: 1.5rem 0;
+}
+
+.commands-section h4 {
+    color: var(--matrix-green);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.commands-list {
+    background: #1a1a1a;
+    border: 1px solid var(--matrix-green);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.command-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0a0a0a;
+    margin-bottom: 0.5rem;
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+}
+
+.command-item:last-child {
+    margin-bottom: 0;
+}
+
+.command-item code {
+    font-family: "Courier New", monospace;
+    color: var(--matrix-green);
+    flex-grow: 1;
+}
+
+.copy-btn {
+    background: transparent;
+    border: 1px solid var(--matrix-green);
+    color: var(--matrix-green);
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+}
+
+/* Avantages MVC */
+.avantages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.avantage-card {
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px solid var(--matrix-green);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.avantage-card:hover {
+    background: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+    transform: translateY(-5px);
+}
+
+.avantage-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.avantage-card h3 {
+    color: var(--matrix-green);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.exemple-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 255, 65, 0.3);
+    text-align: left;
+}
+
+.exemple-text {
+    font-style: italic;
+    color: #aaaaaa;
+    line-height: 1.5;
+}
+
+/* Récapitulatif */
+.recap-section {
+    margin-top: 4rem;
+    padding: 3rem 0;
+    border-top: 2px solid var(--matrix-green);
+}
+
+.recap-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.recap-card,
+.next-steps-card {
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px solid var(--matrix-green);
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.recap-card h3,
+.next-steps-card h3 {
+    color: var(--matrix-green);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.learnings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.learning-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(0, 255, 65, 0.1);
+    border-radius: 10px;
+    border: 1px solid var(--matrix-green);
+}
+
+.learning-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.learning-item h4 {
+    color: var(--matrix-green);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.learning-item p {
+    font-size: 0.9rem;
+    color: #cccccc;
+}
+
+.next-steps-card ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.next-steps-card li {
+    margin-bottom: 0.8rem;
+    color: #cccccc;
+    line-height: 1.5;
+}
+
+.cta-section {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    background: var(--matrix-green);
+    color: var(--matrix-black);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background: #00ff41;
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Help Section */
+.help-section {
+    margin-top: 3rem;
+}
+
+.help-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.help-card {
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px solid var(--matrix-green);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.help-card:hover {
+    background: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+    transform: translateY(-5px);
+}
+
+.help-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.help-card h3 {
+    color: var(--matrix-green);
+    margin-bottom: 1rem;
+}
+
+.help-link {
+    color: var(--matrix-green);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.help-link:hover {
+    text-decoration: underline;
+}
+
+.help-card code {
+    background: #1a1a1a;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-family: "Courier New", monospace;
+    color: var(--matrix-green);
+    display: block;
+    margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .objectif-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .component-details {
+        grid-template-columns: 1fr;
+    }
+
+    .step-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .step-meta {
+        justify-content: center;
+    }
+
+    .recap-content {
+        grid-template-columns: 1fr;
+    }
+
+    .learnings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .command-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .intro-mvc-page .mvc-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+}
