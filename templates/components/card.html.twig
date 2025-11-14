@@ -26,7 +26,11 @@
 	{% if title is defined %}
 		<h3 class="card__title">
 			{% if icon is defined %}
-				<i class="card__icon {{ icon }}"></i>
+				{% if icon starts with 'fa-' or icon starts with 'fas ' or icon starts with 'far ' %}
+					<i class="card__icon {{ icon }}"></i>
+				{% else %}
+					<span class="card__icon">{{ icon }}</span>
+				{% endif %}
 			{% endif %}
 			{{ title }}
 		</h3>

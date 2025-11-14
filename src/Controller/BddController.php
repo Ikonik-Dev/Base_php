@@ -45,8 +45,8 @@ Les BDD sont essentielles pour tout site dynamique : utilisateurs, articles, com
                     'DSN complet : préciser host, dbname, charset, port si non standard'
                 ],
                 'resources' => [
-                    ['title' => 'PDO PHP Manuel', 'url' => 'https://www.php.net/manual/fr/book.pdo.php', 'icon' => '📖'],
-                    ['title' => 'MySQL Documentation', 'url' => 'https://dev.mysql.com/doc/', 'icon' => '🔗']
+                    ['label' => 'PDO PHP Manuel', 'url' => 'https://www.php.net/manual/fr/book.pdo.php', 'icon' => '📖'],
+                    ['label' => 'MySQL Documentation', 'url' => 'https://dev.mysql.com/doc/', 'icon' => '🔗']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-pdo_introduction', 'label' => 'PDO Introduction'],
@@ -86,7 +86,7 @@ PDO protège contre les injections SQL si vous utilisez les requêtes préparée
                     'Mode production : logger erreurs, afficher message générique utilisateur'
                 ],
                 'resources' => [
-                    ['title' => 'PDO Options', 'url' => 'https://www.php.net/manual/fr/pdo.setattribute.php', 'icon' => '📖']
+                    ['label' => 'PDO Options', 'url' => 'https://www.php.net/manual/fr/pdo.setattribute.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-introduction_bdd', 'label' => 'Introduction BDD'],
@@ -126,7 +126,7 @@ Ne JAMAIS concaténer des variables dans SQL : "WHERE id = $id" est dangereux. T
                     'Fetch mode : FETCH_ASSOC évite doublons index numériques inutiles'
                 ],
                 'resources' => [
-                    ['title' => 'PDO fetch modes', 'url' => 'https://www.php.net/manual/fr/pdostatement.fetch.php', 'icon' => '📖']
+                    ['label' => 'PDO fetch modes', 'url' => 'https://www.php.net/manual/fr/pdostatement.fetch.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-requetes_preparees', 'label' => 'Requêtes préparées'],
@@ -166,7 +166,7 @@ Deux syntaxes : positionnelle avec ? (ordre compte) ou nommée avec :email (plus
                     'Types explicites : bindValue(..., PDO::PARAM_INT) si besoin typage fort'
                 ],
                 'resources' => [
-                    ['title' => 'Prepared Statements', 'url' => 'https://www.php.net/manual/fr/pdo.prepared-statements.php', 'icon' => '📖']
+                    ['label' => 'Prepared Statements', 'url' => 'https://www.php.net/manual/fr/pdo.prepared-statements.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-securite_bdd', 'label' => 'Sécurité BDD'],
@@ -206,7 +206,7 @@ Attention aux colonnes obligatoires (NOT NULL) : si vous oubliez une colonne req
                     'Retour lastInsertId : toujours récupérer ID pour opérations suivantes'
                 ],
                 'resources' => [
-                    ['title' => 'PDO lastInsertId', 'url' => 'https://www.php.net/manual/fr/pdo.lastinsertid.php', 'icon' => '📖']
+                    ['label' => 'PDO lastInsertId', 'url' => 'https://www.php.net/manual/fr/pdo.lastinsertid.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-requetes_preparees', 'label' => 'Requêtes préparées'],
@@ -246,7 +246,7 @@ Toujours requête préparée pour UPDATE. Les valeurs SET et WHERE sont des para
                     'Transactions : si UPDATE multiple lié, utiliser beginTransaction()'
                 ],
                 'resources' => [
-                    ['title' => 'PDO rowCount', 'url' => 'https://www.php.net/manual/fr/pdostatement.rowcount.php', 'icon' => '📖']
+                    ['label' => 'PDO rowCount', 'url' => 'https://www.php.net/manual/fr/pdostatement.rowcount.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-requetes_preparees', 'label' => 'Requêtes préparées'],
@@ -286,7 +286,7 @@ Alternative soft delete : plutôt que DELETE, faites UPDATE avec colonne deleted
                     'Confirmation : double vérification utilisateur avant DELETE important'
                 ],
                 'resources' => [
-                    ['title' => 'SQL DELETE', 'url' => 'https://www.w3schools.com/sql/sql_delete.asp', 'icon' => '📖']
+                    ['label' => 'SQL DELETE', 'url' => 'https://www.w3schools.com/sql/sql_delete.asp', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-requetes_preparees', 'label' => 'Requêtes préparées'],
@@ -326,7 +326,7 @@ Pas de transaction = risque d\'incohérence. Utilisez pour toute opération mult
                     'Logs détaillés : logger opérations transaction pour debugging'
                 ],
                 'resources' => [
-                    ['title' => 'PDO Transactions', 'url' => 'https://www.php.net/manual/fr/pdo.transactions.php', 'icon' => '📖']
+                    ['label' => 'PDO Transactions', 'url' => 'https://www.php.net/manual/fr/pdo.transactions.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-insertion_donnees', 'label' => 'Insertion'],
@@ -368,7 +368,7 @@ Attention performance : trop de JOIN ralentit. Optimisez avec index sur colonnes
                     'Limiter JOIN : 3-4 maximum, sinon repenser schéma ou utiliser cache'
                 ],
                 'resources' => [
-                    ['title' => 'SQL Joins', 'url' => 'https://www.w3schools.com/sql/sql_join.asp', 'icon' => '📖']
+                    ['label' => 'SQL Joins', 'url' => 'https://www.w3schools.com/sql/sql_join.asp', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-requetes_select', 'label' => 'Requêtes SELECT'],
@@ -408,7 +408,7 @@ Ne jamais montrer getMessage() à l\'utilisateur : révèle structure BDD, faill
                     'Codes erreur : switch getCode() pour réponses adaptées (23000 = doublon)'
                 ],
                 'resources' => [
-                    ['title' => 'PDO Error Handling', 'url' => 'https://www.php.net/manual/fr/pdo.error-handling.php', 'icon' => '📖']
+                    ['label' => 'PDO Error Handling', 'url' => 'https://www.php.net/manual/fr/pdo.error-handling.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-pdo_introduction', 'label' => 'PDO Introduction'],
@@ -448,8 +448,8 @@ Pour requêtes complexes, QueryBuilder ou DQL (Doctrine Query Language) remplace
                     'Transactions : flush() dans try/catch, clear() si erreur'
                 ],
                 'resources' => [
-                    ['title' => 'Doctrine ORM', 'url' => 'https://www.doctrine-project.org/projects/orm.html', 'icon' => '📖'],
-                    ['title' => 'Symfony Doctrine', 'url' => 'https://symfony.com/doc/current/doctrine.html', 'icon' => '🔗']
+                    ['label' => 'Doctrine ORM', 'url' => 'https://www.doctrine-project.org/projects/orm.html', 'icon' => '📖'],
+                    ['label' => 'Symfony Doctrine', 'url' => 'https://symfony.com/doc/current/doctrine.html', 'icon' => '🔗']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-pdo_introduction', 'label' => 'PDO Introduction'],
@@ -489,8 +489,8 @@ Avantage énorme : toute l\'équipe partage les mêmes migrations. Déploiement 
                     'Messages clairs : nommer fichier migration descriptif (add_user_phone_column)'
                 ],
                 'resources' => [
-                    ['title' => 'Doctrine Migrations', 'url' => 'https://www.doctrine-project.org/projects/migrations.html', 'icon' => '📖'],
-                    ['title' => 'Symfony Migrations', 'url' => 'https://symfony.com/doc/current/doctrine.html#migrations', 'icon' => '🔗']
+                    ['label' => 'Doctrine Migrations', 'url' => 'https://www.doctrine-project.org/projects/migrations.html', 'icon' => '📖'],
+                    ['label' => 'Symfony Migrations', 'url' => 'https://symfony.com/doc/current/doctrine.html#migrations', 'icon' => '🔗']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-orm_doctrine', 'label' => 'ORM Doctrine'],
@@ -532,7 +532,7 @@ EXPLAIN devant votre SELECT montre si index utilisé. Si "full table scan", c\'e
                     'Monitoring : log slow queries (> 1s) pour identifier problèmes'
                 ],
                 'resources' => [
-                    ['title' => 'MySQL Index', 'url' => 'https://dev.mysql.com/doc/refman/8.0/en/optimization-indexes.html', 'icon' => '📖']
+                    ['label' => 'MySQL Index', 'url' => 'https://dev.mysql.com/doc/refman/8.0/en/optimization-indexes.html', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-requetes_select', 'label' => 'Requêtes SELECT'],
@@ -574,8 +574,8 @@ Variables environnement, SSL connexion, backup chiffré, logs audits complètent
                     'Audit logs : tracer qui fait quoi (INSERT/UPDATE/DELETE) avec timestamps'
                 ],
                 'resources' => [
-                    ['title' => 'OWASP SQL Injection', 'url' => 'https://owasp.org/www-community/attacks/SQL_Injection', 'icon' => '🔗'],
-                    ['title' => 'PHP password_hash', 'url' => 'https://www.php.net/manual/fr/function.password-hash.php', 'icon' => '📖']
+                    ['label' => 'OWASP SQL Injection', 'url' => 'https://owasp.org/www-community/attacks/SQL_Injection', 'icon' => '🔗'],
+                    ['label' => 'PHP password_hash', 'url' => 'https://www.php.net/manual/fr/function.password-hash.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-requetes_preparees', 'label' => 'Requêtes préparées'],

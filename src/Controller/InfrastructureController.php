@@ -13,7 +13,7 @@ final class InfrastructureController extends AbstractController
     {
         $concepts = [
             'architecture_client_serveur' => [
-                'title' => 'Architecture Client-Serveur',
+                'label' => 'Architecture Client-Serveur',
                 'description' => 'Le web fonctionne selon un modèle client-serveur où les navigateurs (clients) envoient des requêtes aux serveurs web qui renvoient des réponses.',
                 'details' => [
                     'Client (Navigateur)' => 'Initie les requêtes HTTP, affiche le HTML/CSS/JS, gère l\'interface utilisateur',
@@ -22,7 +22,7 @@ final class InfrastructureController extends AbstractController
                 ]
             ],
             'pile_lamp_lemp' => [
-                'title' => 'Pile LAMP/LEMP',
+                'label' => 'Pile LAMP/LEMP',
                 'description' => 'LAMP (Linux, Apache, MySQL, PHP) et LEMP (Linux, Nginx, MySQL, PHP) sont les piles technologiques standard pour le développement web.',
                 'details' => [
                     'Linux' => 'Système d\'exploitation serveur, stable et sécurisé',
@@ -32,7 +32,7 @@ final class InfrastructureController extends AbstractController
                 ]
             ],
             'cycle_requete_reponse' => [
-                'title' => 'Cycle Requête-Réponse HTTP',
+                'label' => 'Cycle Requête-Réponse HTTP',
                 'description' => 'Chaque interaction web suit un cycle : requête HTTP du client, traitement serveur, génération de la réponse, renvoi au client.',
                 'details' => [
                     '1. Requête HTTP' => 'GET/POST/PUT/DELETE avec headers, paramètres et body',
@@ -42,7 +42,7 @@ final class InfrastructureController extends AbstractController
                 ]
             ],
             'role_de_php' => [
-                'title' => 'Rôle de PHP dans l\'écosystème',
+                'label' => 'Rôle de PHP dans l\'écosystème',
                 'description' => 'PHP est le moteur côté serveur qui génère du contenu dynamique, traite les formulaires, gère les sessions et interagit avec les bases de données.',
                 'details' => [
                     'Génération dynamique' => 'Création de HTML personnalisé selon l\'utilisateur et les données',
@@ -52,7 +52,7 @@ final class InfrastructureController extends AbstractController
                 ]
             ],
             'protocoles_et_standards' => [
-                'title' => 'Protocoles et Standards Web',
+                'label' => 'Protocoles et Standards Web',
                 'description' => 'Le web repose sur des protocoles standardisés qui permettent l\'interopérabilité entre tous les systèmes.',
                 'details' => [
                     'HTTP/HTTPS' => 'Protocole de communication web, sécurisé avec SSL/TLS',
@@ -62,7 +62,7 @@ final class InfrastructureController extends AbstractController
                 ]
             ],
             'environnements_deploiement' => [
-                'title' => 'Environnements de Déploiement',
+                'label' => 'Environnements de Déploiement',
                 'description' => 'De la machine de développement à la production, comprendre les différents environnements et leurs spécificités.',
                 'details' => [
                     'Développement local' => 'XAMPP, WAMP, Laragon pour tester localement',
@@ -72,7 +72,7 @@ final class InfrastructureController extends AbstractController
                 ]
             ],
             'optimisation_performance' => [
-                'title' => 'Optimisation et Performance',
+                'label' => 'Optimisation et Performance',
                 'description' => 'Techniques pour optimiser les performances de l\'infrastructure web et améliorer l\'expérience utilisateur.',
                 'details' => [
                     'Cache serveur' => 'OPcache PHP, cache de requêtes MySQL, Redis/Memcached',
@@ -82,7 +82,7 @@ final class InfrastructureController extends AbstractController
                 ]
             ],
             'securite_infrastructure' => [
-                'title' => 'Sécurité de l\'Infrastructure',
+                'label' => 'Sécurité de l\'Infrastructure',
                 'description' => 'Principes et pratiques de sécurité pour protéger l\'infrastructure web contre les menaces.',
                 'details' => [
                     'HTTPS obligatoire' => 'Chiffrement des communications client-serveur',

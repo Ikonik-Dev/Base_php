@@ -16,7 +16,7 @@ final class VariablesController extends AbstractController
             'declaration' => [
                 'description' => 'En PHP, une variable commence toujours par le symbole $ suivi du nom. Aucune déclaration préalable n\'est nécessaire.',
                 'example' => '$maVariable = "Bonjour";\n$nombre = 42;\n$estVrai = true;',
-                'details' => 'PHP est un langage à typage dynamique, ce qui signifie que vous n\'avez pas besoin de déclarer le type d\'une variable avant de l\'utiliser. Le moteur PHP détermine automatiquement le type en fonction de la valeur assignée. Le préfixe $ est obligatoire pour toutes les variables et permet de les distinguer des constantes et des mots-clés du langage.',
+                'details' => 'En PHP, c\'est super simple : vous créez une variable en écrivant $ puis son nom, et hop ! Pas besoin d\'annoncer "je vais créer une variable de type texte" comme dans d\'autres langages. PHP devine automatiquement le type selon ce que vous mettez dedans : du texte, un nombre, vrai/faux... Le $ est obligatoire, c\'est comme ça que PHP reconnaît "ah, c\'est une variable !". Ça la distingue des constantes (sans $) et des mots réservés du langage.',
                 'useCases' => [
                     'Stocker temporairement des résultats de calculs',
                     'Conserver des données utilisateur pendant l\'exécution du script',
@@ -37,8 +37,8 @@ final class VariablesController extends AbstractController
                     'Éviter les variables inutilisées (dead code)'
                 ],
                 'resources' => [
-                    ['title' => 'Documentation PHP - Variables', 'url' => 'https://www.php.net/manual/fr/language.variables.php', 'icon' => '📖'],
-                    ['title' => 'PHP The Right Way', 'url' => 'https://phptherightway.com', 'icon' => '🎓']
+                    ['label' => 'Documentation PHP - Variables', 'url' => 'https://www.php.net/manual/fr/language.variables.php', 'icon' => '📖'],
+                    ['label' => 'PHP The Right Way', 'url' => 'https://phptherightway.com', 'icon' => '🎓']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-regles_nommage', 'label' => 'Règles de nommage'],
@@ -48,7 +48,7 @@ final class VariablesController extends AbstractController
             'regles_nommage' => [
                 'description' => 'Nom de variable : lettre/underscore en premier, puis lettres/chiffres/underscores. Sensible à la casse.',
                 'example' => '$nom_valide = "OK";\n$_aussi_valide = "OK";\n$var2 = "OK";\n// $2var = "ERREUR";',
-                'details' => 'Les règles de nommage en PHP sont strictes : un nom de variable doit commencer par une lettre (a-z, A-Z) ou un underscore (_), suivi de n\'importe quelle combinaison de lettres, chiffres (0-9) ou underscores. Les noms sont sensibles à la casse et ne peuvent pas contenir d\'espaces ou de caractères spéciaux.',
+                'details' => 'Pour nommer une variable : commencez TOUJOURS par une lettre (a-z) ou un underscore _, puis vous pouvez mélanger lettres, chiffres et underscores comme vous voulez. JAMAIS commencer par un chiffre ($2var = ERREUR) ! Important : PHP fait la différence entre majuscules et minuscules, donc $nom et $Nom sont deux variables complètement différentes. Pas d\'espaces, pas d\'accents, pas de caractères bizarres (@, #, -, etc.). Gardez ça simple et lisible !',
                 'useCases' => [
                     'camelCase pour variables locales : $userName, $totalPrice',
                     'snake_case dans bases de données : $user_name, $total_price',
@@ -68,8 +68,8 @@ final class VariablesController extends AbstractController
                     'Les noms doivent être auto-documentants'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Manual - Variables Basics', 'url' => 'https://www.php.net/manual/fr/language.variables.basics.php', 'icon' => '📖'],
-                    ['title' => 'PSR-1 Coding Standards', 'url' => 'https://www.php-fig.org/psr/psr-1/', 'icon' => '📐']
+                    ['label' => 'PHP Manual - Variables Basics', 'url' => 'https://www.php.net/manual/fr/language.variables.basics.php', 'icon' => '📖'],
+                    ['label' => 'PSR-1 Coding Standards', 'url' => 'https://www.php-fig.org/psr/psr-1/', 'icon' => '📐']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-declaration', 'label' => 'Déclaration'],
@@ -79,7 +79,7 @@ final class VariablesController extends AbstractController
             'affectation' => [
                 'description' => 'L\'affectation se fait avec l\'opérateur =. Une variable peut être réassignée à tout moment.',
                 'example' => '$message = "Bonjour";\n$message = "Au revoir"; // Réaffectation\n$copie = $message; // Copie de valeur',
-                'details' => 'L\'affectation en PHP utilise l\'opérateur = et copie la valeur (pour les types scalaires) ou la référence (pour les objets). PHP permet la réaffectation : une variable peut changer de type et de valeur à tout moment. L\'affectation retourne la valeur assignée, permettant des affectations en chaîne.',
+                'details' => 'Affecter une valeur, c\'est mettre quelque chose dans votre boîte-variable avec le signe =. Vous pouvez changer son contenu autant de fois que vous voulez ! Pour les valeurs simples (texte, nombres), PHP fait une copie. Pour les objets, il donne l\'adresse (comme prêter vs photocopier). Super pratique : vous pouvez faire des affectations en chaîne : $a = $b = $c = 0 donne 0 à tout le monde d\'un coup ! Attention à ne pas confondre = (mettre dedans) avec == (comparer).',
                 'useCases' => [
                     'Affectation simple : $x = 10',
                     'Affectation multiple : $a = $b = $c = 0',
@@ -99,7 +99,7 @@ final class VariablesController extends AbstractController
                     'Documenter les affectations par référence si nécessaires'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Operators', 'url' => 'https://www.php.net/manual/fr/language.operators.assignment.php', 'icon' => '📖']
+                    ['label' => 'PHP Operators', 'url' => 'https://www.php.net/manual/fr/language.operators.assignment.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-declaration', 'label' => 'Déclaration'],
@@ -109,7 +109,7 @@ final class VariablesController extends AbstractController
             'portee_locale' => [
                 'description' => 'Les variables déclarées dans une fonction ont une portée locale (accessible uniquement dans cette fonction).',
                 'example' => 'function test() {\n    $locale = "Je suis locale";\n    echo $locale; // OK\n}\n// echo $locale; // ERREUR',
-                'details' => 'La portée locale (ou scope local) signifie qu\'une variable déclarée dans une fonction n\'existe que dans cette fonction. Elle est créée à l\'entrée de la fonction et détruite à sa sortie. Cela évite les conflits de noms et garantit l\'encapsulation des données.',
+                'details' => 'Une variable locale, c\'est comme un secret qui reste dans sa pièce (la fonction) ! Vous créez $locale dans la fonction, elle vit tant que la fonction travaille, puis disparaît quand la fonction se termine. Si vous essayez de l\'utiliser en dehors, erreur : PHP dit "je ne connais pas cette variable". C\'est super pratique : ça évite que deux fonctions se marchent dessus avec des variables du même nom, et ça garde les données bien rangées chacune dans son coin.',
                 'useCases' => [
                     'Variables de travail temporaires dans une fonction',
                     'Paramètres de fonction (toujours locaux)',
@@ -129,7 +129,7 @@ final class VariablesController extends AbstractController
                     'Documenter les variables statiques si utilisées'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Variable Scope', 'url' => 'https://www.php.net/manual/fr/language.variables.scope.php', 'icon' => '📖']
+                    ['label' => 'PHP Variable Scope', 'url' => 'https://www.php.net/manual/fr/language.variables.scope.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-portee_globale', 'label' => 'Portée globale'],
@@ -139,7 +139,7 @@ final class VariablesController extends AbstractController
             'portee_globale' => [
                 'description' => 'Les variables déclarées hors des fonctions sont globales. Utilisez "global" pour y accéder dans une fonction.',
                 'example' => '$globale = "Je suis globale";\nfunction afficher() {\n    global $globale;\n    echo $globale;\n}',
-                'details' => 'Les variables globales sont déclarées dans l\'espace global (hors de toute fonction). Pour y accéder dans une fonction, vous devez utiliser le mot-clé global ou le tableau $GLOBALS. L\'abus de variables globales rend le code difficile à maintenir et à tester.',
+                'details' => 'Une variable globale, c\'est l\'inverse de la locale : elle est déclarée en dehors de toute fonction et existe partout dans votre script. MAIS pour l\'utiliser dans une fonction, vous devez annoncer "global $maVariable" (comme demander la permission d\'utiliser le coffre commun). Attention : les variables globales, c\'est un peu comme laisser traîner ses affaires partout - pratique sur le moment, mais ça devient vite le bazar ! N\'importe quelle fonction peut la modifier sans prévenir. À éviter autant que possible !',
                 'useCases' => [
                     'Configuration de l\'application (à éviter, utiliser des classes de config)',
                     'Connexions aux bases de données (déconseillé, utiliser DI)',
@@ -160,8 +160,8 @@ final class VariablesController extends AbstractController
                     'Documenter clairement toute variable globale utilisée'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Variable Scope', 'url' => 'https://www.php.net/manual/fr/language.variables.scope.php', 'icon' => '📖'],
-                    ['title' => 'Dependency Injection', 'url' => 'https://www.php-fig.org/psr/psr-11/', 'icon' => '🔧']
+                    ['label' => 'PHP Variable Scope', 'url' => 'https://www.php.net/manual/fr/language.variables.scope.php', 'icon' => '📖'],
+                    ['label' => 'Dependency Injection', 'url' => 'https://www.php-fig.org/psr/psr-11/', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-portee_locale', 'label' => 'Portée locale'],
@@ -171,7 +171,7 @@ final class VariablesController extends AbstractController
             'variables_superglobales' => [
                 'description' => 'PHP fournit des variables superglobales automatiquement disponibles partout ($_GET, $_POST, $_SESSION, etc.).',
                 'example' => 'echo $_SERVER[\'PHP_VERSION\'];\n// $_GET, $_POST, $_SESSION\n// $_COOKIE, $_FILES, $GLOBALS',
-                'details' => 'Les superglobales sont des tableaux prédéfinis par PHP, accessibles dans n\'importe quel scope sans déclaration. Elles contiennent des informations sur l\'environnement, les requêtes HTTP, les sessions, etc. Elles constituent l\'interface principale entre PHP et le monde extérieur.',
+                'details' => 'Les superglobales, ce sont les VIP de PHP : des variables spéciales qui sont TOUJOURS disponibles, partout, dans toutes les fonctions, sans rien demander ! Ce sont des tableaux tout prêts que PHP remplit pour vous avec plein d\'infos utiles : $_GET (paramètres URL), $_POST (données formulaire), $_SESSION (données entre pages), $_SERVER (infos serveur), $_COOKIE (cookies), $_FILES (fichiers uploadés). C\'est votre interface principale avec le monde extérieur : navigateur, serveur, utilisateur.',
                 'useCases' => [
                     '$_GET : récupérer paramètres d\'URL',
                     '$_POST : récupérer données de formulaire',
@@ -194,8 +194,8 @@ final class VariablesController extends AbstractController
                     'Vérifier l\'existence des clés : $_GET[\'key\'] ?? null'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Superglobals', 'url' => 'https://www.php.net/manual/fr/language.variables.superglobals.php', 'icon' => '📖'],
-                    ['title' => 'PHP Security', 'url' => 'https://www.php.net/manual/fr/security.php', 'icon' => '🔒']
+                    ['label' => 'PHP Superglobals', 'url' => 'https://www.php.net/manual/fr/language.variables.superglobals.php', 'icon' => '📖'],
+                    ['label' => 'PHP Security', 'url' => 'https://www.php.net/manual/fr/security.php', 'icon' => '🔒']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-global_$_GET', 'label' => '$_GET'],
@@ -206,7 +206,7 @@ final class VariablesController extends AbstractController
             'bonnes_pratiques' => [
                 'description' => 'Utilisez des noms explicites, respectez les conventions (camelCase ou snake_case), initialisez vos variables.',
                 'example' => '$nomUtilisateur = "John"; // camelCase\n$nom_utilisateur = "John"; // snake_case\n$age = 0; // Initialisation',
-                'details' => 'Les bonnes pratiques de manipulation des variables garantissent un code lisible, maintenable et moins sujet aux erreurs. Elles incluent des conventions de nommage cohérentes, l\'initialisation systématique, la limitation de la portée, et l\'utilisation du typage strict pour prévenir les bugs.',
+                'details' => 'Pour écrire du bon code PHP : 1) Donnez des noms clairs à vos variables ($nombreUtilisateurs au lieu de $n). 2) Choisissez un style et gardez-le : camelCase ($monNom) OU snake_case ($mon_nom), pas un mélange ! 3) Initialisez toujours vos variables avant de les utiliser ($compteur = 0 au début). 4) Gardez vos variables locales plutôt que globales. 5) Utilisez declare(strict_types=1) pour que PHP soit strict sur les types. Ces bonnes habitudes rendent votre code plus facile à lire, à maintenir et évitent plein de bugs !',
                 'useCases' => [
                     'Nommage explicite : $totalCommandes au lieu de $t',
                     'Initialisation : $compteur = 0 avant utilisation',
@@ -229,8 +229,8 @@ final class VariablesController extends AbstractController
                     'Documentation : /** @var string $description */'
                 ],
                 'resources' => [
-                    ['title' => 'PSR-12 Coding Style', 'url' => 'https://www.php-fig.org/psr/psr-12/', 'icon' => '📐'],
-                    ['title' => 'Clean Code PHP', 'url' => 'https://github.com/jupeter/clean-code-php', 'icon' => '✨']
+                    ['label' => 'PSR-12 Coding Style', 'url' => 'https://www.php-fig.org/psr/psr-12/', 'icon' => '📐'],
+                    ['label' => 'Clean Code PHP', 'url' => 'https://github.com/jupeter/clean-code-php', 'icon' => '✨']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-declaration', 'label' => 'Déclaration'],
@@ -245,7 +245,7 @@ final class VariablesController extends AbstractController
             '$_GET' => [
                 'description' => 'Contient les données envoyées via l\'URL (méthode GET). Utilisé pour récupérer les paramètres de requête.',
                 'example' => 'URL: example.com?page=2\nAccès: $page = $_GET[\'page\'];',
-                'details' => '$_GET est un tableau associatif contenant les paramètres de l\'URL (query string). Accessible globalement, il permet de récupérer des données passées dans l\'URL. Attention : ces données sont visibles dans l\'URL et doivent être validées car elles proviennent de l\'utilisateur.',
+                'details' => '$_GET, c\'est le tableau magique qui récupère tout ce qui est écrit après le ? dans l\'URL ! Par exemple dans "site.com?page=2&nom=John", $_GET[\'page\'] vous donne 2, et $_GET[\'nom\'] vous donne "John". Super pratique pour la pagination, les filtres, les recherches... MAIS ATTENTION : tout est visible dans l\'URL (donc jamais de mots de passe là-dedans !) et ça vient de l\'utilisateur, donc TOUJOURS vérifier/nettoyer ces données avant de les utiliser !',
                 'useCases' => [
                     'Pagination : ?page=3&limit=10',
                     'Filtres de recherche : ?category=php&sort=date',
@@ -266,8 +266,8 @@ final class VariablesController extends AbstractController
                     'Échapper avant affichage : htmlspecialchars($_GET[\'q\'])'
                 ],
                 'resources' => [
-                    ['title' => 'PHP $_GET', 'url' => 'https://www.php.net/manual/fr/reserved.variables.get.php', 'icon' => '📖'],
-                    ['title' => 'filter_input()', 'url' => 'https://www.php.net/manual/fr/function.filter-input.php', 'icon' => '🔧']
+                    ['label' => 'PHP $_GET', 'url' => 'https://www.php.net/manual/fr/reserved.variables.get.php', 'icon' => '📖'],
+                    ['label' => 'filter_input()', 'url' => 'https://www.php.net/manual/fr/function.filter-input.php', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-global_$_POST', 'label' => '$_POST'],
@@ -278,7 +278,7 @@ final class VariablesController extends AbstractController
             '$_POST' => [
                 'description' => 'Contient les données envoyées via un formulaire HTML (méthode POST). Utilisé pour récupérer les données de formulaire.',
                 'example' => '<form method="POST">\n  <input name="nom">\n</form>\n$nom = $_POST[\'nom\'];',
-                'details' => '$_POST est un tableau associatif contenant les données envoyées par un formulaire HTML avec la méthode POST. Contrairement à GET, les données ne sont pas visibles dans l\'URL. Idéal pour les formulaires de connexion, inscription, et toutes soumissions de données sensibles.',
+                'details' => '$_POST, c\'est le grand frère discret de $_GET ! Quand un utilisateur remplit un formulaire et clique "Envoyer", toutes les données arrivent dans ce tableau. Différence avec GET : les données ne s\'affichent PAS dans l\'URL, elles voyagent de façon invisible. Parfait pour les mots de passe, inscriptions, connexions, commentaires... MAIS "invisible" ne veut pas dire "sécurisé" ! Il faut TOUJOURS vérifier et nettoyer ces données, et protéger vos formulaires contre les attaques (token CSRF).',
                 'useCases' => [
                     'Formulaires de connexion (login, password)',
                     'Inscription utilisateur (email, nom, prénom)',
@@ -299,8 +299,8 @@ final class VariablesController extends AbstractController
                     'Requêtes préparées pour SQL'
                 ],
                 'resources' => [
-                    ['title' => 'PHP $_POST', 'url' => 'https://www.php.net/manual/fr/reserved.variables.post.php', 'icon' => '📖'],
-                    ['title' => 'CSRF Protection', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html', 'icon' => '🔒']
+                    ['label' => 'PHP $_POST', 'url' => 'https://www.php.net/manual/fr/reserved.variables.post.php', 'icon' => '📖'],
+                    ['label' => 'CSRF Protection', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html', 'icon' => '🔒']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-global_$_GET', 'label' => '$_GET'],
@@ -311,7 +311,7 @@ final class VariablesController extends AbstractController
             '$_SESSION' => [
                 'description' => 'Utilisée pour stocker des informations persistantes entre les pages. Nécessite session_start() au début du script.',
                 'example' => 'session_start();\n$_SESSION[\'user_id\'] = 123;\n// Récupération\n$userId = $_SESSION[\'user_id\'];',
-                'details' => '$_SESSION permet de conserver des données utilisateur entre différentes pages/requêtes. Les données sont stockées côté serveur (contrairement aux cookies). Nécessite session_start() en début de script. Idéal pour l\'authentification, le panier e-commerce, les préférences utilisateur.',
+                'details' => '$_SESSION, c\'est la mémoire de votre site ! Elle garde des infos sur l\'utilisateur quand il navigue de page en page : "qui est connecté ?", "qu\'est-ce qu\'il a dans son panier ?", "quelle langue il préfère ?". Les données restent stockées sur le serveur (pas sur l\'ordinateur du visiteur comme les cookies). IMPORTANT : avant de l\'utiliser, vous DEVEZ écrire session_start() au tout début de votre script. Super pour l\'authentification, les paniers, les messages temporaires !',
                 'useCases' => [
                     'Authentification : $_SESSION[\'user_id\'] = 123',
                     'Panier e-commerce : $_SESSION[\'cart\'] = [...]',
@@ -332,8 +332,8 @@ final class VariablesController extends AbstractController
                     'Utiliser HTTPS pour sécuriser les cookies de session'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Sessions', 'url' => 'https://www.php.net/manual/fr/book.session.php', 'icon' => '📖'],
-                    ['title' => 'Session Security', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html', 'icon' => '🔒']
+                    ['label' => 'PHP Sessions', 'url' => 'https://www.php.net/manual/fr/book.session.php', 'icon' => '📖'],
+                    ['label' => 'Session Security', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html', 'icon' => '🔒']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-global_$_COOKIE', 'label' => '$_COOKIE'],
@@ -344,7 +344,7 @@ final class VariablesController extends AbstractController
             '$_COOKIE' => [
                 'description' => 'Contient les cookies envoyés par le navigateur. Utilisé pour stocker des informations côté client.',
                 'example' => 'setcookie("theme", "dark", time() + 3600);\n// Récupération\n$theme = $_COOKIE[\'theme\'];',
-                'details' => '$_COOKIE est un tableau associatif contenant les cookies envoyés par le navigateur. Créés avec setcookie(), les cookies sont stockés côté client et envoyés à chaque requête. Parfaits pour mémoriser des préférences non sensibles (thème, langue, etc.).',
+                'details' => '$_COOKIE, ce sont les petits post-it du navigateur ! Des infos stockées sur l\'ordinateur du visiteur (pas sur votre serveur) qui reviennent à chaque visite. Vous les créez avec setcookie(), et après le navigateur les renvoie automatiquement. Parfait pour se souvenir de trucs non sensibles : "mode sombre activé", "langue française", "se souvenir de moi"... ATTENTION : comme c\'est sur l\'ordi du visiteur, il peut les lire et les modifier, donc JAMAIS de mots de passe ou infos confidentielles là-dedans ! Limite de taille : ~4KB.',
                 'useCases' => [
                     'Se souvenir de moi (remember me)',
                     'Préférences d\'affichage (thème, langue)',
@@ -365,8 +365,8 @@ final class VariablesController extends AbstractController
                     'Vérifier l\'existence : $_COOKIE[\'key\'] ?? null'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Cookies', 'url' => 'https://www.php.net/manual/fr/features.cookies.php', 'icon' => '📖'],
-                    ['title' => 'Cookie Security', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies', 'icon' => '🔒']
+                    ['label' => 'PHP Cookies', 'url' => 'https://www.php.net/manual/fr/features.cookies.php', 'icon' => '📖'],
+                    ['label' => 'Cookie Security', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies', 'icon' => '🔒']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-global_$_SESSION', 'label' => '$_SESSION'],
@@ -377,7 +377,7 @@ final class VariablesController extends AbstractController
             '$_FILES' => [
                 'description' => 'Contient les fichiers téléchargés via un formulaire HTML. Utilisé pour gérer les uploads de fichiers.',
                 'example' => '<form method="POST" enctype="multipart/form-data">\n  <input type="file" name="monFichier">\n</form>\n// Accès\n$fichier = $_FILES[\'monFichier\'];',
-                'details' => '$_FILES est un tableau associatif contenant les informations sur les fichiers uploadés. Chaque fichier uploadé contient : name (nom original), type (MIME type), tmp_name (chemin temporaire), error (code erreur), size (taille en octets). Nécessite enctype="multipart/form-data" dans le formulaire.',
+                'details' => '$_FILES, c\'est le livreur de colis de PHP ! Quand un utilisateur upload un fichier (photo, PDF, document...), toutes les infos arrivent dans ce tableau : le nom original du fichier, son type, où PHP l\'a stocké temporairement, sa taille, et si l\'upload a marché ou échoué. Pour que ça fonctionne, votre formulaire DOIT avoir enctype="multipart/form-data". Chaque fichier uploadé est comme un paquet avec son étiquette contenant name, type, tmp_name, error, size.',
                 'useCases' => [
                     'Upload avatar/photo de profil',
                     'Upload de documents (PDF, Word, etc.)',
@@ -398,8 +398,8 @@ final class VariablesController extends AbstractController
                     'Générer nom unique : uniqid() . \'_\' . $filename'
                 ],
                 'resources' => [
-                    ['title' => 'PHP File Upload', 'url' => 'https://www.php.net/manual/fr/features.file-upload.php', 'icon' => '📖'],
-                    ['title' => 'File Upload Security', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html', 'icon' => '🔒']
+                    ['label' => 'PHP File Upload', 'url' => 'https://www.php.net/manual/fr/features.file-upload.php', 'icon' => '📖'],
+                    ['label' => 'File Upload Security', 'url' => 'https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html', 'icon' => '🔒']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-global_$_POST', 'label' => '$_POST'],
@@ -410,7 +410,7 @@ final class VariablesController extends AbstractController
             '$GLOBALS' => [
                 'description' => 'Tableau associatif contenant toutes les variables globales. Permet d\'accéder à une variable globale depuis n\'importe où.',
                 'example' => '$a = 5;\nfunction test() {\n    echo $GLOBALS[\'a\']; // Accès à la variable globale $a\n}',
-                'details' => '$GLOBALS est une superglobale contenant une référence vers toutes les variables globales du script. Elle permet d\'accéder et de modifier n\'importe quelle variable globale depuis n\'importe quel scope (fonctions, méthodes, etc.) sans utiliser le mot-clé global.',
+                'details' => '$GLOBALS, c\'est le grand annuaire de TOUTES vos variables globales ! Comme un coffre-fort central où PHP range toutes les variables créées en dehors des fonctions. Depuis n\'importe où (même dans une fonction), vous pouvez faire $GLOBALS[\'maVariable\'] pour y accéder sans utiliser "global". C\'est pratique MAIS... en PHP moderne, c\'est considéré comme une mauvaise pratique ! Ça rend le code difficile à comprendre et à tester. Mieux vaut passer les données explicitement en paramètres ou utiliser des objets.',
                 'useCases' => [
                     'Accès à variable globale : $GLOBALS[\'config\']',
                     'Alternative au mot-clé global',
@@ -431,8 +431,8 @@ final class VariablesController extends AbstractController
                     'Constantes pour valeurs fixes'
                 ],
                 'resources' => [
-                    ['title' => 'PHP $GLOBALS', 'url' => 'https://www.php.net/manual/fr/reserved.variables.globals.php', 'icon' => '📖'],
-                    ['title' => 'Dependency Injection', 'url' => 'https://symfony.com/doc/current/service_container.html', 'icon' => '💉']
+                    ['label' => 'PHP $GLOBALS', 'url' => 'https://www.php.net/manual/fr/reserved.variables.globals.php', 'icon' => '📖'],
+                    ['label' => 'Dependency Injection', 'url' => 'https://symfony.com/doc/current/service_container.html', 'icon' => '💉']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-portee_globale', 'label' => 'Portée globale'],

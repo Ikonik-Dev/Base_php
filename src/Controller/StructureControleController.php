@@ -17,7 +17,7 @@ final class StructureControleController extends AbstractController
             'structures_conditionnelles' => [
                 'description' => 'Structures pour exécuter du code selon des conditions : if, else, elseif, switch avec syntaxes alternatives.',
                 'example' => 'if ($age >= 18) {\n    echo "Majeur";\n} elseif ($age >= 16) {\n    echo "Mineur émancipé";\n} else {\n    echo "Mineur";\n}',
-                'details' => 'Les structures conditionnelles permettent d\'exécuter du code selon la véracité de conditions. PHP offre plusieurs structures : if/else/elseif pour tests booléens, switch pour comparaisons multiples, match (PHP 8+) pour pattern matching strict. Les conditions sont évaluées en contexte booléen : 0, "0", "", null, false, [] sont falsy. Deux syntaxes disponibles : accolades {} pour code PHP pur, ou syntaxe alternative (if: endif;) pour templates mixant PHP et HTML. elseif peut s\'écrire "elseif" ou "else if" (équivalents). Les conditions sont évaluées séquentiellement, la première vraie est exécutée, les autres ignorées. Imbrication possible mais attention à la lisibilité.',
+                'details' => 'Comme un aiguillage de train : selon la condition, votre programme prend une voie ou une autre ! PHP vous offre plusieurs outils : if/else/elseif pour dire "si ça, alors fais ceci", switch pour comparer une valeur à plusieurs possibilités, et match (PHP 8+) pour faire pareil mais en plus strict. Important : PHP considère certaines valeurs comme "faux" (0, "", null, tableau vide...). Vous pouvez écrire avec des accolades {} ou avec if: endif; (plus lisible dans du HTML). La première condition vraie est exécutée, les autres sont ignorées.',
                 'useCases' => [
                     'Validation utilisateurs : if ($user->isAdmin()) afficher options admin',
                     'Traitement formulaires : if ($_SERVER["REQUEST_METHOD"] === "POST") traiter',
@@ -40,7 +40,7 @@ final class StructureControleController extends AbstractController
                     'Match (PHP 8) pour alternatives multiples strictes et concises'
                 ],
                 'resources' => [
-                    ['title' => 'Structures de contrôle', 'url' => 'https://www.php.net/manual/fr/language.control-structures.php', 'icon' => '📖']
+                    ['label' => 'Structures de contrôle', 'url' => 'https://www.php.net/manual/fr/language.control-structures.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-condition_if_else', 'label' => 'if/else/elseif'],
@@ -51,7 +51,7 @@ final class StructureControleController extends AbstractController
             'condition_if_else' => [
                 'description' => 'Structure conditionnelle de base avec if, else et elseif. Supporte la syntaxe alternative avec deux points.',
                 'example' => '// Syntaxe classique\nif ($condition) {\n    // code\n}\n\n// Syntaxe alternative\nif ($condition):\n    // code\nendif;',
-                'details' => 'La structure if/else/elseif est la base du contrôle conditionnel en PHP. Syntaxe : if (condition) { code }. La condition est évaluée en booléen : valeurs falsy (0, "", "0", null, false, []) considérées false. else exécute si condition if false. elseif teste conditions additionnelles séquentiellement. Deux syntaxes : accolades pour code PHP, ou if: endif; pour templates (mélange PHP/HTML). elseif s\'écrit aussi "else if" (2 mots, équivalent). Évaluation court-circuit : première condition vraie exécutée, reste ignoré. Imbrication possible mais favorise complexité. Utilisable dans expressions (assignation : $x = if ($a) $b else $c en PHP 8.3+).',
+                'details' => 'Le if/else est comme une question à choix : "SI cette condition est vraie, ALORS fais ça, SINON fais autre chose". Vous pouvez enchaîner avec elseif pour tester plusieurs conditions dans l\'ordre. PHP vérifie chaque condition une par une et s\'arrête à la première qui est vraie. Vous pouvez écrire avec des accolades {} (code PHP normal) ou avec if: endif; (dans des pages HTML). Attention : certaines valeurs sont considérées comme "faux" (0, texte vide "", null...). On peut aussi imbriquer des if dans des if, mais ça devient vite compliqué à lire !',
                 'useCases' => [
                     'Validation entrées : if (empty($email)) erreur "Email requis"',
                     'Authentification : if (!$user->isLoggedIn()) redirect login',
@@ -74,7 +74,7 @@ final class StructureControleController extends AbstractController
                     'Syntaxe alternative uniquement dans templates, accolades en logique'
                 ],
                 'resources' => [
-                    ['title' => 'if/elseif/else', 'url' => 'https://www.php.net/manual/fr/control-structures.if.php', 'icon' => '📖']
+                    ['label' => 'if/elseif/else', 'url' => 'https://www.php.net/manual/fr/control-structures.if.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-structures_conditionnelles', 'label' => 'Structures conditionnelles'],
@@ -85,7 +85,7 @@ final class StructureControleController extends AbstractController
             'operateur_ternaire_moderne' => [
                 'description' => 'Opérateurs ternaires classiques et modernes : ternaire simple, null coalescing (??) et null coalescing assignment (??=).',
                 'example' => '$statut = $age >= 18 ? "majeur" : "mineur";\n$nom = $_GET[\'nom\'] ?? "Anonyme";\n$config[\'debug\'] ??= false; // PHP 7.4+',
-                'details' => 'Les opérateurs ternaires offrent conditions concises retournant valeurs. Ternaire classique : condition ? siVrai : siFaux. Version courte (PHP 5.3+) : expr1 ?: expr2 (retourne expr1 si truthy, sinon expr2). Null coalescing ?? (PHP 7.0) : retourne premier opérande non-null, sans notice si variable inexistante. ??= (PHP 7.4) : assigne si variable null/inexistante. Différences cruciales : ternaire teste truthiness (0, "" sont falsy), ?? teste uniquement null. Ternaire associe à gauche en PHP (parenthéser si imbriqué). Préférer ?? pour valeurs par défaut, ternaire pour choix binaires. Lisibilité : éviter imbrications, extraire en if/else si complexe.',
+                'details' => 'Une version ultra-courte du if/else ! Au lieu d\'écrire plusieurs lignes, vous écrivez tout sur une ligne : condition ? siVrai : siFaux. Il y a aussi ?? pour dire "si cette variable n\'existe pas ou est vide, prends cette valeur par défaut" (super pratique !). Et même ??= pour dire "si la variable n\'a rien, mets cette valeur dedans". Différence importante : le ? regarde si c\'est vrai/faux (0 = faux), alors que ?? regarde seulement si ça existe ou pas. Attention à ne pas trop les imbriquer, ça devient illisible !',
                 'useCases' => [
                     'Affichage conditionnel : echo $logged ? "Bienvenue" : "Connexion";',
                     'Valeurs par défaut : $limit = $_GET["limit"] ?? 10;',
@@ -108,7 +108,7 @@ final class StructureControleController extends AbstractController
                     '??= excellent pour initialisation : $cache ??= expensive();'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateur ternaire', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php#language.operators.comparison.ternary', 'icon' => '📖']
+                    ['label' => 'Opérateur ternaire', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php#language.operators.comparison.ternary', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-condition_if_else', 'label' => 'if/else/elseif'],
@@ -118,7 +118,7 @@ final class StructureControleController extends AbstractController
             'structure_switch' => [
                 'description' => 'Structure switch pour comparer une variable à plusieurs valeurs. Attention aux break et au fall-through.',
                 'example' => 'switch ($jour) {\n    case \'lundi\':\n    case \'mardi\':\n        echo "Début de semaine";\n        break;\n    case \'vendredi\':\n        echo "TGIF!";\n        break;\n    default:\n        echo "Autre jour";\n}',
-                'details' => 'La structure switch compare une expression à plusieurs valeurs avec case. Utilise comparaison lâche (==) pas stricte (===). Syntaxe : switch (expr) { case val: code; break; default: code; }. break obligatoire pour éviter fall-through (exécution cases suivants). Fall-through volontaire possible : cases consécutifs sans break partagent code. default optionnel, exécuté si aucun case. Comparaison séquentielle : teste chaque case dans l\'ordre. Valeurs case doivent être constantes (littéraux, constantes) pas variables. Syntaxe alternative : switch(): endswitch; pour templates. Performance : switch souvent plus rapide que multiples if/elseif pour > 3 comparaisons. PHP 8 : préférer match pour strictness et retour valeur.',
+                'details' => 'Le switch est comme un grand panneau d\'aiguillage : vous testez une variable et selon sa valeur, vous allez vers le bon "case". IMPORTANT : il faut mettre "break;" sinon le code continue dans les cases suivants (effet domino pas toujours voulu !). Vous pouvez mettre plusieurs cases qui partagent le même code (comme "lundi" et "mardi" ensemble). "default:" c\'est le cas "si aucun autre cas ne correspond". Attention : switch utilise == (pas très strict), pas === ! Depuis PHP 8, il existe "match" qui est plus moderne et plus strict.',
                 'useCases' => [
                     'États/statuts : switch ($order->status) case "pending": case "shipped"',
                     'Types MIME : switch ($ext) case "jpg": case "png": type image',
@@ -141,7 +141,7 @@ final class StructureControleController extends AbstractController
                     'Si > 5-7 cases, considérer pattern strategy ou tableau de callbacks'
                 ],
                 'resources' => [
-                    ['title' => 'Switch', 'url' => 'https://www.php.net/manual/fr/control-structures.switch.php', 'icon' => '📖']
+                    ['label' => 'Switch', 'url' => 'https://www.php.net/manual/fr/control-structures.switch.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-expression_match_php8', 'label' => 'Match (PHP 8)'],
@@ -152,7 +152,7 @@ final class StructureControleController extends AbstractController
             'expression_match_php8' => [
                 'description' => 'Expression match (PHP 8.0+) : alternative moderne au switch, plus stricte et qui retourne une valeur.',
                 'example' => '$resultat = match($status) {\n    200, 300 => "Succès",\n    400 => "Erreur client",\n    500 => "Erreur serveur",\n    default => "Statut inconnu"\n};\n\n$type = match(true) {\n    $age < 13 => "enfant",\n    $age < 18 => "adolescent",\n    default => "adulte"\n};',
-                'details' => 'L\'expression match (PHP 8.0+) est alternative moderne à switch avec différences clés. Utilise comparaison stricte (===) pas lâche. Retourne toujours une valeur (expression, pas statement). Pas de fall-through : un seul bras exécuté. Virgules pour valeurs multiples : 200, 201 => "OK". Lance UnhandledMatchError si aucun match et pas de default. Syntaxe concise : match (expr) { val => result }. Supporte match(true) pour conditions booléennes (alternative if/elseif). Pas de break nécessaire. Arms évalués paresseusement : seul le matching exécuté. Pattern matching simple : PHP 8.0 valeurs, évolutions futures possibles (destructuring). Plus sûr que switch grâce à exhaustivité obligatoire.',
+                'details' => 'Le grand frère moderne de switch, arrivé en PHP 8 ! Match est plus strict (utilise === au lieu de ==) et retourne toujours une valeur directement dans une variable. Pas besoin de break, pas d\'effet domino ! Vous pouvez mettre plusieurs valeurs avec des virgules : 200, 300 => "OK". Si aucune valeur ne correspond ET que vous n\'avez pas de "default:", PHP génère une erreur (il est strict !). Vous pouvez même l\'utiliser avec match(true) pour faire des conditions comme if/elseif, mais en version courte et élégante.',
                 'useCases' => [
                     'HTTP codes : $msg = match($code) { 200 => "OK", 404 => "Not Found" }',
                     'Conversion types : $type = match($val) { 1, 2, 3 => "petit", ... }',
@@ -175,7 +175,7 @@ final class StructureControleController extends AbstractController
                     'Documenter cas intentionnellement non couverts si pas de default'
                 ],
                 'resources' => [
-                    ['title' => 'Match Expression', 'url' => 'https://www.php.net/manual/fr/control-structures.match.php', 'icon' => '📖']
+                    ['label' => 'Match Expression', 'url' => 'https://www.php.net/manual/fr/control-structures.match.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-structure_switch', 'label' => 'Switch'],
@@ -186,7 +186,7 @@ final class StructureControleController extends AbstractController
             'boucles_for' => [
                 'description' => 'Boucle for classique avec initialisation, condition et incrémentation. Idéale pour un nombre d\'itérations connu.',
                 'example' => 'for ($i = 0; $i < 10; $i++) {\n    echo $i . " ";\n}\n\n// Syntaxe alternative\nfor ($i = 0; $i < 10; $i++):\n    echo $i;\nendfor;',
-                'details' => 'La boucle for exécute code un nombre déterminé de fois. Syntaxe : for (init; condition; increment) { code }. Trois parties : initialisation ($i=0, exécutée une fois), condition (testée chaque itération, continue si true), incrément (exécuté après chaque itération). Toutes parties optionnelles : for (;;) boucle infinie. Multiple init/increment possibles : for ($i=0, $j=10; $i<$j; $i++, $j--). Syntaxe alternative : for(): endfor; pour templates. Portée variables : $i accessible après boucle (garde dernière valeur). Performance : condition évaluée à chaque tour (extraire si coûteuse). Break/continue disponibles. Idéale quand nombre itérations connu à l\'avance.',
+                'details' => 'La boucle for, c\'est comme compter sur vos doigts : "je vais faire ça 10 fois". Elle a trois parties : où on commence ($i=0), jusqu\'où on va ($i < 10), et comment on avance ($i++). Vous pouvez tout laisser vide pour faire une boucle infinie : for(;;) (attention danger !). Le compteur $i reste accessible après la boucle avec sa dernière valeur. Vous pouvez utiliser break pour sortir de la boucle ou continue pour passer au tour suivant. Parfait quand vous savez d\'avance combien de fois répéter quelque chose.',
                 'useCases' => [
                     'Itération numérique : for ($i = 0; $i < count; $i++) traiter élément i',
                     'Tableaux indexés : for ($i = 0; $i < count($arr); $i++) accès $arr[$i]',
@@ -209,7 +209,7 @@ final class StructureControleController extends AbstractController
                     'Documenter boucles complexes : multi-init, conditions inhabituelles'
                 ],
                 'resources' => [
-                    ['title' => 'Boucle for', 'url' => 'https://www.php.net/manual/fr/control-structures.for.php', 'icon' => '📖']
+                    ['label' => 'Boucle for', 'url' => 'https://www.php.net/manual/fr/control-structures.for.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-boucles_while', 'label' => 'While/Do-While'],
@@ -220,7 +220,7 @@ final class StructureControleController extends AbstractController
             'boucles_while' => [
                 'description' => 'Boucles while et do-while : while teste la condition avant, do-while teste après (au moins une exécution).',
                 'example' => '$i = 0;\nwhile ($i < 5) {\n    echo $i++;\n}\n\n$j = 0;\ndo {\n    echo $j++;\n} while ($j < 3);',
-                'details' => 'Les boucles while exécutent code tant que condition vraie. while teste AVANT itération : si condition initialement false, code jamais exécuté. do-while teste APRÈS : code exécuté au moins une fois. Syntaxe while : while (condition) { code }. Syntaxe do-while : do { code } while (condition);. Alternative : while(): endwhile; pour templates. Condition réévaluée chaque itération. Risque boucle infinie si condition jamais false. Break/continue disponibles. while plus flexible que for : nombre itérations inconnu (lecture fichier, attente événement). do-while rare mais utile pour menus (afficher puis redemander) ou validation (demander jusqu\'à valide).',
+                'details' => 'While, c\'est "TANT QUE c\'est vrai, continue de faire ça". La condition est vérifiée AVANT chaque tour : si elle est fausse dès le début, le code ne s\'exécute jamais. Le do-while fait l\'inverse : il exécute le code d\'abord, PUIS vérifie la condition, donc le code s\'exécute au moins une fois. Attention danger : si votre condition reste toujours vraie, ça tourne à l\'infini ! Utilisez while quand vous ne savez pas combien de fois répéter (lire un fichier ligne par ligne, attendre quelque chose...). Le do-while est pratique pour les menus : afficher, puis redemander.',
                 'useCases' => [
                     'Lecture fichiers : while ($line = fgets($file)) traiter ligne',
                     'Attente conditions : while (!$ready) sleep(1); attendre',
@@ -243,8 +243,8 @@ final class StructureControleController extends AbstractController
                     'Timeout/limites sécurité : $attempts = 0; while ($trying && $attempts++ < 100)'
                 ],
                 'resources' => [
-                    ['title' => 'While', 'url' => 'https://www.php.net/manual/fr/control-structures.while.php', 'icon' => '📖'],
-                    ['title' => 'Do-While', 'url' => 'https://www.php.net/manual/fr/control-structures.do.while.php', 'icon' => '📖']
+                    ['label' => 'While', 'url' => 'https://www.php.net/manual/fr/control-structures.while.php', 'icon' => '📖'],
+                    ['label' => 'Do-While', 'url' => 'https://www.php.net/manual/fr/control-structures.do.while.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-boucles_for', 'label' => 'Boucle for'],
@@ -255,7 +255,7 @@ final class StructureControleController extends AbstractController
             'boucles_foreach' => [
                 'description' => 'Boucle foreach pour parcourir tableaux et objets. Accès aux clés et valeurs, par référence possible.',
                 'example' => '$fruits = ["pomme", "banane", "orange"];\n\n// Valeurs seulement\nforeach ($fruits as $fruit) {\n    echo $fruit;\n}\n\n// Clés et valeurs\nforeach ($fruits as $index => $fruit) {\n    echo "$index: $fruit";\n}\n\n// Par référence\nforeach ($fruits as &$fruit) {\n    $fruit = strtoupper($fruit);\n}',
-                'details' => 'La boucle foreach parcourt tableaux et objets implémentant Iterator. Deux formes : foreach ($arr as $val) pour valeurs seules, foreach ($arr as $key => $val) pour clés et valeurs. Référence : foreach ($arr as &$val) permet modifier tableau original. Important : unset($val) après foreach par référence pour éviter effets bord. Objets : traverse propriétés publiques par défaut, ou méthodes Iterator. Syntaxe alternative : foreach(): endforeach; templates. PHP 7+ : list() dans foreach pour destructuring : foreach ($pairs as [$a, $b]). Copie interne du tableau (pointeur) : modifications pendant foreach possibles mais déconseillées. Plus lisible que for pour tableaux.',
+                'details' => 'Foreach, c\'est LA boucle parfaite pour les tableaux ! Elle parcourt automatiquement chaque élément : "pour chaque fruit dans mon panier, fais ça". Deux versions : juste les valeurs (as $fruit), ou les clés ET valeurs (as $index => $fruit). Super pratique ! Vous pouvez même modifier le tableau en direct avec le & : foreach ($arr as &$item) - mais attention à faire unset($item) après pour éviter des surprises ! C\'est beaucoup plus lisible qu\'un for classique quand vous voulez juste parcourir un tableau.',
                 'useCases' => [
                     'Affichage listes : foreach ($users as $user) echo $user->name',
                     'Transformation : foreach ($items as &$item) $item = transform($item)',
@@ -278,18 +278,19 @@ final class StructureControleController extends AbstractController
                     'Clés descriptives : foreach ($data as $userId => $userData)'
                 ],
                 'resources' => [
-                    ['title' => 'Foreach', 'url' => 'https://www.php.net/manual/fr/control-structures.foreach.php', 'icon' => '📖']
+                    ['label' => 'Foreach', 'url' => 'https://www.php.net/manual/fr/control-structures.foreach.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-boucles_for', 'label' => 'Boucle for'],
                     ['id' => 'modal-boucles_while', 'label' => 'While/Do-While'],
-                    ['id' => 'modal-controle_boucles', 'label' => 'Break/Continue']
+                    ['id' => 'modal-controle_boucles', 'label' => 'Break/Continue'],
+                    ['id' => 'modal-return_yield', 'label' => 'Return/Yield (générateurs)']
                 ]
             ],
             'controle_boucles' => [
                 'description' => 'Instructions de contrôle des boucles : break (sortir), continue (passer à l\'itération suivante), avec niveaux optionnels.',
                 'example' => 'for ($i = 0; $i < 10; $i++) {\n    if ($i === 3) continue; // Passer 3\n    if ($i === 7) break;    // Arrêter à 7\n    echo $i;\n}\n\n// Avec niveaux\nfor ($i = 0; $i < 3; $i++) {\n    for ($j = 0; $j < 3; $j++) {\n        if ($j === 1) break 2; // Sortir des 2 boucles\n    }\n}',
-                'details' => 'Les instructions break et continue contrôlent flux des boucles. break sort immédiatement de la boucle englobante, exécution continue après. continue passe à l\'itération suivante, ignorant code restant du corps. Niveaux optionnels : break 2 sort de 2 boucles imbriquées, continue 3 passe itération 3 niveaux au-dessus. Utilisables dans for, while, do-while, foreach, switch (break). Sans niveau : break/continue = break 1/continue 1. Niveaux > 1 rares, souvent signe code complexe nécessitant refactoring. PHP 5.4+ interdit variables comme niveaux : break $n invalide, constantes seules. Alternative goto pour sorties multi-niveaux mais déconseillé.',
+                'details' => 'Deux commandes super pratiques dans les boucles : break = "STOP, on arrête tout de suite !" et continue = "passe au tour suivant sans finir celui-ci". Break sort complètement de la boucle, continue saute juste ce qui reste dans le tour actuel et passe au suivant. Vous pouvez même mettre un chiffre : break 2 sort de deux boucles imbriquées d\'un coup ! Mais attention, si vous en mettez trop (break 4, break 5...), ça devient illisible. À ce moment-là, c\'est mieux de faire des fonctions séparées.',
                 'useCases' => [
                     'Recherche : foreach ($items as $item) if (found($item)) break;',
                     'Validation : foreach ($data as $val) if (!valid($val)) continue;',
@@ -312,8 +313,8 @@ final class StructureControleController extends AbstractController
                     'Documenter break N où N > 1 : // sort des boucles x et y'
                 ],
                 'resources' => [
-                    ['title' => 'Break', 'url' => 'https://www.php.net/manual/fr/control-structures.break.php', 'icon' => '📖'],
-                    ['title' => 'Continue', 'url' => 'https://www.php.net/manual/fr/control-structures.continue.php', 'icon' => '📖']
+                    ['label' => 'Break', 'url' => 'https://www.php.net/manual/fr/control-structures.break.php', 'icon' => '📖'],
+                    ['label' => 'Continue', 'url' => 'https://www.php.net/manual/fr/control-structures.continue.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-boucles_for', 'label' => 'Boucle for'],
@@ -324,7 +325,7 @@ final class StructureControleController extends AbstractController
             'include_require' => [
                 'description' => 'Inclusion de fichiers : include/require (erreur non fatale/fatale) et leurs variantes _once pour éviter les doublons.',
                 'example' => 'include "config.php";        // Warning si échec\nrequire "database.php";     // Fatal error si échec\ninclude_once "functions.php"; // Une seule fois\nrequire_once "classes.php";   // Une seule fois + fatal',
-                'details' => 'Les instructions include/require insèrent contenu d\'un fichier. Différences : include génère warning si échec (continue), require fatal error (arrêt). Variantes _once vérifient si déjà inclus (via chemin absolu), évitent doublons. Syntaxe : include "file.php" ou include("file.php") équivalents. Retourne valeur si fichier contient return. Cherche dans include_path puis dossier courant/script. Chemins relatifs, absolus, URLs (si allow_url_include). Scope : variables fichier inclus héritent scope inclusion. Performance : require_once légèrement plus lent (vérification). Modern PHP : autoloading (PSR-4) préféré aux includes manuels classes. Include utile : configuration, templates, parties réutilisables.',
+                'details' => 'Include et require permettent de "copier-coller" le contenu d\'un autre fichier PHP dans votre code, comme assembler des briques Lego ! Différence : include c\'est "essaie, si ça marche pas tant pis on continue" (warning), require c\'est "ça DOIT marcher sinon on arrête tout" (erreur fatale). Les versions _once vérifient "on l\'a déjà inclus ? Si oui, on passe". Super utile pour configuration, morceaux de HTML réutilisables, fonctions partagées. En PHP moderne, on préfère l\'autoloading pour les classes, mais include/require reste pratique pour les templates !',
                 'useCases' => [
                     'Configuration : require_once __DIR__ . "/config.php"; charger une fois',
                     'Templates : include "templates/header.php"; réutiliser HTML',
@@ -347,8 +348,8 @@ final class StructureControleController extends AbstractController
                     'Valider/sanitizer chemins avant inclusion dynamique'
                 ],
                 'resources' => [
-                    ['title' => 'Include', 'url' => 'https://www.php.net/manual/fr/function.include.php', 'icon' => '📖'],
-                    ['title' => 'Require', 'url' => 'https://www.php.net/manual/fr/function.require.php', 'icon' => '📖']
+                    ['label' => 'Include', 'url' => 'https://www.php.net/manual/fr/function.include.php', 'icon' => '📖'],
+                    ['label' => 'Require', 'url' => 'https://www.php.net/manual/fr/function.require.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-structures_alternatives', 'label' => 'Syntaxes alternatives'],
@@ -358,7 +359,7 @@ final class StructureControleController extends AbstractController
             'try_catch_finally' => [
                 'description' => 'Gestion d\'exceptions avec try/catch/finally. Multiple catch possibles, finally toujours exécuté (PHP 5.5+).',
                 'example' => 'try {\n    $pdo = new PDO($dsn, $user, $pass);\n    // code risqué\n} catch (PDOException $e) {\n    echo "Erreur BDD: " . $e->getMessage();\n} catch (Exception $e) {\n    echo "Erreur générale: " . $e->getMessage();\n} finally {\n    echo "Nettoyage";\n}',
-                'details' => 'Le bloc try/catch/finally gère exceptions. try contient code risqué. catch intercepte exceptions type spécifique. finally (PHP 5.5+) exécuté toujours, exception ou non. Multiple catch : ordre spécifique → général (hiérarchie classes). PHP 7.1+ : catch (Ex1 | Ex2 $e) pour types multiples. catch sans variable (PHP 8.0+) : catch (Exception). finally utile pour nettoyage (fermer fichiers, connexions). Exception non catchée remonte pile jusqu\'à gestionnaire global ou fatal error. Exceptions objets héritant Throwable (PHP 7+) : Exception pour applicatif, Error pour PHP interne. Retour dans finally écrase retour try/catch.',
+                'details' => 'Try/catch, c\'est comme un filet de sécurité ! Dans le bloc "try", vous mettez du code risqué (connexion base de données, lecture fichier...). Si ça plante, au lieu que tout s\'arrête, le "catch" attrape l\'erreur et vous pouvez la gérer proprement. Vous pouvez mettre plusieurs catch pour différents types d\'erreurs, du plus précis au plus général. Le "finally" (depuis PHP 5.5) s\'exécute TOUJOURS, qu\'il y ait eu erreur ou pas - super pour fermer des fichiers ou des connexions ! Si une erreur n\'est pas attrapée, elle remonte et fait planter le programme.',
                 'useCases' => [
                     'Base données : try { query() } catch (PDOException) logger erreur',
                     'Fichiers : try { fopen() } finally { fclose() } garantir fermeture',
@@ -381,7 +382,7 @@ final class StructureControleController extends AbstractController
                     'set_exception_handler() pour catch global non géré'
                 ],
                 'resources' => [
-                    ['title' => 'Exceptions', 'url' => 'https://www.php.net/manual/fr/language.exceptions.php', 'icon' => '📖']
+                    ['label' => 'Exceptions', 'url' => 'https://www.php.net/manual/fr/language.exceptions.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-throw_exceptions', 'label' => 'Throw/Exceptions'],
@@ -391,7 +392,7 @@ final class StructureControleController extends AbstractController
             'throw_exceptions' => [
                 'description' => 'Lancement d\'exceptions avec throw. Création d\'exceptions personnalisées héritant d\'Exception.',
                 'example' => 'function diviser($a, $b) {\n    if ($b === 0) {\n        throw new InvalidArgumentException("Division par zéro!");\n    }\n    return $a / $b;\n}\n\nclass MonException extends Exception {\n    public function errorMessage() {\n        return "Erreur personnalisée: " . $this->getMessage();\n    }\n}',
-                'details' => 'L\'instruction throw lance une exception, interrompant flux normal. Syntaxe : throw new ExceptionClass("message"). Objet doit implémenter Throwable (PHP 7+) : Exception (applicatif) ou Error (interne PHP). Exception standard : Exception, InvalidArgumentException, RuntimeException, LogicException, etc. Exceptions personnalisées héritent Exception ou sous-classes. Propriétés : $message, $code, $file, $line, $trace. Méthodes : getMessage(), getCode(), getFile(), getLine(), getTrace(), __toString(). PHP 8.0 : throw expression (assignable) : $val = $x ?? throw new Exception(). Exception remonte pile jusqu\'à catch correspondant ou fatal error.',
+                'details' => 'Throw, c\'est "lancer une alerte rouge" ! Quand quelque chose ne va pas, au lieu de laisser le code continuer n\'importe comment, vous throw (lancez) une exception : "STOP ! Il y a un problème ici !". PHP a plein d\'exceptions toutes prêtes (InvalidArgumentException, RuntimeException...) mais vous pouvez créer les vôtres en héritant d\'Exception. L\'exception contient un message, un code, et plein d\'infos utiles (fichier, ligne...). Depuis PHP 8, vous pouvez même throw dans une affectation : $val = $x ?? throw new Exception(). L\'exception remonte jusqu\'à un catch ou fait tout planter.',
                 'useCases' => [
                     'Validation : if (!$valid) throw new InvalidArgumentException("Invalid")',
                     'État invalide : if ($closed) throw new RuntimeException("Already closed")',
@@ -414,7 +415,7 @@ final class StructureControleController extends AbstractController
                     'Documenter exceptions lancées : @throws dans docblocks'
                 ],
                 'resources' => [
-                    ['title' => 'Throw', 'url' => 'https://www.php.net/manual/fr/language.exceptions.php', 'icon' => '📖']
+                    ['label' => 'Throw', 'url' => 'https://www.php.net/manual/fr/language.exceptions.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-try_catch_finally', 'label' => 'Try/Catch'],
@@ -424,7 +425,7 @@ final class StructureControleController extends AbstractController
             'goto_labels' => [
                 'description' => 'Instruction goto pour sauter à un label (à éviter, nuit à la lisibilité). Utile dans de rares cas spécifiques.',
                 'example' => '$i = 0;\nloop:\necho $i++;\nif ($i < 5) goto loop;\n\n// Sortie de boucles imbriquées\nfor ($i = 0; $i < 3; $i++) {\n    for ($j = 0; $j < 3; $j++) {\n        if ($condition) goto end;\n    }\n}\nend:\necho "Fin";',
-                'details' => 'L\'instruction goto saute directement à un label défini. Syntaxe : label: et goto label;. Label doit être dans même fichier et contexte (pas traverser fonctions). goto saute en avant ou arrière mais pas dans/hors blocs try/catch/finally, boucles depuis extérieur. Considéré mauvaise pratique : rend code difficile à suivre, crée "spaghetti code". Utilisations légitimes rares : sortir de boucles profondément imbriquées, cleanup en C-style en PHP. Alternative préférable : fonctions, break avec niveaux, exceptions. PHP moderne déconseille goto sauf cas très spécifiques. Certains standards de code (PSR) interdisent goto.',
+                'details' => 'Goto, c\'est le mouton noir de la famille ! Ça permet de "téléporter" l\'exécution du code vers un label (une étiquette). Vous mettez "label:" quelque part, et "goto label;" pour y sauter. Le problème : ça crée du "code spaghetti" impossible à suivre - votre code saute partout comme un kangourou fou ! C\'est considéré comme une MAUVAISE PRATIQUE. Il y a de très rares cas où c\'est utile (sortir de 5 boucles imbriquées), mais 99% du temps, utilisez plutôt des fonctions, break, ou des exceptions. Certains standards de code l\'interdisent carrément !',
                 'useCases' => [
                     'Sortie boucles profondes : for() { for() { if() goto end; } } end:',
                     'Cleanup unifié : error1: cleanup(); return; goto error1 depuis multiples points',
@@ -447,7 +448,7 @@ final class StructureControleController extends AbstractController
                     'Si utilisé : documenter explicitement pourquoi nécessaire'
                 ],
                 'resources' => [
-                    ['title' => 'Goto', 'url' => 'https://www.php.net/manual/fr/control-structures.goto.php', 'icon' => '⚠️']
+                    ['label' => 'Goto', 'url' => 'https://www.php.net/manual/fr/control-structures.goto.php', 'icon' => '⚠️']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-controle_boucles', 'label' => 'Break/Continue'],
@@ -457,7 +458,7 @@ final class StructureControleController extends AbstractController
             'declare_directives' => [
                 'description' => 'Directive declare pour modifier le comportement du script : strict_types, ticks, encoding.',
                 'example' => 'declare(strict_types=1); // Types stricts\n\nfunction additionner(int $a, int $b): int {\n    return $a + $b;\n}\n\n// declare(ticks=1);\n// declare(encoding=\'UTF-8\');',
-                'details' => 'La directive declare modifie comportement compilation/exécution. Syntaxe : declare(directive=value); en début de fichier ou bloc. Trois directives : strict_types (1 ou 0, mode strict types arguments/retours), ticks (entier, callback chaque N instructions bas niveau), encoding (string, encodage source). strict_types (PHP 7+) empêche jonglage automatique : additionner("2", 3) erreur si strict. Portée : fichier entier si en début, bloc si dans {}. declare() sans bloc affecte reste fichier. ticks rarement utilisé (profiling, signaux). encoding obsolète, UTF-8 standard. declare compatible namespaces : declare doit être avant/après.',
+                'details' => 'Declare, c\'est comme mettre des règles du jeu au début de votre fichier PHP ! La plus importante : declare(strict_types=1) qui dit "sois très strict sur les types - pas de conversion automatique !". Si vous demandez un nombre entier, PHP refusera un texte "123". Il y a aussi "ticks" (rarement utilisé, pour du profiling avancé) et "encoding" (obsolète, PHP utilise UTF-8 maintenant). Le declare doit être EN TOUTE PREMIÈRE LIGNE du fichier (ligne 2 après <?php). Important : chaque fichier doit avoir son propre declare, ce n\'est pas hérité !',
                 'useCases' => [
                     'Types stricts : declare(strict_types=1); forcer sécurité types',
                     'Bibliothèques : strict_types dans librairies pour robustesse',
@@ -480,7 +481,7 @@ final class StructureControleController extends AbstractController
                     'PSR-12 : strict_types dans ligne 2 (après <?php)'
                 ],
                 'resources' => [
-                    ['title' => 'Declare', 'url' => 'https://www.php.net/manual/fr/control-structures.declare.php', 'icon' => '📖']
+                    ['label' => 'Declare', 'url' => 'https://www.php.net/manual/fr/control-structures.declare.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-structures_conditionnelles', 'label' => 'Structures conditionnelles']
@@ -489,7 +490,7 @@ final class StructureControleController extends AbstractController
             'return_yield' => [
                 'description' => 'Instructions return (sortir de fonction) et yield (générateurs PHP 5.5+) pour retourner des valeurs de manière paresseuse.',
                 'example' => 'function generateur() {\n    yield 1;\n    yield 2;\n    yield 3;\n}\n\nforeach (generateur() as $valeur) {\n    echo $valeur; // 1, 2, 3\n}\n\n// Yield avec clés\nfunction paires() {\n    yield \'a\' => 1;\n    yield \'b\' => 2;\n}',
-                'details' => 'return termine fonction et retourne valeur. yield (PHP 5.5+) crée générateur : fonction pause et reprend, valeurs lazy. Générateur implémente Iterator : parcourable foreach. yield produit valeur, pause, reprend à next(). yield $key => $value pour clés. send() envoie valeurs au générateur. yield from (PHP 7) délègue sous-générateur. Avantages : mémoire (pas tableau complet), performance (calcul à la demande). Générateurs utiles : gros datasets, flux infinis, pipelines. return dans générateur (PHP 7+) : valeur finale via getReturn(). yield paresseux : valeur générée seulement si consommée.',
+                'details' => 'Return, c\'est "sortir de la fonction et renvoyer une valeur". Yield (depuis PHP 5.5), c\'est un return spécial qui fait "pause" : la fonction donne une valeur, se met en pause, et reprend plus tard pour donner la suivante ! C\'est comme distribuer des cartes une par une au lieu de donner tout le paquet d\'un coup. ÉNORME avantage : économise la mémoire ! Au lieu de créer un tableau de 1 million d\'éléments, vous les générez un par un à la demande. Parfait pour lire de gros fichiers, créer des séquences infinies, ou traiter de grandes quantités de données sans saturer la mémoire.',
                 'useCases' => [
                     'Gros fichiers : yield lignes sans charger fichier entier en mémoire',
                     'Séquences infinies : function count() { $i=0; while(true) yield $i++; }',
@@ -512,7 +513,7 @@ final class StructureControleController extends AbstractController
                     'Préférer array pour petits sets (< 1000), générateur pour gros'
                 ],
                 'resources' => [
-                    ['title' => 'Générateurs', 'url' => 'https://www.php.net/manual/fr/language.generators.php', 'icon' => '📖']
+                    ['label' => 'Générateurs', 'url' => 'https://www.php.net/manual/fr/language.generators.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-boucles_foreach', 'label' => 'Foreach'],
@@ -522,7 +523,7 @@ final class StructureControleController extends AbstractController
             'structures_alternatives' => [
                 'description' => 'Syntaxes alternatives des structures de contrôle avec deux points et mots-clés de fermeture (endif, endwhile, etc.).',
                 'example' => '<?php if ($condition): ?>\n    <p>HTML mixé</p>\n<?php endif; ?>\n\n<?php foreach ($items as $item): ?>\n    <li><?= $item ?></li>\n<?php endforeach; ?>\n\n<?php while ($condition): ?>\n    <!-- contenu -->\n<?php endwhile; ?>',
-                'details' => 'Les syntaxes alternatives remplacent accolades par deux-points et mots-clés fermeture. Structures concernées : if/elseif/else (endif), for (endfor), foreach (endforeach), while (endwhile), switch (endswitch). Syntaxe : structure(): ... end*;. Obligation point-virgule après end*. Utilisées principalement templates mixant PHP et HTML pour lisibilité. Comportement identique aux accolades. Imbrication possible : if(): foreach(): endforeach; endif;. PSR-1/2 recommandent accolades en logique, alternatives acceptables templates. Attention indentation : HTML entre balises PHP doit rester lisible. Alternative moderne : moteurs templates (Twig, Blade) évitent PHP direct.',
+                'details' => 'Une autre façon d\'écrire les structures : au lieu des accolades {}, vous utilisez deux-points : et des mots de fin (endif, endforeach, endwhile...). C\'est SUPER pratique quand vous mélangez PHP et HTML dans vos templates ! Au lieu de fermer et rouvrir des balises PHP partout, vous écrivez <?php if(): ?> ... du HTML ... <?php endif; ?>. Beaucoup plus lisible ! ATTENTION : il faut le point-virgule après endif; endforeach; etc. Ça marche pour if, for, foreach, while, switch. En PHP moderne, on préfère utiliser des moteurs de templates (Twig, Blade) mais cette syntaxe reste très pratique.',
                 'useCases' => [
                     'Templates : <?php if ($user): ?> <nav>menu</nav> <?php endif; ?>',
                     'Listes : <?php foreach ($items as $i): ?> <li><?=$i?></li> <?php endforeach; ?>',
@@ -545,7 +546,7 @@ final class StructureControleController extends AbstractController
                     'PHP short tags : <?= $var ?> acceptable templates (PSR-1)'
                 ],
                 'resources' => [
-                    ['title' => 'Syntaxes alternatives', 'url' => 'https://www.php.net/manual/fr/control-structures.alternative-syntax.php', 'icon' => '📖']
+                    ['label' => 'Syntaxes alternatives', 'url' => 'https://www.php.net/manual/fr/control-structures.alternative-syntax.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-condition_if_else', 'label' => 'if/else/elseif'],

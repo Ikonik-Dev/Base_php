@@ -44,12 +44,12 @@ final class TestModalsController extends AbstractController
 
                 'resources' => [
                     [
-                        'title' => 'Documentation PHP - Variables',
+                        'label' => 'Documentation PHP - Variables',
                         'url' => 'https://www.php.net/manual/fr/language.variables.php',
                         'icon' => '📖'
                     ],
                     [
-                        'title' => 'PHP The Right Way - Variables',
+                        'label' => 'PHP The Right Way - Variables',
                         'url' => 'https://phptherightway.com',
                         'icon' => '🎓'
                     ]
@@ -92,7 +92,7 @@ final class TestModalsController extends AbstractController
 
                 'resources' => [
                     [
-                        'title' => 'Documentation PHP - Types',
+                        'label' => 'Documentation PHP - Types',
                         'url' => 'https://www.php.net/manual/fr/language.types.php',
                         'icon' => '📖'
                     ]
@@ -136,12 +136,12 @@ final class TestModalsController extends AbstractController
 
                 'resources' => [
                     [
-                        'title' => 'Documentation PHP - Opérateurs',
+                        'label' => 'Documentation PHP - Opérateurs',
                         'url' => 'https://www.php.net/manual/fr/language.operators.php',
                         'icon' => '📖'
                     ],
                     [
-                        'title' => 'Priorité des opérateurs',
+                        'label' => 'Priorité des opérateurs',
                         'url' => 'https://www.php.net/manual/fr/language.operators.precedence.php',
                         'icon' => '⚡'
                     ]

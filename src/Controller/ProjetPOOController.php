@@ -14,7 +14,7 @@ final class ProjetPOOController extends AbstractController
         // Structure pédagogique sur 2,5 jours pour novices
         $progression = [
             'jour1' => [
-                'title' => 'Niveau 1 - Les Fondations',
+                'label' => 'Niveau 1 - Les Fondations',
                 'duration' => '4h',
                 'objectives' => [
                     'Comprendre ce qu\'est un objet dans la vraie vie',
@@ -31,7 +31,7 @@ final class ProjetPOOController extends AbstractController
                 'concepts' => ['classes', 'objets', 'propriétés', 'méthodes', 'constructeur']
             ],
             'jour2' => [
-                'title' => 'Niveau 2 - L\'Organisation',
+                'label' => 'Niveau 2 - L\'Organisation',
                 'duration' => '7h',
                 'objectives' => [
                     'Maîtriser l\'encapsulation (public/private/protected)',
@@ -48,7 +48,7 @@ final class ProjetPOOController extends AbstractController
                 'concepts' => ['encapsulation', 'héritage', 'visibilité', 'parent/enfant', 'override']
             ],
             'jour3' => [
-                'title' => 'Niveau 3 - La Maîtrise',
+                'label' => 'Niveau 3 - La Maîtrise',
                 'duration' => '7h',
                 'objectives' => [
                     'Découvrir le polymorphisme',

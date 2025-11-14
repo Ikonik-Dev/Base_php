@@ -17,7 +17,7 @@ final class TypagesController extends AbstractController
             'types_primitifs_scalaires' => [
                 'description' => 'Types de base qui contiennent une seule valeur : integer, float, string, boolean.',
                 'example' => '$entier = 42;\n$decimal = 3.14;\n$texte = "Hello";\n$booleen = true;',
-                'details' => 'Les types scalaires sont les types de données les plus simples en PHP. Ils contiennent une seule valeur à la fois (contrairement aux arrays ou objets qui en contiennent plusieurs). PHP est faiblement typé, donc une variable peut changer de type durant son existence.',
+                'details' => 'Imaginez une boîte qui ne peut contenir qu\'une seule chose : un nombre entier, un nombre à virgule, du texte, ou vrai/faux. C\'est ça un type scalaire ! Contrairement à un tableau qui peut stocker plusieurs valeurs, ici c\'est une valeur unique et simple. PHP est flexible : une même variable peut changer de contenu et de type au fil du programme.',
                 'useCases' => [
                     'Integer : compteurs, identifiants, âges',
                     'Float : prix, mesures scientifiques, calculs précis',
@@ -37,8 +37,8 @@ final class TypagesController extends AbstractController
                     'Utiliser is_int(), is_float(), is_string(), is_bool() pour vérifier'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Types', 'url' => 'https://www.php.net/manual/fr/language.types.php', 'icon' => '📖'],
-                    ['title' => 'Type Declarations', 'url' => 'https://www.php.net/manual/fr/language.types.declarations.php', 'icon' => '🔧']
+                    ['label' => 'PHP Types', 'url' => 'https://www.php.net/manual/fr/language.types.php', 'icon' => '📖'],
+                    ['label' => 'Type Declarations', 'url' => 'https://www.php.net/manual/fr/language.types.declarations.php', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-type_integer', 'label' => 'Integer'],
@@ -50,7 +50,7 @@ final class TypagesController extends AbstractController
             'type_integer' => [
                 'description' => 'Nombres entiers positifs ou négatifs. Peut être décimal, hexadécimal, octal ou binaire.',
                 'example' => '$decimal = 123;\n$hexa = 0x7B; // 123 en hexa\n$octal = 0173; // 123 en octal\n$binaire = 0b1111011; // 123 en binaire',
-                'details' => 'Les integers sont des nombres entiers sans décimale. Taille dépend de la plateforme (32 ou 64 bits). Sur 64 bits, range de -9223372036854775808 à 9223372036854775807. Peut être exprimé en décimal, hexadécimal (0x), octal (0) ou binaire (0b).',
+                'details' => 'Un nombre entier, c\'est comme compter sur vos doigts : 1, 2, 3... pas de virgule ! Sur un ordinateur moderne (64 bits), vous pouvez compter jusqu\'à plus de 9 milliards de milliards. Vous pouvez écrire ce nombre de différentes façons : normalement (123), en code hexadécimal avec 0x (comme en informatique), en octal avec 0 (ancien système), ou en binaire avec 0b (langage machine).',
                 'useCases' => [
                     'Compteurs et incréments : $count++',
                     'Identifiants : $userId = 12345',
@@ -70,7 +70,7 @@ final class TypagesController extends AbstractController
                     'Conversion sûre : filter_var($value, FILTER_VALIDATE_INT)'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Integers', 'url' => 'https://www.php.net/manual/fr/language.types.integer.php', 'icon' => '📖']
+                    ['label' => 'PHP Integers', 'url' => 'https://www.php.net/manual/fr/language.types.integer.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-type_float', 'label' => 'Float'],
@@ -80,7 +80,7 @@ final class TypagesController extends AbstractController
             'type_float' => [
                 'description' => 'Nombres à virgule flottante (décimaux). Aussi appelés double ou real.',
                 'example' => '$prix = 19.99;\n$scientifique = 1.5e3; // 1500\n$negatif = -0.75;',
-                'details' => 'Les floats (ou doubles) représentent des nombres à virgule flottante. Précision limitée (~14 décimales). Supporte la notation scientifique (1.5e3 = 1500). Attention aux arrondis et comparaisons !',
+                'details' => 'Un nombre à virgule, comme un prix 19,99 € ou une mesure 3,14 cm. L\'ordinateur ne peut garder qu\'environ 14 chiffres après la virgule, comme une calculatrice avec un écran limité. Vous pouvez aussi écrire en notation scientifique (1.5e3 = 1500, comme en physique). ATTENTION : l\'ordinateur peut faire de petites erreurs d\'arrondi, donc ne jamais comparer deux nombres à virgule avec == !',
                 'useCases' => [
                     'Prix et montants : $price = 19.99',
                     'Calculs scientifiques : $pi = 3.14159',
@@ -100,8 +100,8 @@ final class TypagesController extends AbstractController
                     'Arrondir : round($value, 2) pour 2 décimales'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Float', 'url' => 'https://www.php.net/manual/fr/language.types.float.php', 'icon' => '📖'],
-                    ['title' => 'Floating Point Math', 'url' => 'https://floating-point-gui.de/', 'icon' => '⚠️']
+                    ['label' => 'PHP Float', 'url' => 'https://www.php.net/manual/fr/language.types.float.php', 'icon' => '📖'],
+                    ['label' => 'Floating Point Math', 'url' => 'https://floating-point-gui.de/', 'icon' => '⚠️']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-type_integer', 'label' => 'Integer'],
@@ -111,7 +111,7 @@ final class TypagesController extends AbstractController
             'type_string' => [
                 'description' => 'Chaînes de caractères délimitées par des guillemets simples ou doubles.',
                 'example' => '$simple = \'Hello\';\n$double = "World";\n$heredoc = <<<EOD\nTexte multiligne\nEOD;',
-                'details' => 'Les strings sont des séquences de caractères. Guillemets simples : littéral. Guillemets doubles : interprète variables et séquences d\'échappement. Heredoc/Nowdoc pour textes multilignes. Taille max : 2GB sur 64 bits.',
+                'details' => 'Du texte, tout simplement ! Avec des guillemets simples \'texte\', PHP écrit exactement ce que vous tapez. Avec des guillemets doubles "texte", PHP peut comprendre des variables dedans et afficher leur valeur. Pour de longs textes sur plusieurs lignes, il existe des syntaxes spéciales (heredoc/nowdoc). Vous pouvez stocker jusqu\'à 2 Go de texte dans une variable (énorme !)',
                 'useCases' => [
                     'Textes et labels : $nom = "Jean"',
                     'HTML/SQL : $html = "<div>$content</div>"',
@@ -131,8 +131,8 @@ final class TypagesController extends AbstractController
                     'Type hint : function greet(string $name)'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Strings', 'url' => 'https://www.php.net/manual/fr/language.types.string.php', 'icon' => '📖'],
-                    ['title' => 'String Functions', 'url' => 'https://www.php.net/manual/fr/ref.strings.php', 'icon' => '🔧']
+                    ['label' => 'PHP Strings', 'url' => 'https://www.php.net/manual/fr/language.types.string.php', 'icon' => '📖'],
+                    ['label' => 'String Functions', 'url' => 'https://www.php.net/manual/fr/ref.strings.php', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-type_array', 'label' => 'Array'],
@@ -142,7 +142,7 @@ final class TypagesController extends AbstractController
             'type_boolean' => [
                 'description' => 'Type logique qui ne peut avoir que deux valeurs : true ou false.',
                 'example' => '$vrai = true;\n$faux = false;\n// Valeurs falsy : 0, 0.0, "", "0", [], null',
-                'details' => 'Le type boolean représente une valeur de vérité. Seulement deux valeurs : true et false (insensibles à la casse). Crucial pour les conditions. PHP convertit automatiquement d\'autres types en bool dans un contexte booléen.',
+                'details' => 'Comme un interrupteur : allumé (true) ou éteint (false). C\'est tout, seulement deux possibilités ! Vous pouvez écrire TRUE, True ou true, PHP comprend pareil. Super utile pour les conditions (if). PHP est malin : si vous utilisez un nombre ou du texte là où il attend vrai/faux, il convertit automatiquement (0 devient false, 1 devient true, etc.).',
                 'useCases' => [
                     'Conditions : if ($isValid)',
                     'Flags : $isActive = true',
@@ -162,8 +162,8 @@ final class TypagesController extends AbstractController
                     'Conversion explicite : $bool = (bool)$value'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Boolean', 'url' => 'https://www.php.net/manual/fr/language.types.boolean.php', 'icon' => '📖'],
-                    ['title' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '🔄']
+                    ['label' => 'PHP Boolean', 'url' => 'https://www.php.net/manual/fr/language.types.boolean.php', 'icon' => '📖'],
+                    ['label' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '🔄']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-juggling_types', 'label' => 'Jonglage de types'],
@@ -173,7 +173,7 @@ final class TypagesController extends AbstractController
             'types_composes' => [
                 'description' => 'Types qui peuvent contenir plusieurs valeurs : array et object.',
                 'example' => '$tableau = [1, 2, 3];\n$objet = new stdClass();\n$objet->propriete = "valeur";',
-                'details' => 'Les types composés peuvent stocker plusieurs valeurs. Arrays : collections ordonnées accessibles par index/clé. Objects : instances de classes avec propriétés et méthodes. Contrairement aux scalaires, ils sont passés par référence.',
+                'details' => 'Contrairement aux boîtes simples (scalaires), voici des conteneurs qui peuvent ranger plusieurs choses ! Un tableau (array) c\'est comme un tiroir avec des cases numérotées ou étiquetées. Un objet (object) c\'est comme une pochette qui regroupe des informations ET des actions possibles. Différence importante : quand vous passez un tableau à une fonction, PHP fait une copie ; pour un objet, il donne l\'adresse de l\'original (comme prêter vs photocopier).',
                 'useCases' => [
                     'Array : listes, collections, configurations',
                     'Object : modèles de données, services, entités',
@@ -193,7 +193,7 @@ final class TypagesController extends AbstractController
                     'Vérification : is_array(), is_object()'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Types', 'url' => 'https://www.php.net/manual/fr/language.types.php', 'icon' => '📖']
+                    ['label' => 'PHP Types', 'url' => 'https://www.php.net/manual/fr/language.types.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-type_array', 'label' => 'Array'],
@@ -203,7 +203,7 @@ final class TypagesController extends AbstractController
             'type_array' => [
                 'description' => 'Collections ordonnées de valeurs indexées par des clés numériques ou associatives.',
                 'example' => '$indexe = [1, 2, 3];\n$associatif = ["nom" => "John", "age" => 30];\n$mixte = [0 => "zero", "un" => 1];',
-                'details' => 'Les arrays sont des maps ordonnés : associations clé => valeur. Clés peuvent être int ou string. Syntaxe courte [] depuis PHP 5.4. Très flexibles : peuvent contenir n\'importe quel type, même d\'autres arrays (multidimensionnel).',
+                'details' => 'Un tableau, c\'est comme un classeur à tiroirs : chaque tiroir a une étiquette (clé) et contient quelque chose (valeur). L\'étiquette peut être un numéro (0, 1, 2...) ou un nom ("nom", "age"...). Depuis PHP 5.4, on écrit simplement []. Super flexible : vous pouvez mettre n\'importe quoi dedans, même un tableau dans un tableau (comme des boîtes dans des boîtes) !',
                 'useCases' => [
                     'Listes : $fruits = ["pomme", "poire"]',
                     'Configuration : $config = ["host" => "localhost"]',
@@ -223,8 +223,8 @@ final class TypagesController extends AbstractController
                     'in_array() avec strict === : in_array($needle, $haystack, true)'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Arrays', 'url' => 'https://www.php.net/manual/fr/language.types.array.php', 'icon' => '📖'],
-                    ['title' => 'Array Functions', 'url' => 'https://www.php.net/manual/fr/ref.array.php', 'icon' => '🔧']
+                    ['label' => 'PHP Arrays', 'url' => 'https://www.php.net/manual/fr/language.types.array.php', 'icon' => '📖'],
+                    ['label' => 'Array Functions', 'url' => 'https://www.php.net/manual/fr/ref.array.php', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-types_composes', 'label' => 'Types composés'],
@@ -234,7 +234,7 @@ final class TypagesController extends AbstractController
             'type_object' => [
                 'description' => 'Instances de classes contenant des propriétés et des méthodes.',
                 'example' => 'class Personne {\n    public $nom = "John";\n}\n$p = new Personne();\necho $p->nom;',
-                'details' => 'Les objects sont des instances de classes. Encapsulent données (propriétés) et comportements (méthodes). Passés par référence (contrairement aux arrays). Base de la POO : héritage, interfaces, traits, etc.',
+                'details' => 'Un objet est comme une pochette complète sur une personne ou une chose : elle contient des informations (propriétés) ET ce qu\'on peut faire avec (méthodes). C\'est une copie créée à partir d\'un modèle (classe). Important : quand vous passez un objet à une fonction, vous lui donnez l\'adresse du vrai objet, pas une copie ! C\'est la base de la programmation orientée objet (POO) avec héritage, interfaces, etc.',
                 'useCases' => [
                     'Modèles : class User { public $name; }',
                     'Services : class EmailService { function send() }',
@@ -254,8 +254,8 @@ final class TypagesController extends AbstractController
                     'Vérification : $obj instanceof ClassName'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Objects', 'url' => 'https://www.php.net/manual/fr/language.types.object.php', 'icon' => '📖'],
-                    ['title' => 'OOP Basics', 'url' => 'https://www.php.net/manual/fr/language.oop5.php', 'icon' => '🎓']
+                    ['label' => 'PHP Objects', 'url' => 'https://www.php.net/manual/fr/language.types.object.php', 'icon' => '📖'],
+                    ['label' => 'OOP Basics', 'url' => 'https://www.php.net/manual/fr/language.oop5.php', 'icon' => '🎓']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-types_composes', 'label' => 'Types composés'],
@@ -265,7 +265,7 @@ final class TypagesController extends AbstractController
             'types_speciaux' => [
                 'description' => 'Types particuliers : null, resource et callable.',
                 'example' => '$nul = null;\n$fichier = fopen("test.txt", "r"); // resource\n$fonction = "strlen"; // callable',
-                'details' => 'Types spéciaux ayant des usages particuliers. NULL : absence de valeur. Resource : référence vers ressource externe (fichier, connexion). Callable : fonction/méthode appelable. Chacun a son contexte d\'utilisation spécifique.',
+                'details' => 'Trois types un peu spéciaux : NULL signifie "rien du tout, pas de valeur". Resource est comme un ticket qui permet d\'accéder à quelque chose en dehors de PHP (un fichier ouvert, une connexion). Callable désigne quelque chose qu\'on peut appeler comme une fonction (une vraie fonction, ou une "recette" stockée dans une variable). Chacun a son utilité précise selon la situation.',
                 'useCases' => [
                     'NULL : variable non initialisée ou valeur absente',
                     'Resource : fichiers, connexions BDD, sockets',
@@ -285,7 +285,7 @@ final class TypagesController extends AbstractController
                     'Éviter null returns : utiliser exceptions ou nullables'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Special Types', 'url' => 'https://www.php.net/manual/fr/language.types.php', 'icon' => '📖']
+                    ['label' => 'PHP Special Types', 'url' => 'https://www.php.net/manual/fr/language.types.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-type_null', 'label' => 'NULL'],
@@ -296,7 +296,7 @@ final class TypagesController extends AbstractController
             'type_null' => [
                 'description' => 'Représente une variable sans valeur. Seule valeur possible : null.',
                 'example' => '$vide = null;\nunset($variable); // $variable devient null\n$inexistante; // null par défaut',
-                'details' => 'NULL représente l\'absence de valeur. Une variable est null si : assignée à null, pas encore définie, ou unset(). Seule valeur du type NULL. Insensible à la casse (null, NULL, Null). Falsy en contexte booléen.',
+                'details' => 'NULL, c\'est le "rien" ou "vide" : votre boîte existe mais elle ne contient rien. Une variable est null dans trois cas : vous lui avez donné null explicitement, elle n\'a jamais été remplie, ou vous l\'avez vidée avec unset(). Vous pouvez l\'écrire null, NULL ou Null (PHP comprend). Dans une condition if, null compte comme faux.',
                 'useCases' => [
                     'Valeur par défaut : $result = null',
                     'Valeur optionnelle : function process(?string $name)',
@@ -316,7 +316,7 @@ final class TypagesController extends AbstractController
                     'isset() vs is_null() : isset() pour existence'
                 ],
                 'resources' => [
-                    ['title' => 'PHP NULL', 'url' => 'https://www.php.net/manual/fr/language.types.null.php', 'icon' => '📖']
+                    ['label' => 'PHP NULL', 'url' => 'https://www.php.net/manual/fr/language.types.null.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-types_speciaux', 'label' => 'Types spéciaux'],
@@ -326,7 +326,7 @@ final class TypagesController extends AbstractController
             'type_resource' => [
                 'description' => 'Référence vers une ressource externe (fichier, connexion base de données, etc.).',
                 'example' => '$fichier = fopen("data.txt", "r");\n$connexion = mysqli_connect("localhost");\nfclose($fichier);',
-                'details' => 'Les resources sont des références vers des ressources externes maintenues par PHP : fichiers, connexions BDD, sockets, images GD, etc. Non sérialisables. Doivent être libérées explicitement pour éviter les fuites mémoire.',
+                'details' => 'Une resource est comme un ticket ou un jeton qui vous donne accès à quelque chose en dehors de PHP : un fichier ouvert sur le disque dur, une connexion à une base de données, un socket réseau, une image en mémoire... Important : PHP ne peut pas les sauvegarder (non sérialisable). Vous DEVEZ toujours fermer ces "tickets" après usage pour éviter de gaspiller la mémoire et les ressources système.',
                 'useCases' => [
                     'Fichiers : $f = fopen("file.txt", "r")',
                     'Base de données : $conn = mysqli_connect(...)',
@@ -346,7 +346,7 @@ final class TypagesController extends AbstractController
                     'PDO au lieu mysqli_* pour BDD'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Resource', 'url' => 'https://www.php.net/manual/fr/language.types.resource.php', 'icon' => '📖']
+                    ['label' => 'PHP Resource', 'url' => 'https://www.php.net/manual/fr/language.types.resource.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-types_speciaux', 'label' => 'Types spéciaux'],
@@ -356,7 +356,7 @@ final class TypagesController extends AbstractController
             'type_callable' => [
                 'description' => 'Représente quelque chose qui peut être appelé comme une fonction.',
                 'example' => '$func = "strtoupper";\n$lambda = function($x) { return $x * 2; };\ncall_user_func($func, "hello");',
-                'details' => 'Callable désigne tout ce qui peut être appelé : nom de fonction (string), closure, méthode (array), callable objet. Utilisé pour callbacks, array_map, usort, etc. PHP 7.4+ : arrow functions pour syntaxe courte.',
+                'details' => 'Callable désigne tout ce qu\'on peut "appeler" ou "exécuter" comme une fonction : un nom de fonction écrit en texte, une fonction anonyme (sans nom) dans une variable, une méthode d\'un objet... C\'est super utile quand vous voulez passer une "recette" à une autre fonction pour qu\'elle l\'applique (comme array_map ou usort). Depuis PHP 7.4, on peut même écrire des fonctions ultra-courtes avec => (arrow functions).',
                 'useCases' => [
                     'Callbacks : array_map($callable, $array)',
                     'Tri custom : usort($array, $comparator)',
@@ -376,8 +376,8 @@ final class TypagesController extends AbstractController
                     'Closure binding : Closure::bind() pour contexte'
                 ],
                 'resources' => [
-                    ['title' => 'PHP Callable', 'url' => 'https://www.php.net/manual/fr/language.types.callable.php', 'icon' => '📖'],
-                    ['title' => 'Anonymous Functions', 'url' => 'https://www.php.net/manual/fr/functions.anonymous.php', 'icon' => '🔧']
+                    ['label' => 'PHP Callable', 'url' => 'https://www.php.net/manual/fr/language.types.callable.php', 'icon' => '📖'],
+                    ['label' => 'Anonymous Functions', 'url' => 'https://www.php.net/manual/fr/functions.anonymous.php', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-types_speciaux', 'label' => 'Types spéciaux'],
@@ -387,7 +387,7 @@ final class TypagesController extends AbstractController
             'verification_types' => [
                 'description' => 'Fonctions pour vérifier le type d\'une variable : is_int(), is_string(), gettype(), etc.',
                 'example' => 'is_int(42); // true\nis_string("hello"); // true\ngettype(3.14); // "double"\nvar_dump($variable);',
-                'details' => 'PHP fournit des fonctions is_*() pour vérifier les types : is_int(), is_float(), is_string(), is_bool(), is_array(), is_object(), is_null(), is_resource(), is_callable(). gettype() retourne le type sous forme de string. var_dump() pour debug détaillé.',
+                'details' => 'PHP vous donne des outils pour vérifier "c\'est quoi dans la boîte ?" : des fonctions is_int(), is_float(), is_string(), is_bool(), etc. Chacune répond vrai ou faux. gettype() vous dit le nom du type en toutes lettres. var_dump() affiche TOUT en détail (super pour comprendre ce qui se passe pendant le développement). C\'est comme avoir une loupe pour examiner vos variables !',
                 'useCases' => [
                     'Validation : if (is_int($age)) {...}',
                     'Type guards : is_array($data) ? count($data) : 0',
@@ -407,8 +407,8 @@ final class TypagesController extends AbstractController
                     'PHPStan/Psalm pour analyse statique'
                 ],
                 'resources' => [
-                    ['title' => 'Type Functions', 'url' => 'https://www.php.net/manual/fr/ref.var.php', 'icon' => '📖'],
-                    ['title' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '🔄']
+                    ['label' => 'Type Functions', 'url' => 'https://www.php.net/manual/fr/ref.var.php', 'icon' => '📖'],
+                    ['label' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '🔄']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-types_hints', 'label' => 'Type hints'],
@@ -418,7 +418,7 @@ final class TypagesController extends AbstractController
             'conversion_types' => [
                 'description' => 'Conversion explicite (cast) ou implicite entre types de données.',
                 'example' => '$str = (string) 123; // "123"\n$int = (int) "456"; // 456\n$bool = (bool) ""; // false',
-                'details' => 'PHP permet de convertir (cast) une variable d\'un type vers un autre. Casting explicite : (int), (float), (string), (bool), (array), (object). Conversion implicite : PHP le fait automatiquement dans certains contextes (juggling).',
+                'details' => 'Transformer un type en un autre, c\'est possible ! Vous pouvez forcer la transformation avec (int), (float), (string), (bool), etc. - on appelle ça un "cast" ou "transtypage". Par exemple, transformer le nombre 123 en texte "123", ou le texte "456" en nombre 456. Parfois PHP fait cette transformation tout seul automatiquement (conversion implicite ou "juggling"), mais c\'est mieux de le faire vous-même pour être sûr du résultat.',
                 'useCases' => [
                     'Forcer type : $id = (int)$_GET["id"]',
                     'String concat : $msg = "Total: " . (string)$count',
@@ -438,8 +438,8 @@ final class TypagesController extends AbstractController
                     'settype($var, "int") pour conversion in-place'
                 ],
                 'resources' => [
-                    ['title' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '📖'],
-                    ['title' => 'Filter Functions', 'url' => 'https://www.php.net/manual/fr/ref.filter.php', 'icon' => '🔧']
+                    ['label' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '📖'],
+                    ['label' => 'Filter Functions', 'url' => 'https://www.php.net/manual/fr/ref.filter.php', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-juggling_types', 'label' => 'Jonglage de types'],
@@ -449,7 +449,7 @@ final class TypagesController extends AbstractController
             'juggling_types' => [
                 'description' => 'PHP convertit automatiquement les types selon le contexte (jonglage de types).',
                 'example' => 'echo "5" + 3; // 8 (string devient int)\necho "10.5" * 2; // 21 (string devient float)',
-                'details' => 'Le type juggling est la conversion automatique de types par PHP selon le contexte. "5" + 3 : string devient int. "hello" . 5 : int devient string. Pratique mais peut cacher des bugs. strict_types=1 le désactive partiellement.',
+                'details' => 'PHP est comme un assistant qui devine et convertit automatiquement les types selon ce que vous faites. Vous additionnez "5" + 3 ? Il transforme "5" en nombre et donne 8. Vous collez "Age: " avec 25 ? Il transforme 25 en texte. C\'est pratique MAIS ça peut cacher des erreurs ! Par exemple "abc" + 5 donne 5 (il considère "abc" comme 0). Pour éviter les surprises, on peut activer strict_types=1.',
                 'useCases' => [
                     'Calculs : "10" * 2 → 20',
                     'Concaténation : "Age: " . 25 → "Age: 25"',
@@ -469,8 +469,8 @@ final class TypagesController extends AbstractController
                     'PHPStan level élevé pour détecter les problèmes'
                 ],
                 'resources' => [
-                    ['title' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '📖'],
-                    ['title' => 'Comparison Operators', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php', 'icon' => '⚖️']
+                    ['label' => 'Type Juggling', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '📖'],
+                    ['label' => 'Comparison Operators', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php', 'icon' => '⚖️']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-conversion_types', 'label' => 'Conversion de types'],
@@ -480,7 +480,7 @@ final class TypagesController extends AbstractController
             'types_hints' => [
                 'description' => 'Déclaration de types pour les paramètres et valeurs de retour de fonctions (PHP 7+).',
                 'example' => 'function additionner(int $a, int $b): int {\n    return $a + $b;\n}\ndeclare(strict_types=1);',
-                'details' => 'Type hints (déclarations de types) permettent de spécifier les types attendus pour paramètres et return. PHP 7.0+ : scalaires (int, float, string, bool). PHP 7.1+ : nullable (?int), void. PHP 8.0+ : union (int|float), mixed. strict_types=1 force le mode strict.',
+                'details' => 'Depuis PHP 7, vous pouvez mettre des "étiquettes" sur vos fonctions pour dire exactement quel type de données elles acceptent et retournent. Comme écrire "cette fonction prend deux nombres entiers et rend un nombre entier". PHP 7.1 ajoute le ? pour dire "peut être null" (?int). PHP 8 permet plusieurs types possibles avec | (int|float). Avec declare(strict_types=1) en début de fichier, PHP refuse tout ce qui n\'est pas exactement le bon type !',
                 'useCases' => [
                     'Paramètres : function greet(string $name)',
                     'Return type : function getAge(): int',
@@ -500,8 +500,8 @@ final class TypagesController extends AbstractController
                     'PHPDoc pour types complexes : /** @param array<string> */'
                 ],
                 'resources' => [
-                    ['title' => 'Type Declarations', 'url' => 'https://www.php.net/manual/fr/language.types.declarations.php', 'icon' => '📖'],
-                    ['title' => 'PHP 8 Union Types', 'url' => 'https://www.php.net/manual/fr/language.types.declarations.php#language.types.declarations.union', 'icon' => '🔧']
+                    ['label' => 'Type Declarations', 'url' => 'https://www.php.net/manual/fr/language.types.declarations.php', 'icon' => '📖'],
+                    ['label' => 'PHP 8 Union Types', 'url' => 'https://www.php.net/manual/fr/language.types.declarations.php#language.types.declarations.union', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-juggling_types', 'label' => 'Jonglage de types'],

@@ -16,7 +16,7 @@ final class HomeController extends AbstractController
             'variables' => [
                 'description' => 'Les variables en PHP sont utilisées pour stocker des données. Elles sont déclarées avec le signe $ suivi du nom de la variable.',
                 'example' => '$maVariable = "Bonjour";',
-                'details' => 'Les variables PHP commencent par $ et stockent toutes sortes de données (nombres, textes, tableaux, objets). Elles sont créées automatiquement dès l\'assignation et leur type peut changer dynamiquement. PHP propose aussi des superglobales ($_GET, $_POST, $_SESSION) accessibles partout dans le code. Les variables peuvent être locales (dans une fonction), globales (partout avec le mot-clé global) ou statiques (conservent leur valeur entre appels).',
+                'details' => 'Les variables, c\'est comme des boîtes avec une étiquette $ ! Tu mets ce que tu veux dedans : nombres, texte, listes... et PHP devine automatiquement le type. Il existe des variables spéciales appelées "superglobales" ($_GET, $_POST, $_SESSION) qui sont accessibles partout dans ton code. Une variable peut vivre juste dans sa fonction (locale), partout dans le code (globale avec le mot-clé global), ou garder sa valeur entre les appels (statique). C\'est la base de tout en PHP !',
                 'useCases' => [
                     'Stocker des données utilisateur provenant de formulaires ($_POST, $_GET)',
                     'Gérer les sessions utilisateur avec $_SESSION (connexion, panier)',
@@ -51,7 +51,7 @@ final class HomeController extends AbstractController
             'types_de_donnees' => [
                 'description' => 'PHP supporte plusieurs types de données, y compris les entiers, les flottants, les chaînes de caractères, les tableaux, les objets, et les types spéciaux comme NULL.',
                 'example' => '$monEntier = 42; $maChaine = "Hello World";',
-                'details' => 'PHP est un langage à typage dynamique avec 10 types principaux : scalaires (int, float, string, bool), composés (array, object, callable, iterable), spéciaux (resource, null). Depuis PHP 7+, le typage strict peut être activé avec declare(strict_types=1). PHP 8 introduit les Union Types (int|string), le type mixed et never. Le typage aide à détecter les erreurs tôt et améliore la maintenabilité du code.',
+                'details' => 'PHP a 10 types de données : simples (int, float, string, bool), complexes (array, object, callable, iterable) et spéciaux (resource, null). Normalement PHP est "cool" et devine tout... mais ça crée des bugs ! C\'est pourquoi depuis PHP 7, tu peux activer le mode strict avec declare(strict_types=1) pour forcer PHP à être rigoureux. PHP 8 ajoute des types encore plus puissants : Union Types (int|string pour accepter plusieurs types), mixed (n\'importe quoi) et never (jamais de retour). Le typage, c\'est ton filet de sécurité !',
                 'useCases' => [
                     'Typer les paramètres et retours de fonctions pour éviter les erreurs',
                     'Utiliser les types scalaires pour les calculs (int, float) et textes (string)',
@@ -86,7 +86,7 @@ final class HomeController extends AbstractController
             'operateurs' => [
                 'description' => 'Les opérateurs en PHP sont utilisés pour effectuer des opérations sur des variables et des valeurs. Ils incluent les opérateurs arithmétiques, de comparaison, logiques, et plus encore.',
                 'example' => '$somme = $a + $b; $estEgal = ($a == $b);',
-                'details' => 'PHP propose de nombreux opérateurs : arithmétiques (+, -, *, /, %, **), comparaison (==, ===, !=, !==, <, >, <=, >=), logiques (&&, ||, !, and, or, xor), affectation (=, +=, -=, .=), incrémentation (++, --), ternaire (?:), null coalescing (??), spaceship (<=>), et opérateur de fusion null (??=). PHP 8 ajoute le nullsafe operator (?->) pour éviter les erreurs sur objets null.',
+                'details' => 'Les opérateurs, c\'est comme des outils dans une boîte ! Maths (+, -, *, /, %, **), comparaisons (==, ===, <, >), logique (&&, ||, !), raccourcis (+=, -=, ++, --), et les stars modernes : le ternaire (?:) pour des if courts, le ?? pour les valeurs par défaut sans erreur, le spaceship (<=>) pour trier, et le nullsafe (?->) de PHP 8 qui évite les plantages sur null. ASTUCE : utilise toujours === au lieu de == pour être précis, et ?? est ton meilleur ami pour les valeurs optionnelles !',
                 'useCases' => [
                     'Effectuer des calculs mathématiques avec opérateurs arithmétiques',
                     'Comparer des valeurs avec === (strict) plutôt que == (faible)',
@@ -121,7 +121,7 @@ final class HomeController extends AbstractController
             'structures_de_controle' => [
                 'description' => 'Les structures de contrôle en PHP permettent de contrôler le flux d\'exécution du code. Cela inclut les instructions conditionnelles (if, else, switch) et les boucles (for, while, foreach).',
                 'example' => 'if ($a > $b) { echo "A est plus grand que B"; }',
-                'details' => 'Les structures de contrôle dirigent l\'exécution du code : conditionnelles (if/elseif/else pour décisions, switch/match pour sélections multiples), boucles (for compteur, while condition, do-while au moins une fois, foreach collections), instructions de contrôle (break sortie, continue suivant, return valeur). PHP 8 introduit match (switch amélioré avec expressions et comparaisons strictes). Ces structures sont essentielles pour créer une logique métier complexe.',
+                'details' => 'Les structures de contrôle, c\'est le système de navigation de ton code ! Tu as les décisions (if/else = "si ça alors fais ci", switch/match = "selon le cas"), les boucles (for = compter, while = tant que c\'est vrai, foreach = pour chaque élément), et les contrôles (break = sortir, continue = passer au suivant, return = renvoyer). PHP 8 a apporté match, une version améliorée de switch qui est plus stricte et plus courte. C\'est avec ces outils que tu construis toute la logique de ton application !',
                 'useCases' => [
                     'Valider des données utilisateur avec if/else (formulaires, authentification)',
                     'Parcourir des tableaux avec foreach pour traiter chaque élément',
@@ -156,7 +156,7 @@ final class HomeController extends AbstractController
             'fonctions' => [
                 'description' => 'Les fonctions en PHP sont des blocs de code réutilisables qui effectuent une tâche spécifique. Elles peuvent accepter des paramètres et retourner des valeurs.',
                 'example' => 'function addition($a, $b) { return $a + $b; }',
-                'details' => 'Les fonctions structurent le code en blocs réutilisables avec des paramètres typés et valeurs de retour. PHP supporte : fonctions classiques, fonctions anonymes (closures), arrow functions (PHP 7.4), générateurs (yield), fonctions variadiques (...$args), paramètres nommés (PHP 8), typage strict des paramètres/retours, valeurs par défaut. Les fonctions améliorent la lisibilité, testabilité et maintenabilité du code.',
+                'details' => 'Les fonctions, c\'est comme des recettes de cuisine réutilisables ! Tu leur donnes des ingrédients (paramètres), elles font leur travail, et te rendent un résultat. PHP offre plusieurs styles : classiques, anonymes (closures = fonctions dans des variables), arrow functions (fn => super courtes depuis PHP 7.4), générateurs (yield pour économiser mémoire), fonctions avec nombre variable d\'arguments (...$args), et depuis PHP 8 les paramètres nommés (plus besoin de se souvenir de l\'ordre !). Les fonctions rendent ton code clair, testable et facile à maintenir.',
                 'useCases' => [
                     'Encapsuler la logique métier réutilisable (calculs, validations)',
                     'Créer des callbacks avec fonctions anonymes (array_map, usort)',
@@ -191,7 +191,7 @@ final class HomeController extends AbstractController
             'tableaux' => [
                 'description' => 'Les tableaux en PHP sont des structures de données qui peuvent contenir plusieurs valeurs. Ils peuvent être indexés numériquement ou associatifs (avec des clés personnalisées).',
                 'example' => '$monTableau = array("pomme", "banane", "cerise");',
-                'details' => 'Les tableaux PHP sont des structures polyvalentes : indexés (clés numériques 0, 1, 2...), associatifs (clés personnalisées), multidimensionnels (tableaux de tableaux). PHP offre 80+ fonctions pour les manipuler : tri (sort, usort), recherche (in_array, array_search), filtrage (array_filter, array_map), fusion (array_merge), extraction (array_slice). Les tableaux peuvent stocker tous types de données et sont essentiels pour gérer des collections.',
+                'details' => 'Les tableaux en PHP, c\'est comme un classeur géant qui peut tout ranger ! Tu as 3 types : indexés (0, 1, 2... automatique), associatifs (tu choisis les noms de clés), et multidimensionnels (des tableaux dans des tableaux). PHP te donne plus de 80 fonctions pour les manipuler : trier (sort, usort), chercher (in_array, array_search), filtrer/transformer (array_filter, array_map), fusionner (array_merge), découper (array_slice)... Les tableaux stockent n\'importe quoi et sont LA structure indispensable pour gérer des collections !',
                 'useCases' => [
                     'Stocker des collections d\'objets métier (utilisateurs, produits)',
                     'Gérer des configurations avec tableaux associatifs (paramètres)',
@@ -226,7 +226,7 @@ final class HomeController extends AbstractController
             'manipulation_de_chaines' => [
                 'description' => 'PHP offre de nombreuses fonctions pour manipuler les chaînes de caractères, comme la concaténation, la recherche, le remplacement, et la modification de la casse.',
                 'example' => '$chaine = "Bonjour"; $chaine .= " le monde!";',
-                'details' => 'PHP propose 100+ fonctions pour manipuler les chaînes : concaténation (. et .=), recherche (strpos, str_contains), remplacement (str_replace, preg_replace), extraction (substr, explode, str_split), formatage (sprintf, trim, strtolower), encodage (htmlspecialchars, urlencode), longueur (strlen, mb_strlen). Attention à l\'encodage UTF-8 : utiliser les fonctions mb_* pour caractères multi-octets.',
+                'details' => 'PHP a plus de 100 fonctions pour jouer avec le texte ! Coller (. et .=), chercher (strpos, str_contains en PHP 8), remplacer (str_replace, ou regex avec preg_replace), découper (substr, explode, str_split), formater (sprintf, trim, strtolower), sécuriser (htmlspecialchars contre XSS, urlencode pour URLs), mesurer (strlen, mb_strlen). ATTENTION : strlen compte les octets, pas les caractères ! Pour les accents et émojis (UTF-8), utilise toujours les fonctions mb_* (mb_strlen, mb_substr...). Et sécurise TOUJOURS avec htmlspecialchars() !',
                 'useCases' => [
                     'Valider et nettoyer les entrées utilisateur (trim, strip_tags)',
                     'Formater des textes pour affichage (ucfirst, wordwrap)',
@@ -261,7 +261,7 @@ final class HomeController extends AbstractController
             'gestion_des_erreurs' => [
                 'description' => 'La gestion des erreurs en PHP peut être effectuée à l\'aide de fonctions intégrées comme try-catch, error_reporting, et set_error_handler pour capturer et gérer les erreurs de manière appropriée.',
                 'example' => 'try { // code qui peut générer une exception } catch (Exception $e) { echo "Erreur : " . $e->getMessage(); }',
-                'details' => 'PHP distingue erreurs (warnings, notices, fatals) et exceptions (objets Exception). Mécanismes : try/catch/finally pour exceptions, error_reporting() pour niveau d\'erreurs, set_error_handler() pour gestionnaire personnalisé, throw pour lancer exceptions. PHP 8 améliore avec TypeError automatique, exceptions sur erreurs fatales. Une bonne gestion évite crashs, sécurise l\'app et facilite le débogage avec logs structurés.',
+                'details' => 'PHP a deux systèmes d\'alertes : les erreurs (warnings, notices, fatals = ancien système) et les exceptions (objets Exception = système moderne). Tu gères ça avec try/catch/finally (tente, attrape si problème, nettoie toujours), error_reporting() pour choisir quoi voir, set_error_handler() pour personnaliser, et throw pour déclencher une exception. PHP 8 a tout amélioré : TypeError automatiques, erreurs fatales deviennent des exceptions. Bien gérer les erreurs = app qui ne crashe pas + logs utiles pour déboguer !',
                 'useCases' => [
                     'Capturer erreurs de connexion BDD avec try/catch sur PDO',
                     'Valider données utilisateur et lever exceptions personnalisées',
@@ -296,7 +296,7 @@ final class HomeController extends AbstractController
             'programmation_orientee_objet' => [
                 'description' => 'La POO en PHP permet d\'organiser le code en classes et objets. Maîtrisez l\'encapsulation, l\'héritage, le polymorphisme et l\'abstraction pour créer des applications robustes et maintenables.',
                 'example' => 'class Voiture { private $marque; public function __construct($marque) { $this->marque = $marque; } public function demarrer() { return "La " . $this->marque . " démarre"; } }',
-                'details' => 'La POO structure le code en classes (modèles) et objets (instances) avec 4 piliers : encapsulation (private/protected/public), héritage (extends, parent::), polymorphisme (interfaces, classes abstraites), abstraction (cacher complexité). PHP supporte : propriétés/méthodes typées, constructeur promu (PHP 8), readonly (PHP 8.1), traits (réutilisation), namespaces, autoloading PSR-4. La POO améliore maintenabilité, testabilité et réutilisabilité du code.',
+                'details' => 'La POO, c\'est comme construire avec des Lego ! Tu crées des modèles (classes) et tu fabriques des pièces (objets). 4 règles d\'or : encapsulation (protéger avec private/protected/public), héritage (extends pour réutiliser du code parent), polymorphisme (interfaces pour garantir des méthodes communes), abstraction (cacher la complexité). PHP moderne ajoute : propriétés/méthodes typées, constructeur promu (PHP 8 = moins de code !), readonly (PHP 8.1 = impossible à modifier), traits (copier-coller intelligent), namespaces et autoloading PSR-4. La POO = code organisé, testable et facile à maintenir !',
                 'useCases' => [
                     'Modéliser entités métier (User, Product, Order) avec propriétés/méthodes',
                     'Créer architecture MVC avec séparation contrôleurs/modèles/vues',
@@ -331,7 +331,7 @@ final class HomeController extends AbstractController
             'interaction_avec_les_bases_de_donnees' => [
                 'description' => 'Apprenez à interagir avec les bases de données en PHP : connexions PDO sécurisées, requêtes préparées, transactions, jointures, ORM Doctrine, migrations et optimisation des performances.',
                 'example' => '$pdo = new PDO("mysql:host=localhost;dbname=boutique", "user", "password"); $stmt = $pdo->prepare("SELECT * FROM produits WHERE prix > ?"); $stmt->execute([100]);',
-                'details' => 'PHP interagit avec bases de données via PDO (abstraction multi-SGBD) ou mysqli (spécifique MySQL). Concepts clés : connexion sécurisée, requêtes préparées (protection injections SQL), transactions (cohérence données), jointures (relations entre tables), gestion erreurs (try/catch PDO::ERRMODE_EXCEPTION). ORMs comme Doctrine abstraient SQL avec objets, migrations gèrent schéma, optimisations améliorent performances (index, EXPLAIN, cache).',
+                'details' => 'PHP parle aux bases de données avec PDO (fonctionne avec MySQL, PostgreSQL, SQLite...) ou mysqli (juste MySQL). Les essentiels : connexion sécurisée, requêtes préparées (OBLIGATOIRE pour éviter les injections SQL = piratage !), transactions (tout réussit ou tout annule = cohérence), jointures (relier les tables), gestion d\'erreurs (try/catch avec PDO::ERRMODE_EXCEPTION). Les ORMs comme Doctrine te permettent de manipuler des objets au lieu d\'écrire du SQL. Migrations = versionnage de ta base. Et optimise avec index, EXPLAIN et cache !',
                 'useCases' => [
                     'Connecter app à MySQL/PostgreSQL avec PDO et gestion erreurs',
                     'Sécuriser requêtes avec statements préparés (prévenir SQL injection)',
@@ -366,7 +366,7 @@ final class HomeController extends AbstractController
             'infrastructure_web' => [
                 'description' => 'Comprenez l\'écosystème web et la place de PHP : architecture client-serveur, pile LAMP/LEMP, cycle HTTP, rôle de PHP dans l\'infrastructure moderne et interactions avec les autres technologies.',
                 'example' => 'Client (Navigateur) → Requête HTTP → Serveur (Apache/Nginx + PHP) → Base de données (MySQL) → Réponse HTTP → Client',
-                'details' => 'PHP s\'insère dans architecture web : client (navigateur) envoie requête HTTP → serveur web (Apache/Nginx) → module PHP-FPM exécute script → génère HTML/JSON → retourne réponse. Pile classique LAMP (Linux, Apache, MySQL, PHP) ou moderne (Docker, Nginx, PostgreSQL, Redis cache). PHP 8+ avec JIT améliore performances. Comprendre ce flux aide à optimiser (cache, CDN) et déboguer (logs serveur, network tab).',
+                'details' => 'PHP, c\'est une pièce dans un grand puzzle web ! Le flux : ton navigateur envoie une requête HTTP → le serveur web (Apache/Nginx) la reçoit → PHP-FPM exécute le script → génère du HTML/JSON → renvoie la réponse. La pile classique s\'appelle LAMP (Linux, Apache, MySQL, PHP), la moderne utilise Docker, Nginx, PostgreSQL et Redis pour la vitesse. PHP 8+ avec son JIT (compilation à la volée) va encore plus vite ! Comprendre ce système te permet d\'optimiser (cache, CDN) et de déboguer efficacement (logs, network tab du navigateur).',
                 'useCases' => [
                     'Déployer app PHP sur serveur Linux avec Nginx + PHP-FPM',
                     'Configurer virtual hosts Apache pour multi-sites',

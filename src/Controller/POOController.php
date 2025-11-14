@@ -45,8 +45,8 @@ En PHP, on utilise le mot "class" pour créer une classe, "new" pour créer un o
                     'Documentation : PHPDoc sur classes et méthodes publiques'
                 ],
                 'resources' => [
-                    ['title' => 'POO en PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.php', 'icon' => '📖'],
-                    ['title' => 'POO Grafikart', 'url' => 'https://grafikart.fr/formations/programmation-objet-php', 'icon' => '🎥']
+                    ['label' => 'POO en PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.php', 'icon' => '📖'],
+                    ['label' => 'POO Grafikart', 'url' => 'https://grafikart.fr/formations/programmation-objet-php', 'icon' => '🎥']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],
@@ -86,7 +86,7 @@ Pour accéder aux propriétés et méthodes, on utilise la flèche -> : $objet->
                     'Documentation : commenter classe explique son rôle, responsabilité'
                 ],
                 'resources' => [
-                    ['title' => 'Classes et objets PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.basic.php', 'icon' => '📖']
+                    ['label' => 'Classes et objets PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.basic.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-introduction', 'label' => 'Introduction POO'],
@@ -126,7 +126,7 @@ Depuis PHP 7.4, on peut typer les propriétés : public string $nom. Depuis PHP 
                     'Documentation : PHPDoc type et description chaque propriété/méthode'
                 ],
                 'resources' => [
-                    ['title' => 'Propriétés PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.properties.php', 'icon' => '📖']
+                    ['label' => 'Propriétés PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.properties.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],
@@ -168,7 +168,7 @@ L\'encapsulation est le principe de cacher les détails internes. C\'est comme u
                     'Cohérence : si $nom private, créer getNom() et setNom() publics'
                 ],
                 'resources' => [
-                    ['title' => 'Visibilité PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.visibility.php', 'icon' => '📖']
+                    ['label' => 'Visibilité PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.visibility.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-proprietes_et_methodes', 'label' => 'Propriétés et méthodes'],
@@ -208,7 +208,7 @@ Depuis PHP 8.0, on peut déclarer les propriétés directement dans le construct
                     'Éviter destructeur : rarement nécessaire, PHP gère mémoire automatiquement'
                 ],
                 'resources' => [
-                    ['title' => 'Constructeurs PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.decon.php', 'icon' => '📖']
+                    ['label' => 'Constructeurs PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.decon.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],
@@ -248,7 +248,7 @@ Pour appeler une méthode du parent, on utilise parent::methode(). C\'est utile 
                     'Préférer composition : "utiliser" objet souvent meilleur qu\'hériter'
                 ],
                 'resources' => [
-                    ['title' => 'Héritage PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.inheritance.php', 'icon' => '📖']
+                    ['label' => 'Héritage PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.inheritance.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],
@@ -288,7 +288,7 @@ C\'est utile quand vous avez un comportement commun mais des détails spécifiqu
                     'Éviter sur-abstraction : ne pas abstraire si < 3 classes héritent'
                 ],
                 'resources' => [
-                    ['title' => 'Classes abstraites PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.abstract.php', 'icon' => '📖']
+                    ['label' => 'Classes abstraites PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.abstract.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-heritage', 'label' => 'Héritage'],
@@ -328,7 +328,7 @@ C\'est très utile pour définir ce qu\'un objet peut faire sans imposer comment
                     'Stable API : interfaces changent rarement, réfléchir avant créer'
                 ],
                 'resources' => [
-                    ['title' => 'Interfaces PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.interfaces.php', 'icon' => '📖']
+                    ['label' => 'Interfaces PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.interfaces.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-abstraction', 'label' => 'Classes abstraites'],
@@ -368,7 +368,7 @@ Le polymorphisme fonctionne avec l\'héritage (classes enfants) et les interface
                     'Dependency injection : injecter interface, pas implémentation concrète'
                 ],
                 'resources' => [
-                    ['title' => 'Polymorphisme PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.php', 'icon' => '📖']
+                    ['label' => 'Polymorphisme PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-interfaces', 'label' => 'Interfaces'],
@@ -408,7 +408,7 @@ C\'est utile pour les fonctions utilitaires (Math::abs()) ou les données partag
                     'Documentation : indiquer méthode statique @static PHPDoc'
                 ],
                 'resources' => [
-                    ['title' => 'Static PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.static.php', 'icon' => '📖']
+                    ['label' => 'Static PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.static.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],
@@ -448,7 +448,7 @@ Les traits évitent la duplication et permettent de composer des classes avec de
                     'Nommage explicite : Logger, Timestampable noms clairs comportement'
                 ],
                 'resources' => [
-                    ['title' => 'Traits PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.traits.php', 'icon' => '📖']
+                    ['label' => 'Traits PHP', 'url' => 'https://www.php.net/manual/fr/language.oop5.traits.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],
@@ -488,8 +488,8 @@ Les namespaces rendent le code organisé et clair. Symfony utilise "App\\Control
                     'Alias si conflit : use App\\Model\\User as ModelUser évite collision'
                 ],
                 'resources' => [
-                    ['title' => 'Namespaces PHP', 'url' => 'https://www.php.net/manual/fr/language.namespaces.php', 'icon' => '📖'],
-                    ['title' => 'PSR-4 Autoload', 'url' => 'https://www.php-fig.org/psr/psr-4/', 'icon' => '🔗']
+                    ['label' => 'Namespaces PHP', 'url' => 'https://www.php.net/manual/fr/language.namespaces.php', 'icon' => '📖'],
+                    ['label' => 'PSR-4 Autoload', 'url' => 'https://www.php-fig.org/psr/psr-4/', 'icon' => '🔗']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],
@@ -529,7 +529,7 @@ Vous pouvez avoir plusieurs types d\'exceptions (EmailInvalideException, AgeInva
                     'Log exceptions : logger toutes exceptions non gérées pour debugging'
                 ],
                 'resources' => [
-                    ['title' => 'Exceptions PHP', 'url' => 'https://www.php.net/manual/fr/language.exceptions.php', 'icon' => '📖']
+                    ['label' => 'Exceptions PHP', 'url' => 'https://www.php.net/manual/fr/language.exceptions.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-classes_et_objets', 'label' => 'Classes et objets'],

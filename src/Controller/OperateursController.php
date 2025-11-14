@@ -16,7 +16,7 @@ final class OperateursController extends AbstractController
             'operateurs_arithmetiques' => [
                 'description' => 'Opérateurs pour effectuer des calculs mathématiques : addition, soustraction, multiplication, division, modulo, exponentiation.',
                 'example' => '$a = 10; $b = 3;\n$addition = $a + $b; // 13\n$division = $a / $b; // 3.333...\n$modulo = $a % $b; // 1\n$puissance = $a ** $b; // 1000',
-                'details' => 'Les opérateurs arithmétiques permettent d\'effectuer des calculs mathématiques sur des valeurs numériques. PHP supporte sept opérateurs principaux : addition (+), soustraction (-), multiplication (*), division (/), modulo (%), exponentiation (**) depuis PHP 5.6, et négation unaire (-). La division retourne toujours un float, même si le résultat est un entier. Le modulo retourne le reste de la division entière. L\'exponentiation calcule la puissance. PHP gère automatiquement le dépassement d\'entiers en convertissant vers float. Les opérateurs respectent les priorités mathématiques standards : ** > * / % > + -. Utilisez des parenthèses pour contrôler l\'ordre d\'évaluation.',
+                'details' => 'Les opérateurs arithmétiques, c\'est les maths de base ! + pour additionner, - pour soustraire, * pour multiplier, / pour diviser, % pour avoir le reste d\'une division (super utile pour savoir si c\'est pair ou impair !), et ** pour la puissance (10 ** 2 = 100). PHP respecte l\'ordre des priorités comme à l\'école : d\'abord ** puis * / % puis + -. Attention : la division donne TOUJOURS un nombre à virgule (même 10/2 donne 5.0), et diviser par zéro fait planter le programme ! Le modulo (%) c\'est comme le reste quand vous partagez des bonbons.',
                 'useCases' => [
                     'Calculs financiers avec addition, soustraction et multiplication pour prix, taxes, remises',
                     'Division pour moyennes, ratios, pourcentages (attention aux divisions par zéro)',
@@ -39,7 +39,7 @@ final class OperateursController extends AbstractController
                     'Utiliser abs() pour valeurs absolues plutôt que multiplier par -1'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs arithmétiques PHP', 'url' => 'https://www.php.net/manual/fr/language.operators.arithmetic.php', 'icon' => '📖']
+                    ['label' => 'Opérateurs arithmétiques PHP', 'url' => 'https://www.php.net/manual/fr/language.operators.arithmetic.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_comparaison', 'label' => 'Opérateurs de comparaison'],
@@ -50,7 +50,7 @@ final class OperateursController extends AbstractController
             'operateurs_comparaison' => [
                 'description' => 'Opérateurs pour comparer des valeurs et retourner true/false : égalité, inégalité, supérieur, inférieur.',
                 'example' => '$x = 5; $y = "5";\nvar_dump($x == $y);  // true (égalité)\nvar_dump($x === $y); // false (identité)\nvar_dump($x != $y);  // false\nvar_dump($x <=> $y); // 0 (spaceship)',
-                'details' => 'Les opérateurs de comparaison comparent deux valeurs et retournent un booléen (true/false), sauf spaceship qui retourne -1, 0 ou 1. Distinction cruciale : == (égalité) compare après jonglage de types, tandis que === (identité) compare valeur ET type sans conversion. Disponibles : == (égal), === (identique), != ou <> (différent), !== (non identique), < (inférieur), > (supérieur), <= (inférieur ou égal), >= (supérieur ou égal), <=> (spaceship, PHP 7+). L\'opérateur spaceship retourne -1 si gauche < droite, 0 si égales, 1 si gauche > droite. Utile pour fonctions de tri. PHP compare les chaînes lexicographiquement et les tableaux élément par élément.',
+                'details' => 'Comparer, c\'est vérifier "est-ce que c\'est pareil ?", "est-ce que c\'est plus grand ?". Les symboles : == (égal), === (strictement identique), != (différent), !== (strictement différent), < (plus petit), > (plus grand), <= (plus petit ou égal), >= (plus grand ou égal). LA DIFFÉRENCE IMPORTANTE : == compare les valeurs (5 == "5" est vrai), === compare valeur ET type (5 === "5" est faux). Conseil : toujours utiliser === pour éviter les surprises ! Il y a aussi <=> ("spaceship", vaisseau spatial) qui donne -1, 0 ou 1 pour trier facilement.',
                 'useCases' => [
                     'Validation de formulaires : vérifier âge >= 18, longueur mot de passe > 8',
                     'Conditions if/elseif pour logique métier, contrôle d\'accès, états d\'application',
@@ -73,8 +73,8 @@ final class OperateursController extends AbstractController
                     'Spaceship excellent pour callbacks de tri : usort($arr, fn($a, $b) => $a["age"] <=> $b["age"])'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs de comparaison', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php', 'icon' => '📖'],
-                    ['title' => 'Tableau de comparaisons', 'url' => 'https://www.php.net/manual/fr/types.comparisons.php', 'icon' => '📊']
+                    ['label' => 'Opérateurs de comparaison', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php', 'icon' => '📖'],
+                    ['label' => 'Tableau de comparaisons', 'url' => 'https://www.php.net/manual/fr/types.comparisons.php', 'icon' => '📊']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_logiques', 'label' => 'Opérateurs logiques'],
@@ -85,7 +85,7 @@ final class OperateursController extends AbstractController
             'operateurs_logiques' => [
                 'description' => 'Opérateurs pour combiner des expressions booléennes : AND, OR, NOT, XOR avec priorités différentes.',
                 'example' => '$a = true; $b = false;\nvar_dump($a && $b); // false (AND)\nvar_dump($a || $b); // true (OR)\nvar_dump(!$a);      // false (NOT)\nvar_dump($a xor $b); // true (XOR)',
-                'details' => 'Les opérateurs logiques combinent des expressions booléennes et retournent true ou false. PHP offre deux syntaxes : symboles (&& || !) et mots-clés (and or not) avec priorités différentes. && et || utilisent l\'évaluation court-circuit : si le résultat est déterminé par la première expression, la seconde n\'est pas évaluée. AND logique (&& ou and) retourne true si les deux opérandes sont true. OR logique (|| ou or) retourne true si au moins un opérande est true. NOT logique (! ou not) inverse la valeur booléenne. XOR (xor) retourne true si exactement un opérande est true. Priorité : ! > && > || > and > xor > or. Les symboles sont recommandés pour leur priorité prévisible.',
+                'details' => 'Les opérateurs logiques, c\'est pour combiner des conditions : "Si j\'ai 18 ans ET j\'ai mon permis". Les symboles : && (ET), || (OU), ! (NON). && = les deux doivent être vrais. || = au moins un doit être vrai. ! = inverse le résultat. Important : PHP est malin et fait du "court-circuit" : si la première partie suffit à connaître le résultat, il ne calcule même pas la deuxième ! Par exemple : if ($user && $user->isAdmin()) - si $user est faux, il ne teste même pas isAdmin() (évite une erreur). Astuce : toujours utiliser && || ! plutôt que and or not.',
                 'useCases' => [
                     'Conditions composées : if ($age >= 18 && $hasLicense) pour vérifications multiples',
                     'Validation formulaires : if (empty($name) || empty($email)) pour champs requis',
@@ -108,7 +108,7 @@ final class OperateursController extends AbstractController
                     'Ordre des conditions : placer les plus rapides/fréquentes en premier pour optimisation'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs logiques PHP', 'url' => 'https://www.php.net/manual/fr/language.operators.logical.php', 'icon' => '📖']
+                    ['label' => 'Opérateurs logiques PHP', 'url' => 'https://www.php.net/manual/fr/language.operators.logical.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_comparaison', 'label' => 'Opérateurs de comparaison'],
@@ -119,7 +119,7 @@ final class OperateursController extends AbstractController
             'operateurs_affectation' => [
                 'description' => 'Opérateurs pour assigner des valeurs : affectation simple et composée (+=, -=, *=, /=, %=, etc.).',
                 'example' => '$x = 10;\n$x += 5;  // $x = $x + 5 = 15\n$x -= 3;  // $x = $x - 3 = 12\n$x *= 2;  // $x = $x * 2 = 24\n$x /= 4;  // $x = $x / 4 = 6',
-                'details' => 'Les opérateurs d\'affectation assignent une valeur à une variable. L\'opérateur de base est = qui copie la valeur de droite vers la variable de gauche. Les opérateurs composés combinent opération et affectation : += (addition), -= (soustraction), *= (multiplication), /= (division), %= (modulo), **= (exponentiation), .= (concaténation), &= (ET bitwise), |= (OU bitwise), ^= (XOR bitwise), <<= (décalage gauche), >>= (décalage droite). Ils modifient la variable en place : $x += 5 équivaut à $x = $x + 5 mais plus concis et légèrement plus rapide. En PHP, l\'affectation retourne la valeur assignée, permettant des chaînes d\'affectation : $a = $b = $c = 10.',
+                'details' => 'Les opérateurs d\'affectation, c\'est pour mettre une valeur dans une variable. Le basique : = met la valeur. Les versions raccourcies sont super pratiques : += pour ajouter ($x += 5 au lieu de $x = $x + 5), -= pour retirer, *= pour multiplier, /= pour diviser, .= pour ajouter du texte à la fin. C\'est plus court à écrire et un peu plus rapide ! Vous pouvez même faire des affectations en chaîne : $a = $b = $c = 0 donne zéro à tout le monde d\'un coup. Ces raccourcis sont très utilisés dans les boucles pour accumuler des totaux ou construire du texte progressivement.',
                 'useCases' => [
                     'Accumulation dans boucles : $total += $value pour sommes, compteurs',
                     'Mise à jour de propriétés : $obj->score += 10 pour incréments conditionnels',
@@ -142,7 +142,7 @@ final class OperateursController extends AbstractController
                     'Documenter chaînes d\'affectation si nécessaires, mais généralement les éviter'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs d\'affectation', 'url' => 'https://www.php.net/manual/fr/language.operators.assignment.php', 'icon' => '📖']
+                    ['label' => 'Opérateurs d\'affectation', 'url' => 'https://www.php.net/manual/fr/language.operators.assignment.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_arithmetiques', 'label' => 'Opérateurs arithmétiques'],
@@ -153,7 +153,7 @@ final class OperateursController extends AbstractController
             'operateurs_incrementation' => [
                 'description' => 'Opérateurs pour augmenter/diminuer une variable : pré-incrémentation, post-incrémentation, pré-décrémentation, post-décrémentation.',
                 'example' => '$i = 5;\necho ++$i; // 6 (pré-incrémentation)\necho $i++; // 6 (post-incrémentation, $i devient 7)\necho --$i; // 6 (pré-décrémentation)\necho $i--; // 6 (post-décrémentation, $i devient 5)',
-                'details' => 'Les opérateurs d\'incrémentation (++) et décrémentation (--) augmentent ou diminuent une variable de 1. Position cruciale : préfixe (++$i) modifie puis retourne la nouvelle valeur, postfixe ($i++) retourne l\'ancienne valeur puis modifie. Pré-incrémentation : ++$var équivaut à $var = $var + 1; return $var. Post-incrémentation : $temp = $var; $var = $var + 1; return $temp. Fonctionnent avec entiers, floats et chaînes (comportement spécial). Pour chaînes : "a"++ devient "b", "z"++ devient "aa", "A9"++ devient "B0". Ne fonctionnent pas avec booléens ou null. Légèrement plus rapide en pré-incrémentation (pas de copie temporaire).',
+                'details' => 'Incrémentation (++) et décrémentation (--), c\'est ajouter ou retirer 1 rapidement ! La position compte : ++$i change d\'abord puis donne la nouvelle valeur, $i++ donne l\'ancienne valeur puis change. Exemple : $i = 5; echo ++$i; affiche 6. Mais $i = 5; echo $i++; affiche 5 (et après $i vaut 6). Super utilisé dans les boucles : for ($i = 0; $i < 10; $i++). Fun fact : ça marche aussi sur les lettres ! "a"++ devient "b", "z"++ devient "aa" (comme Excel). Préférez ++$i c\'est un poil plus rapide (mais vraiment un tout petit poil).',
                 'useCases' => [
                     'Boucles for classiques : for ($i = 0; $i < 10; $i++) pour itérations',
                     'Compteurs : $counter++ pour suivre occurrences, clics, tentatives',
@@ -176,7 +176,7 @@ final class OperateursController extends AbstractController
                     'Dans boucles for, convention $i++ acceptée même si ++$i techniquement meilleur'
                 ],
                 'resources' => [
-                    ['title' => 'Incrémentation/Décrémentation', 'url' => 'https://www.php.net/manual/fr/language.operators.increment.php', 'icon' => '📖']
+                    ['label' => 'Incrémentation/Décrémentation', 'url' => 'https://www.php.net/manual/fr/language.operators.increment.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_affectation', 'label' => 'Opérateurs d\'affectation'],
@@ -187,7 +187,7 @@ final class OperateursController extends AbstractController
             'operateurs_concatenation' => [
                 'description' => 'Opérateurs pour joindre des chaînes de caractères : concaténation simple (.) et avec affectation (.=).',
                 'example' => '$nom = "John";\n$age = 25;\n$message = "Bonjour " . $nom; // "Bonjour John"\n$message .= ", vous avez " . $age . " ans"; // Concaténation avec affectation',
-                'details' => 'L\'opérateur de concaténation (.) joint des chaînes de caractères en PHP. Contrairement à d\'autres langages utilisant +, PHP réserve + aux opérations numériques. L\'opérateur .= combine concaténation et affectation : $str .= "texte" équivaut à $str = $str . "texte". PHP convertit automatiquement les types non-chaîne vers string lors de la concaténation (nombres, booléens). Les objets doivent implémenter __toString() pour être concaténables. Performance : multiples concaténations séquentielles avec .= efficaces grâce à l\'optimisation interne PHP. Pour tableaux de strings, implode() plus performant que boucle de concaténation. Depuis PHP 8, concaténation avec types incompatibles peut générer TypeError.',
+                'details' => 'La concaténation, c\'est coller du texte bout à bout ! En PHP, c\'est le point . qui fait ça (pas le +). Par exemple : "Bonjour " . "John" donne "Bonjour John". Le raccourci .= ajoute du texte à la fin : $msg .= " !" équivaut à $msg = $msg . " !". PHP est malin : si vous collez un nombre, il le transforme automatiquement en texte ("Age: " . 25 donne "Age: 25"). Super pratique pour construire des messages, du HTML, des URLs... Pour coller plein de morceaux, vous pouvez faire $a . $b . $c ou utiliser .= progressivement.',
                 'useCases' => [
                     'Construction de messages : $msg = "Bonjour " . $nom . ", bienvenue !"',
                     'Génération HTML : $html .= "<li>" . htmlspecialchars($item) . "</li>"',
@@ -210,7 +210,7 @@ final class OperateursController extends AbstractController
                     'Considérer sprintf() pour formats complexes : sprintf("%s (%d ans)", $nom, $age)'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs de chaînes', 'url' => 'https://www.php.net/manual/fr/language.operators.string.php', 'icon' => '📖']
+                    ['label' => 'Opérateurs de chaînes', 'url' => 'https://www.php.net/manual/fr/language.operators.string.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_affectation', 'label' => 'Opérateurs d\'affectation'],
@@ -221,7 +221,7 @@ final class OperateursController extends AbstractController
             'operateurs_tableaux' => [
                 'description' => 'Opérateurs spécifiques aux tableaux : union (+), égalité (==), identité (===), inégalité (!=, <>).',
                 'example' => '$arr1 = [1, 2, 3];\n$arr2 = [4, 5, 6];\n$union = $arr1 + $arr2; // [1, 2, 3]\n$arr3 = [1, 2, 3];\nvar_dump($arr1 == $arr3); // true\nvar_dump($arr1 === $arr3); // true',
-                'details' => 'Les opérateurs de tableaux permettent de manipuler et comparer des arrays. L\'opérateur union (+) fusionne deux tableaux en conservant les clés du premier : si clé existe dans les deux, valeur du premier conservée (inverse de array_merge). Opérateurs de comparaison : == (égalité) vérifie mêmes paires clé/valeur sans ordre, === (identité) vérifie mêmes paires ET même ordre ET mêmes types. != et !== pour inégalité/non-identité. <> alias de !=. Pas d\'opérateurs < > <= >= pour tableaux (comparaison élément par élément possible via spaceship). L\'union préserve les types des clés (entiers restent entiers, strings restent strings), contrairement à array_merge qui réindexe les clés numériques.',
+                'details' => 'Les tableaux ont leurs propres opérateurs ! Le + fusionne deux tableaux MAIS attention : si une clé existe dans les deux, c\'est la valeur du premier qui gagne (pas comme array_merge qui ajoute tout). Pour comparer : == vérifie si les tableaux ont les mêmes données (peu importe l\'ordre), === vérifie données + ordre + types identiques. C\'est pratique pour fusionner des configurations : $config = $userSettings + $defaults donne priorité aux paramètres utilisateur et complète avec les valeurs par défaut. Différent d\'array_merge qui écraserait ou ajouterait les valeurs !',
                 'useCases' => [
                     'Fusion avec priorité : $config = $userConfig + $defaultConfig (user prioritaire)',
                     'Comparaison de tableaux associatifs : if ($arr1 == $arr2) sans souci d\'ordre',
@@ -244,7 +244,7 @@ final class OperateursController extends AbstractController
                     'Utiliser array_diff() / array_intersect() pour comparaisons plus complexes'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs de tableaux', 'url' => 'https://www.php.net/manual/fr/language.operators.array.php', 'icon' => '📖']
+                    ['label' => 'Opérateurs de tableaux', 'url' => 'https://www.php.net/manual/fr/language.operators.array.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_comparaison', 'label' => 'Opérateurs de comparaison'],
@@ -254,7 +254,7 @@ final class OperateursController extends AbstractController
             'operateurs_ternaire' => [
                 'description' => 'Opérateur conditionnel ternaire pour des conditions courtes : condition ? valeur_si_vrai : valeur_si_faux.',
                 'example' => '$age = 18;\n$statut = ($age >= 18) ? "majeur" : "mineur";\n// Null coalescing\n$nom = $utilisateur ?? "Anonyme";\n// Null coalescing assignment (PHP 7.4+)\n$config[\'debug\'] ??= false;',
-                'details' => 'L\'opérateur ternaire (? :) est une structure conditionnelle compacte retournant une valeur selon une condition booléenne. Syntaxe : condition ? valeur_si_vrai : valeur_si_faux. Équivalent concis à if-else pour affectations simples. PHP 5.3+ permet forme courte : expr1 ?: expr2 (retourne expr1 si truthy, sinon expr2). Attention : ternaires imbriqués associent à gauche, contrairement à autres langages (nécessite parenthèses). Évaluation court-circuit : seule l\'expression choisie est exécutée. Différent de ?? : ternaire teste truthiness (0, "", false sont falsy), ?? teste seulement null/undefined. Utilisable partout où expression attendue : arguments fonctions, concaténations, arrays.',
+                'details' => 'Le ternaire, c\'est le if/else en version ultra-courte ! Condition ? SiVrai : SiFaux. Par exemple : $statut = ($age >= 18) ? "majeur" : "mineur". Vous pouvez même faire plus court : $x = $y ?: "défaut" (si $y est vrai, prends $y, sinon prends "défaut"). ATTENTION : ne pas en mettre 10 les uns dans les autres, ça devient illisible ! Différence avec ?? : le ternaire regarde si c\'est vrai/faux (0 = faux), alors que ?? regarde juste si ça existe ou si c\'est null. À utiliser pour des trucs simples, sinon faites un vrai if/else.',
                 'useCases' => [
                     'Affectations conditionnelles simples : $message = $success ? "OK" : "Erreur"',
                     'Valeurs par défaut : $limit = $userLimit ? $userLimit : 10',
@@ -277,7 +277,7 @@ final class OperateursController extends AbstractController
                     'Pour templates, acceptable car concis, mais if-else plus maintenable en logique métier'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs de comparaison (ternaire)', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php#language.operators.comparison.ternary', 'icon' => '📖']
+                    ['label' => 'Opérateurs de comparaison (ternaire)', 'url' => 'https://www.php.net/manual/fr/language.operators.comparison.php#language.operators.comparison.ternary', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_null_coalescing', 'label' => 'Null coalescing'],
@@ -288,7 +288,7 @@ final class OperateursController extends AbstractController
             'operateurs_null_coalescing' => [
                 'description' => 'Opérateurs pour gérer les valeurs null : null coalescing (??) et null coalescing assignment (??=).',
                 'example' => '$nom = $_GET[\'nom\'] ?? "Défaut";\n$config = $config ?? [];\n// Assignment (PHP 7.4+)\n$settings[\'theme\'] ??= "dark";\n// Équivalent à :\n// $settings[\'theme\'] = $settings[\'theme\'] ?? "dark";',
-                'details' => 'L\'opérateur null coalescing (??) retourne l\'opérande de gauche si elle existe et n\'est pas null, sinon l\'opérande de droite. Introduit en PHP 7.0, il simplifie les vérifications isset(). Contrairement au ternaire (?:), ?? teste uniquement null/undefined, pas les valeurs falsy (0, "", false). Ne génère pas de notice si variable non définie. Chaînable : $x ?? $y ?? $z ?? "défaut" (premier non-null). PHP 7.4 ajoute ??= (null coalescing assignment) : $var ??= value assigne seulement si $var null/inexistant. Équivalent court de : if (!isset($var)) { $var = value; }. Particulièrement utile pour $_GET, $_POST, tableaux optionnels, propriétés d\'objets.',
+                'details' => 'Null coalescing (??) c\'est THE super opérateur pour les valeurs par défaut ! Il dit : "si cette variable existe et n\'est pas null, prends-la, sinon prends ça". Par exemple : $nom = $_GET[\'nom\'] ?? "Anonyme". L\'énorme avantage : aucune erreur si la variable n\'existe pas ! Vous pouvez en chaîner : $x ?? $y ?? $z ?? "défaut" prend le premier qui existe. Depuis PHP 7.4, il y a même ??= : $config[\'theme\'] ??= "dark" met "dark" SEULEMENT si theme n\'existe pas encore. Différent du ternaire : ?? teste juste null, pas le vrai/faux (0 serait accepté).',
                 'useCases' => [
                     'Récupération sécurisée $_GET/$_POST : $id = $_GET["id"] ?? 0 sans notice',
                     'Valeurs par défaut config : $timeout = $config["timeout"] ?? 30',
@@ -311,8 +311,8 @@ final class OperateursController extends AbstractController
                     'Documenter valeurs par défaut choisies, surtout si comportement métier important'
                 ],
                 'resources' => [
-                    ['title' => 'Null Coalescing', 'url' => 'https://www.php.net/manual/fr/migration70.new-features.php#migration70.new-features.null-coalesce-op', 'icon' => '📖'],
-                    ['title' => 'Null Coalescing Assignment', 'url' => 'https://www.php.net/manual/fr/migration74.new-features.php#migration74.new-features.core.null-coalescing-assignment', 'icon' => '🆕']
+                    ['label' => 'Null Coalescing', 'url' => 'https://www.php.net/manual/fr/migration70.new-features.php#migration70.new-features.null-coalesce-op', 'icon' => '📖'],
+                    ['label' => 'Null Coalescing Assignment', 'url' => 'https://www.php.net/manual/fr/migration74.new-features.php#migration74.new-features.core.null-coalescing-assignment', 'icon' => '🆕']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_ternaire', 'label' => 'Opérateur ternaire'],
@@ -323,7 +323,7 @@ final class OperateursController extends AbstractController
             'operateurs_bitwise' => [
                 'description' => 'Opérateurs au niveau des bits : AND (&), OR (|), XOR (^), NOT (~), décalages (<< >>).',
                 'example' => '$a = 12; // 1100 en binaire\n$b = 10; // 1010 en binaire\necho $a & $b;  // 8 (1000)\necho $a | $b;  // 14 (1110)\necho $a ^ $b;  // 6 (0110)\necho $a << 1; // 24 (décalage gauche)',
-                'details' => 'Les opérateurs bitwise manipulent les bits individuels des entiers. & (AND) : bit à 1 si les deux sont 1. | (OR) : bit à 1 si au moins un est 1. ^ (XOR) : bit à 1 si exactement un est 1. ~ (NOT) : inverse tous les bits (complément à un). << (shift left) : décalage gauche, équivalent à multiplication par 2^n. >> (shift right) : décalage droite, équivalent à division entière par 2^n. Opèrent sur représentation binaire des entiers (32-bit sur systèmes 32-bit, 64-bit sur 64-bit). Utiles pour flags, masques de bits, permissions, optimisations, cryptographie, compression. Opérateurs composés disponibles : &=, |=, ^=, <<=, >>=.',
+                'details' => 'Les opérateurs bitwise, c\'est pour les ninjas du code ! Ils travaillent au niveau des bits (0 et 1) dans les nombres. & (AND) met 1 si les deux bits sont 1. | (OR) met 1 si au moins un bit est 1. ^ (XOR) met 1 si exactement un est 1. ~ (NOT) inverse tous les bits. << décale à gauche (×2), >> décale à droite (÷2). Super utile pour les permissions (READ | WRITE | EXECUTE), les flags de configuration, ou optimiser des calculs ($x << 3 plus rapide que $x * 8). C\'est du niveau avancé, vous n\'en aurez pas besoin tous les jours, mais c\'est puissant pour gérer des flags et des masques !',
                 'useCases' => [
                     'Gestion de permissions : $perms = READ | WRITE; if ($perms & ADMIN) {...}',
                     'Flags de configuration : $options |= FLAG_DEBUG; pour activer flag',
@@ -346,7 +346,7 @@ final class OperateursController extends AbstractController
                     'Préférer opérateurs logiques (&&, ||) sauf besoin bitwise spécifique'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateurs bit à bit', 'url' => 'https://www.php.net/manual/fr/language.operators.bitwise.php', 'icon' => '📖']
+                    ['label' => 'Opérateurs bit à bit', 'url' => 'https://www.php.net/manual/fr/language.operators.bitwise.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_logiques', 'label' => 'Opérateurs logiques'],
@@ -357,7 +357,7 @@ final class OperateursController extends AbstractController
             'operateurs_instanceof' => [
                 'description' => 'Opérateur pour vérifier si un objet est une instance d\'une classe ou implémente une interface.',
                 'example' => 'class Personne {}\n$obj = new Personne();\nvar_dump($obj instanceof Personne); // true\nvar_dump($obj instanceof stdClass); // false\nvar_dump($obj instanceof Countable); // false',
-                'details' => 'L\'opérateur instanceof vérifie si une variable est un objet instance d\'une classe donnée, hérite d\'une classe parente, ou implémente une interface. Retourne booléen (true/false). Syntaxe : $object instanceof ClassName. Fonctionne avec héritage : si B extends A, instance de B est aussi instanceof A. Vérifie implémentation d\'interfaces : $obj instanceof Iterator. Depuis PHP 8.0, accepte expressions comme opérande droit : $obj instanceof $className. Retourne false si opérande gauche n\'est pas objet (pas d\'erreur). Utilisable avec interfaces, traits (indirectement via classes), classes abstraites. Ne lève pas erreur si classe inexistante (false), sauf en PHP 8 mode strict.',
+                'details' => 'Instanceof, c\'est le "tu es de quelle famille ?" de la POO ! Il vérifie si un objet est une instance d\'une certaine classe : $user instanceof User. Ça marche aussi avec l\'héritage : si vous avez class Admin extends User, alors $admin instanceof User est vrai ! Pareil pour les interfaces : $obj instanceof JsonSerializable vérifie si l\'objet peut être transformé en JSON. Retourne true ou false. Depuis PHP 8, vous pouvez même mettre le nom de la classe dans une variable ! Super utile pour vérifier qu\'un objet peut faire certaines choses avant de les lui demander.',
                 'useCases' => [
                     'Validation de types : if ($data instanceof Response) { $data->send(); }',
                     'Gestion polymorphique : if ($vehicle instanceof Car) { $vehicle->openTrunk(); }',
@@ -380,7 +380,7 @@ final class OperateursController extends AbstractController
                     'Considérer duck typing (méthode existe ?) plutôt que instanceof strict dans certains cas'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateur instanceof', 'url' => 'https://www.php.net/manual/fr/language.operators.type.php', 'icon' => '📖']
+                    ['label' => 'Opérateur instanceof', 'url' => 'https://www.php.net/manual/fr/language.operators.type.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_type', 'label' => 'Opérateurs de type'],
@@ -390,7 +390,7 @@ final class OperateursController extends AbstractController
             'operateurs_execution' => [
                 'description' => 'Opérateur d\'exécution (backticks) pour exécuter des commandes système (à éviter pour la sécurité).',
                 'example' => '// ATTENTION : Risque de sécurité !\n$output = `ls -la`; // Unix/Linux\n$output = `dir`; // Windows\n// Préférer : shell_exec(), exec(), system()',
-                'details' => 'L\'opérateur d\'exécution utilise backticks (`) pour exécuter une commande shell et retourner sa sortie. Équivalent à shell_exec(). Syntaxe : $output = `commande`. Retourne stdout de la commande comme string, ou null en cas d\'erreur. Désactivable via disable_functions ou safe_mode (déprécié). DANGER MAJEUR DE SÉCURITÉ : injection de commandes si input utilisateur non sanitizé. Ne capture que stdout, pas stderr (utiliser 2>&1 pour rediriger). Bloquant : attend fin de commande. Sur Windows, utilise cmd.exe; sur Unix/Linux, sh. Variables d\'environnement accessibles. Performance : spawner processus coûteux, éviter en boucles. PHP 8+ déprécié dans certains contextes. Alternative sécurisée : exec(), proc_open() avec escapeshellarg().',
+                'details' => 'Les backticks (`) exécutent des commandes système directement depuis PHP ! C\'est comme appeler le Terminal ou l\'Invite de commande... mais 🚨 DANGER ABSOLU 🚨 si tu y mets des données utilisateur ! Un pirate peut alors exécuter N\'IMPORTE QUELLE commande sur ton serveur (effacer fichiers, voler données, etc.). En pratique, c\'est presque toujours désactivé sur les hébergeurs pour cette raison. Si tu en as vraiment besoin : utilise escapeshellarg() sur TOUS les paramètres et privilégie proc_open() qui est plus sécurisé. Vraiment, cherche d\'abord une bibliothèque PHP qui fait la même chose !',
                 'useCases' => [
                     'Scripts système simples : $users = `cat /etc/passwd` (développement seulement)',
                     'Intégration outils CLI : $converted = `ffmpeg -i input.mp4 output.webm 2>&1`',
@@ -413,8 +413,8 @@ final class OperateursController extends AbstractController
                     'Logs et monitoring : tracer toutes exécutions pour audit sécurité'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateur d\'exécution', 'url' => 'https://www.php.net/manual/fr/language.operators.execution.php', 'icon' => '⚠️'],
-                    ['title' => 'Sécurité - Commandes shell', 'url' => 'https://www.php.net/manual/fr/security.shell.php', 'icon' => '🔒']
+                    ['label' => 'Opérateur d\'exécution', 'url' => 'https://www.php.net/manual/fr/language.operators.execution.php', 'icon' => '⚠️'],
+                    ['label' => 'Sécurité - Commandes shell', 'url' => 'https://www.php.net/manual/fr/security.shell.php', 'icon' => '🔒']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_suppression_erreur', 'label' => 'Suppression d\'erreur'],
@@ -424,7 +424,7 @@ final class OperateursController extends AbstractController
             'operateurs_suppression_erreur' => [
                 'description' => 'Opérateur de suppression d\'erreur (@) pour ignorer les erreurs (à utiliser avec parcimonie).',
                 'example' => '$contenu = @file_get_contents("fichier.txt");\n// Supprime les warnings si le fichier n\'existe pas\n$connexion = @mysql_connect("localhost", "user", "pass");\n// Attention : masque les erreurs importantes !',
-                'details' => 'L\'opérateur @ supprime les messages d\'erreur (notices, warnings, fatals) générés par l\'expression qui suit. N\'empêche pas l\'erreur de se produire, masque seulement l\'affichage. Applique temporairement error_reporting(0) pour cette expression. Coûteux en performance (environ 2-3x plus lent). N\'affecte pas error_log si logging configuré. Ne supprime pas exceptions : try-catch reste nécessaire. Considéré mauvaise pratique car masque problèmes réels et complique debugging. Alternatives préférables : vérifications préalables (file_exists(), isset()), gestion d\'exceptions, error_get_last(). Peut créer faux sentiment de sécurité. PHP 8 améliore gestion erreurs, rendant @ encore moins nécessaire.',
+                'details' => 'Le @ c\'est le "mouton noir" des opérateurs ! Il cache les erreurs sous le tapis... exactement ce qu\'il ne faut PAS faire ! En plus, il ralentit ton code de 2-3 fois. Au lieu d\'utiliser @file_get_contents(), fais plutôt if (file_exists($fichier)) avant. Au lieu de @$variable, utilise isset($variable) ou le super ?? qu\'on a vu. L\'arobase masque les problèmes, et quand ton code plante, tu ne comprends rien ! Seule exception acceptable : parfois dans du vieux code legacy où tu ne peux pas refaire tout. Sinon, fuis-le comme la peste.',
                 'useCases' => [
                     'Opérations fichiers optionnelles : @unlink($temp) si suppression non critique',
                     'Conversion de types : $int = @intval($maybeString) sans warning',
@@ -447,7 +447,7 @@ final class OperateursController extends AbstractController
                     'Refactoring : remplacer @ par gestion d\'erreur propre quand possible'
                 ],
                 'resources' => [
-                    ['title' => 'Opérateur de contrôle d\'erreur', 'url' => 'https://www.php.net/manual/fr/language.operators.errorcontrol.php', 'icon' => '⚠️']
+                    ['label' => 'Opérateur de contrôle d\'erreur', 'url' => 'https://www.php.net/manual/fr/language.operators.errorcontrol.php', 'icon' => '⚠️']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_execution', 'label' => 'Opérateur d\'exécution'],
@@ -457,7 +457,7 @@ final class OperateursController extends AbstractController
             'precedence_operateurs' => [
                 'description' => 'Ordre de priorité des opérateurs : parenthèses, puis **, puis *, /, %, puis +, -, puis comparaisons, puis logiques.',
                 'example' => '$result = 2 + 3 * 4; // 14 (pas 20)\n$result = (2 + 3) * 4; // 20\n$result = 2 ** 3 * 4; // 32 (2^3 = 8, puis 8*4)\n$result = true || false && false; // true (AND prioritaire)',
-                'details' => 'La précédence (ou priorité) des opérateurs détermine l\'ordre d\'évaluation des expressions. Niveaux (du plus prioritaire au moins) : clone/new > [] > ** > ++ -- ~ (int) (float) (string) @ > instanceof > ! > * / % > + - . > << >> > < <= > >= > == != === !== <=> > & > ^ > | > && > || > ?? > ? : > = += -= etc. > and > xor > or. Opérateurs de même priorité évalués selon associativité : gauche-droite ou droite-gauche. Différence cruciale : && vs and, || vs or (priorités différentes). Parenthèses forcent évaluation prioritaire. PHP suit généralement mathématiques standard mais avec particularités (ternaire, assignment).',
+                'details' => 'C\'est comme en maths : la multiplication avant l\'addition ! 2 + 3 * 4 = 14 (pas 20). Les parenthèses sont toujours les plus fortes. Ordre général : ** (puissance) > * / % > + - > comparaisons (==, <, >, etc.) > && (ET) > || (OU). PIÈGE : le ternaire (? :) en PHP s\'évalue bizarrement de gauche à droite... mets TOUJOURS des parenthèses si tu en imbriques plusieurs ! Autre piège : && est plus prioritaire que and, || que or... utilise toujours && et || pour éviter les surprises. En cas de doute : mets des parenthèses, ton code sera plus clair !',
                 'useCases' => [
                     'Calculs mathématiques : $total = $price * $qty + $tax comprendre ordre',
                     'Conditions complexes : $valid = $a && $b || $c && $d (parenthéser si ambigu)',
@@ -480,7 +480,7 @@ final class OperateursController extends AbstractController
                     'Utiliser linter/formatter configuré pour forcer parenthèses sur cas ambigus'
                 ],
                 'resources' => [
-                    ['title' => 'Précédence des opérateurs', 'url' => 'https://www.php.net/manual/fr/language.operators.precedence.php', 'icon' => '📖']
+                    ['label' => 'Précédence des opérateurs', 'url' => 'https://www.php.net/manual/fr/language.operators.precedence.php', 'icon' => '📖']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_logiques', 'label' => 'Opérateurs logiques'],
@@ -491,7 +491,7 @@ final class OperateursController extends AbstractController
             'operateurs_type' => [
                 'description' => 'Opérateurs liés aux types : instanceof, cast, is_*() pour la vérification et conversion de types.',
                 'example' => '$var = "123";\n$int = (int) $var; // Cast vers entier\n$bool = (bool) $var; // Cast vers booléen\nvar_dump(is_string($var)); // true\nvar_dump(is_numeric($var)); // true',
-                'details' => 'Les opérateurs de type permettent de vérifier et manipuler les types de données. Cast (transtypages) : (int), (integer), (float), (double), (real), (string), (bool), (boolean), (array), (object), (unset) [déprécié]. Conversion forcée et immédiate. Vérification : instanceof pour objets, fonctions is_*() pour tous types (is_int, is_string, is_array, is_object, is_bool, is_null, is_numeric, is_callable, is_resource, is_scalar, is_iterable). gettype() retourne string du type. settype() modifie type en place. PHP 7+ declare(strict_types=1) force vérification types arguments/retours. Type juggling automatique si strict_types désactivé. Cast préserve variable originale, settype modifie.',
+                'details' => 'Tu peux forcer la transformation d\'une variable avec les "cast" : (int)$x transforme en nombre, (string)$x en texte, (bool)$x en vrai/faux, (array)$x en tableau. ATTENTION, ça peut perdre des infos : (int)4.9 donne 4 (pas 5 !). Pour vérifier le type sans modifier, utilise les fonctions is_int(), is_string(), is_array(), is_bool(), is_numeric(), etc. Pour les objets, on a déjà vu instanceof. Astuce moderne : utilise plutôt les "type hints" dans tes fonctions (function truc(int $x): string) et ajoute declare(strict_types=1) en haut du fichier... PHP vérifiera tout automatiquement !',
                 'useCases' => [
                     'Validation entrées : if (is_numeric($_GET["id"])) $id = (int)$_GET["id"]',
                     'Conversion API : $json = (array)json_decode($data) pour forcer array',
@@ -514,8 +514,8 @@ final class OperateursController extends AbstractController
                     'Pour objets, préférer instanceof à is_object() + vérifications manuelles'
                 ],
                 'resources' => [
-                    ['title' => 'Manipulation de types', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '📖'],
-                    ['title' => 'Fonctions de types', 'url' => 'https://www.php.net/manual/fr/ref.var.php', 'icon' => '🔧']
+                    ['label' => 'Manipulation de types', 'url' => 'https://www.php.net/manual/fr/language.types.type-juggling.php', 'icon' => '📖'],
+                    ['label' => 'Fonctions de types', 'url' => 'https://www.php.net/manual/fr/ref.var.php', 'icon' => '🔧']
                 ],
                 'relatedTopics' => [
                     ['id' => 'modal-operateurs_instanceof', 'label' => 'instanceof'],

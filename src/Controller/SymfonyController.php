@@ -13,7 +13,7 @@ final class SymfonyController extends AbstractController
     {
         // Présentation du framework Symfony
         $presentation = [
-            'title' => 'Symfony - Le Framework PHP de Référence',
+            'label' => 'Symfony - Le Framework PHP de Référence',
             'description' => 'Symfony est un framework PHP open-source qui suit les meilleures pratiques de développement web. Il fournit une architecture robuste, des composants réutilisables et une philosophie orientée développement rapide.',
             'version_actuelle' => '7.3',
             'depuis' => '2005',
@@ -30,7 +30,7 @@ final class SymfonyController extends AbstractController
         // Concepts fondamentaux
         $concepts_base = [
             'mvc_pattern' => [
-                'title' => 'Architecture MVC (Model-View-Controller)',
+                'label' => 'Architecture MVC (Model-View-Controller)',
                 'description' => 'Symfony organise le code selon le pattern MVC pour séparer la logique métier, la présentation et le contrôle',
                 'composants' => [
                     'Model' => 'Entités Doctrine - Gestion des données et logique métier',
@@ -45,7 +45,7 @@ final class SymfonyController extends AbstractController
                 ]
             ],
             'dependency_injection' => [
-                'title' => 'Injection de Dépendances (DI)',
+                'label' => 'Injection de Dépendances (DI)',
                 'description' => 'Système permettant de gérer automatiquement les dépendances entre objets',
                 'principe' => 'Les objets reçoivent leurs dépendances au lieu de les créer eux-mêmes',
                 'avantages' => [
@@ -61,7 +61,7 @@ public function __construct(
 ) {}'
             ],
             'routing' => [
-                'title' => 'Système de Routage',
+                'label' => 'Système de Routage',
                 'description' => 'Mécanisme qui associe les URLs aux contrôleurs et actions',
                 'types' => [
                     'Annotations/Attributs' => '#[Route(\'/user/{id}\', name: \'user_show\')]',
@@ -77,7 +77,7 @@ public function __construct(
                 ]
             ],
             'twig_templating' => [
-                'title' => 'Moteur de Templates Twig',
+                'label' => 'Moteur de Templates Twig',
                 'description' => 'Système de templates sécurisé et expressif intégré à Symfony',
                 'caracteristiques' => [
                     'Syntaxe claire et intuitive',

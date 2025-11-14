@@ -13,7 +13,7 @@ final class EcommerceController extends AbstractController
     {
         // Introduction du tutoriel e-commerce
         $presentation = [
-            'title' => 'E-commerce avec Symfony - Tutoriel Progressif',
+            'label' => 'E-commerce avec Symfony - Tutoriel Progressif',
             'description' => 'Apprenez à construire un site e-commerce complet étape par étape en utilisant Symfony et ses bonnes pratiques.',
             'niveau' => 'Intermédiaire',
             'duree_estimee' => '8-12 heures',
@@ -176,7 +176,7 @@ final class EcommerceController extends AbstractController
         // Concepts techniques détaillés
         $concepts_techniques = [
             'architecture' => [
-                'title' => 'Architecture E-commerce',
+                'label' => 'Architecture E-commerce',
                 'description' => 'Structure modulaire et évolutive',
                 'composants' => [
                     'Frontend' => 'Interface utilisateur responsive',
@@ -186,7 +186,7 @@ final class EcommerceController extends AbstractController
                 ]
             ],
             'patterns' => [
-                'title' => 'Design Patterns Utilisés',
+                'label' => 'Design Patterns Utilisés',
                 'description' => 'Bonnes pratiques de développement',
                 'liste' => [
                     'Repository Pattern' => 'Abstraction de l\'accès aux données',
@@ -196,7 +196,7 @@ final class EcommerceController extends AbstractController
                 ]
             ],
             'securite' => [
-                'title' => 'Aspects Sécurité',
+                'label' => 'Aspects Sécurité',
                 'description' => 'Protection contre les vulnérabilités courantes',
                 'mesures' => [
                     'CSRF Protection' => 'Protection contre les attaques CSRF',

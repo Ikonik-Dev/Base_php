@@ -13,7 +13,7 @@ final class IntroMVCController extends AbstractController
     {
         // Introduction à l'exercice MVC
         $presentation = [
-            'title' => 'Introduction Pratique au MVC avec Symfony',
+            'label' => 'Introduction Pratique au MVC avec Symfony',
             'description' => 'Exercice pratique pour comprendre le pattern MVC en créant une mini-boutique étape par étape.',
             'niveau' => 'Débutant/Intermédiaire',
             'duree_estimee' => '3-4 heures',
@@ -293,7 +293,7 @@ class ShopController extends AbstractController
         // Concepts MVC expliqués simplement
         $concepts_mvc = [
             'model' => [
-                'title' => 'MODEL - La Donnée',
+                'label' => 'MODEL - La Donnée',
                 'description' => 'Gère les données et la logique métier',
                 'role' => 'Représente et manipule les informations',
                 'composants' => [
@@ -309,7 +309,7 @@ class ShopController extends AbstractController
                 ]
             ],
             'view' => [
-                'title' => 'VIEW - L\'Affichage',
+                'label' => 'VIEW - L\'Affichage',
                 'description' => 'Présente les données à l\'utilisateur',
                 'role' => 'Interface utilisateur et présentation',
                 'composants' => [
@@ -325,7 +325,7 @@ class ShopController extends AbstractController
                 ]
             ],
             'controller' => [
-                'title' => 'CONTROLLER - La Logique',
+                'label' => 'CONTROLLER - La Logique',
                 'description' => 'Fait le lien entre Model et View',
                 'role' => 'Chef d\'orchestre de l\'application',
                 'composants' => [
