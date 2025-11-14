@@ -58,7 +58,7 @@
 				{% for jour_key, jour in progression %}
 					<section class="day-section {{ jour_key == 'jour1' ? 'active' : '' }}" id="{{ jour_key }}">
 						<div class="day-header">
-							<h2>{{ jour.title }}</h2>
+							<h2>{{ jour.label }}</h2>
 							<div class="day-info">
 								<span class="duration">{{ jour.duration }}</span>
 								<span class="objectives-count">{{ jour.objectives|length }}

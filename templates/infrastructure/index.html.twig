@@ -41,7 +41,7 @@
 
 				<!-- Diagramme Architecture Client-Serveur -->
 				<section id="architecture" class="concept-section">
-					<h2>{{ concepts.architecture_client_serveur.title }}</h2>
+					<h2>{{ concepts.architecture_client_serveur.label }}</h2>
 					<p class="section-description">{{ concepts.architecture_client_serveur.description }}</p>
 
 					<div class="diagram-container">
@@ -88,7 +88,7 @@
 
 				<!-- Diagramme Pile LAMP/LEMP -->
 				<section id="pile-tech" class="concept-section">
-					<h2>{{ concepts.pile_lamp_lemp.title }}</h2>
+					<h2>{{ concepts.pile_lamp_lemp.label }}</h2>
 					<p class="section-description">{{ concepts.pile_lamp_lemp.description }}</p>
 
 					<div class="diagram-container">
@@ -134,7 +134,7 @@
 
 				<!-- Diagramme Cycle HTTP -->
 				<section id="http-cycle" class="concept-section">
-					<h2>{{ concepts.cycle_requete_reponse.title }}</h2>
+					<h2>{{ concepts.cycle_requete_reponse.label }}</h2>
 					<p class="section-description">{{ concepts.cycle_requete_reponse.description }}</p>
 
 					<div class="diagram-container">
@@ -186,7 +186,7 @@
 
 				<!-- Rôle de PHP -->
 				<section id="php-role" class="concept-section">
-					<h2>{{ concepts.role_de_php.title }}</h2>
+					<h2>{{ concepts.role_de_php.label }}</h2>
 					<p class="section-description">{{ concepts.role_de_php.description }}</p>
 
 					<div class="php-role-grid">
@@ -213,7 +213,7 @@
 						{% for key, concept in concepts %}
 							{% if key not in ['architecture_client_serveur', 'pile_lamp_lemp', 'cycle_requete_reponse', 'role_de_php'] %}
 								<div class="concept-card advanced-concept">
-									<h3>{{ concept.title }}</h3>
+									<h3>{{ concept.label }}</h3>
 									<p class="concept-description">{{ concept.description }}</p>
 									<div class="concept-details">
 										{% for detail, description in concept.details %}

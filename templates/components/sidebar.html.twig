@@ -8,8 +8,8 @@
 		{% if sections is defined %}
 			{% for section in sections %}
 				<div class="sidebar__section">
-					{% if section.title is defined %}
-						<h3 class="sidebar__section-title">{{ section.title }}</h3>
+					{% if section.label is defined %}
+						<h3 class="sidebar__section-title">{{ section.label }}</h3>
 					{% endif %}
 
 					{% if section.separator is defined and section.separator %}

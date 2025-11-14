@@ -18,7 +18,7 @@
 			<div class="container">
 				<h1 class="page-title">
 					<span class="icon">🏗️</span>
-					{{ presentation.title }}
+					{{ presentation.label }}
 				</h1>
 				<p class="page-subtitle">
 					{{ presentation.description }}
@@ -102,7 +102,7 @@
 						{% for key, concept in concepts_mvc %}
 							<div class="mvc-component-card">
 								<div class="component-header {{ key }}">
-									<h3>{{ concept.title }}</h3>
+									<h3>{{ concept.label }}</h3>
 									<p class="component-role">{{ concept.role }}</p>
 								</div>
 
