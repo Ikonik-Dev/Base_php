@@ -1,0 +1,846 @@
+/* ===== ANIMATIONS KEYFRAMES ===== */
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%,
+    20%,
+    53%,
+    80%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+    40%,
+    43% {
+        transform: translate3d(0, -15px, 0);
+    }
+    70% {
+        transform: translate3d(0, -8px, 0);
+    }
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(95, 39, 205, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(95, 39, 205, 0.6);
+    }
+}
+
+/* ===== VARIABLES SYMFONY ===== */
+.symfony-page {
+    --symfony-primary: #5f27cd;
+    --symfony-secondary: #341f97;
+    --symfony-accent: #8854d0;
+    --symfony-light: #a55eea;
+    --symfony-gradient: linear-gradient(
+        135deg,
+        var(--symfony-primary),
+        var(--symfony-secondary)
+    );
+}
+
+/* ===== HEADER SYMFONY ===== */
+.symfony-header {
+    background: var(--symfony-gradient);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+    position: relative;
+    animation: slideInUp 1s ease-out;
+}
+
+.symfony-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>')
+        repeat;
+    background-size: 50px 50px;
+}
+
+.symfony-header .container {
+    position: relative;
+    z-index: 1;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.page-title .icon {
+    font-size: 3rem;
+    animation: bounce 2s infinite;
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 1.5rem;
+}
+
+.symfony-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    animation: slideInUp 1s ease-out;
+}
+
+.stat-item:nth-child(1) {
+    animation-delay: 0.2s;
+}
+.stat-item:nth-child(2) {
+    animation-delay: 0.4s;
+}
+.stat-item:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* ===== NAVIGATION RAPIDE ===== */
+.quick-nav {
+    background: rgba(95, 39, 205, 0.2);
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+    border-top: 2px solid var(--symfony-primary);
+    border-bottom: 2px solid var(--symfony-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.nav-pills {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-pill {
+    padding: 0.5rem 1rem;
+    background: var(--symfony-gradient);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    animation: slideInUp 0.8s ease-out;
+}
+
+.nav-pill:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.nav-pill:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.nav-pill:nth-child(3) {
+    animation-delay: 0.3s;
+}
+.nav-pill:nth-child(4) {
+    animation-delay: 0.4s;
+}
+.nav-pill:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.nav-pill:hover {
+    background: linear-gradient(
+        135deg,
+        var(--symfony-secondary),
+        var(--symfony-primary)
+    );
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(95, 39, 205, 0.4);
+}
+
+/* ===== SECTIONS ===== */
+.concept-section {
+    margin: 3rem 0;
+    animation: fadeInScale 1.2s ease-out;
+}
+
+.concept-section h2 {
+    color: var(--symfony-primary);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    animation: slideInLeft 1s ease-out;
+}
+
+.concept-section h3 {
+    color: var(--symfony-secondary);
+    margin-bottom: 1rem;
+}
+
+.concept-description {
+    color: var(--matrix-text);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* ===== GRILLE DE PHILOSOPHIE ===== */
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.philosophy-card {
+    background: var(--matrix-dark);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    border-top: 4px solid var(--symfony-accent);
+    transition: all 0.3s ease;
+    animation: slideInUp 1s ease-out;
+}
+
+.philosophy-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.philosophy-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.philosophy-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+.philosophy-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+.philosophy-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.philosophy-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(95, 39, 205, 0.4);
+    animation: glow 2s infinite;
+}
+
+.philosophy-card h3 {
+    color: var(--symfony-light);
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.philosophy-card p {
+    color: var(--matrix-text);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: bounce 2s infinite;
+}
+
+/* ===== DÉTAILS DE CONCEPT ===== */
+.concept-detail {
+    background: var(--matrix-dark);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--symfony-accent);
+}
+
+/* ===== DIAGRAMME MVC ===== */
+.mvc-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 15px;
+}
+
+.mvc-component {
+    background: var(--matrix-dark);
+    padding: 2rem;
+    border-radius: 10px;
+    min-width: 250px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    border: 3px solid var(--symfony-primary);
+    transition: all 0.3s ease;
+    animation: fadeInScale 1s ease-out;
+}
+
+.mvc-component.model {
+    animation-delay: 0.2s;
+}
+.mvc-component.controller {
+    animation-delay: 0.4s;
+}
+.mvc-component.view {
+    animation-delay: 0.6s;
+}
+
+.mvc-component:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(95, 39, 205, 0.5);
+}
+
+.mvc-component h4 {
+    color: var(--symfony-light);
+    margin-bottom: 0.5rem;
+}
+
+.mvc-component p {
+    color: var(--matrix-text);
+    margin-bottom: 1rem;
+}
+
+.component-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: bounce 2s infinite;
+}
+
+.component-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.component-details li {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    background: rgba(95, 39, 205, 0.1);
+    border-radius: 5px;
+}
+
+.mvc-arrow {
+    font-size: 2rem;
+    color: var(--symfony-primary);
+    animation: pulse 2s infinite;
+}
+
+/* ===== EXEMPLE DEPENDENCY INJECTION ===== */
+.di-example {
+    margin: 1.5rem 0;
+}
+
+.code-block {
+    background: #1e1e1e;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.code-block h4 {
+    color: var(--symfony-light);
+    margin-bottom: 1rem;
+}
+
+.code-block pre {
+    margin: 0;
+    overflow-x: auto;
+}
+
+.code-block code {
+    color: #e2e8f0;
+    font-family: "Courier New", monospace;
+    line-height: 1.6;
+}
+
+.di-benefits {
+    background: rgba(95, 39, 205, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.di-benefits h4 {
+    color: var(--symfony-accent);
+    margin-bottom: 1rem;
+}
+
+.di-benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.di-benefits li {
+    padding: 0.5rem 0;
+    color: var(--matrix-text);
+}
+
+.di-benefits li:before {
+    content: "✓ ";
+    color: var(--symfony-accent);
+    font-weight: bold;
+}
+
+/* ===== ROUTING ===== */
+.routing-examples {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.routing-card {
+    background: var(--matrix-dark);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--symfony-accent);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.routing-card h4 {
+    color: var(--symfony-light);
+    margin-bottom: 0.75rem;
+}
+
+.routing-card code {
+    display: block;
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 5px;
+    color: #e2e8f0;
+    overflow-x: auto;
+}
+
+/* ===== TWIG SYNTAX ===== */
+.twig-syntax {
+    background: var(--matrix-dark);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.syntax-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    background: rgba(95, 39, 205, 0.1);
+    border-radius: 5px;
+}
+
+.syntax-item code {
+    background: #1e1e1e;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    color: var(--symfony-light);
+}
+
+.syntax-item span {
+    color: var(--matrix-text);
+}
+
+/* ===== ARCHITECTURE ===== */
+.architecture-diagram {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.arch-component {
+    background: var(--matrix-dark);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: slideInUp 1s ease-out;
+}
+
+.arch-component:nth-child(1) {
+    animation-delay: 0.2s;
+}
+.arch-component:nth-child(2) {
+    animation-delay: 0.4s;
+}
+.arch-component:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.arch-component:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(95, 39, 205, 0.4);
+}
+
+.component-header {
+    background: var(--symfony-gradient);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.component-header h3 {
+    color: white;
+    margin: 0.5rem 0 0 0;
+}
+
+.arch-icon {
+    font-size: 2.5rem;
+    animation: bounce 2s infinite;
+}
+
+.component-role {
+    padding: 1rem 1.5rem;
+    color: var(--matrix-text);
+    font-style: italic;
+}
+
+.component-list {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.list-item {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    background: rgba(95, 39, 205, 0.1);
+    border-radius: 5px;
+    color: var(--matrix-text);
+}
+
+/* ===== ÉCOSYSTÈME AVEC ONGLETS ===== */
+.ecosystem-tabs {
+    margin: 2rem 0;
+}
+
+.tab-headers {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.tab-header {
+    padding: 1rem 2rem;
+    background: var(--matrix-dark);
+    border: 2px solid var(--matrix-border);
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--matrix-text);
+    transition: all 0.3s ease;
+}
+
+.tab-header.active {
+    background: var(--symfony-primary);
+    color: white;
+    border-color: var(--symfony-primary);
+}
+
+.tab-header:hover:not(.active) {
+    background: var(--symfony-light);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeInScale 0.8s ease-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.ecosystem-card {
+    background: var(--matrix-dark);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border-left: 4px solid var(--symfony-accent);
+    transition: all 0.3s ease;
+}
+
+.ecosystem-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(95, 39, 205, 0.4);
+}
+
+.ecosystem-card h4 {
+    color: var(--symfony-light);
+    margin-bottom: 0.75rem;
+}
+
+.ecosystem-card p {
+    color: var(--matrix-text);
+    line-height: 1.6;
+}
+
+/* ===== WORKFLOW ===== */
+.workflow-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.workflow-step {
+    background: var(--matrix-dark);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: slideInUp 1s ease-out;
+}
+
+.workflow-step:nth-child(1) {
+    animation-delay: 0.2s;
+}
+.workflow-step:nth-child(2) {
+    animation-delay: 0.4s;
+}
+.workflow-step:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.workflow-step h3 {
+    color: var(--symfony-light);
+    margin-bottom: 1rem;
+}
+
+.step-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: bounce 2s infinite;
+}
+
+.workflow-step > code {
+    display: block;
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    color: var(--symfony-light);
+}
+
+.workflow-step p {
+    color: var(--matrix-text);
+    line-height: 1.6;
+}
+
+.folder-structure {
+    text-align: left;
+}
+
+.folder-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    background: rgba(95, 39, 205, 0.1);
+    border-radius: 5px;
+}
+
+.folder-name {
+    font-family: "Courier New", monospace;
+    color: var(--symfony-light);
+    font-weight: bold;
+}
+
+.folder-desc {
+    color: var(--matrix-text);
+    font-size: 0.9rem;
+}
+
+.commands-list {
+    text-align: left;
+}
+
+.command-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: rgba(95, 39, 205, 0.1);
+    border-radius: 5px;
+    border-left: 3px solid var(--symfony-accent);
+}
+
+.command-item code {
+    display: block;
+    background: #1e1e1e;
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    color: var(--symfony-light);
+}
+
+.command-item span {
+    color: var(--matrix-text);
+    font-size: 0.9rem;
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+    background: var(--symfony-gradient);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    text-align: center;
+    margin: 3rem 0;
+    animation: slideInUp 1s ease-out;
+}
+
+.cta-content h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: white;
+    color: var(--symfony-primary);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .symfony-stats {
+        justify-content: center;
+    }
+
+    .nav-pills {
+        justify-content: center;
+    }
+
+    .mvc-diagram {
+        padding: 1rem;
+    }
+
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .architecture-diagram {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab-headers {
+        justify-content: center;
+    }
+
+    .folder-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
