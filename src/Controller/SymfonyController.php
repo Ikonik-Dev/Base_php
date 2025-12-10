@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Data\SymfonyArchitectureData;
+use App\Data\SymfonyEcosystemData;
 
 final class SymfonyController extends AbstractController
 {
@@ -94,7 +96,7 @@ public function __construct(
             ]
         ];
 
-        // Architecture Symfony détaillée
+        // Architecture Symfony de haut niveau (pour la section visuelle)
         $architecture = [
             'kernel' => [
                 'nom' => 'Kernel (Noyau)',
@@ -106,7 +108,7 @@ public function __construct(
                     'Coordination des composants'
                 ]
             ],
-            'container' => [
+            'service_container' => [
                 'nom' => 'Service Container',
                 'role' => 'Gestionnaire central de tous les services de l\'application',
                 'fonctions' => [
@@ -127,6 +129,29 @@ public function __construct(
                 ]
             ]
         ];
+
+        // Détails pour les modals de l'architecture (kernel, service container, event dispatcher)
+        $architectureDetails = SymfonyArchitectureData::getDetails();
+        // Définir l'ordre pour la navigation prev/next
+        $archOrder = ['kernel', 'service_container', 'event_dispatcher'];
+        $architectureModals = [];
+        foreach ($archOrder as $index => $slug) {
+            $detail = $architectureDetails[$slug] ?? [];
+            $architectureModals[] = [
+                'id' => $slug,
+                'title' => $architecture[$slug]['nom'] ?? ucfirst(str_replace('_', ' ', $slug)),
+                'icon' => $slug === 'kernel' ? '🔧' : ($slug === 'service_container' ? '📦' : '📡'),
+                'description' => $detail['description_detaillee'] ?? null,
+                'analogie' => $detail['analogie'] ?? null,
+                'cas_usage' => $detail['cas_usage'] ?? [],
+                'exemple_code' => $detail['exemple_code'] ?? null,
+                'avantages' => $detail['avantages'] ?? [],
+                'inconvenients' => $detail['inconvenients'] ?? [],
+                'ressources' => $detail['ressources'] ?? [],
+                'prevConcept' => $archOrder[$index - 1] ?? null,
+                'nextConcept' => $archOrder[$index + 1] ?? null,
+            ];
+        }
 
         // Bundle et composants Symfony
         $ecosysteme = [
@@ -151,6 +176,45 @@ public function __construct(
                 'PHPUnit Bridge' => 'Intégration des tests unitaires'
             ]
         ];
+
+        // Construire des modals pour l'écosystème (bundles, composants, outils) avec contenu enrichi
+        $ecosystemModals = [];
+        $bundlesDetails = SymfonyEcosystemData::getBundlesDetails();
+        $componentsDetails = SymfonyEcosystemData::getComponentsDetails();
+        $toolsDetails = SymfonyEcosystemData::getToolsDetails();
+        $ecoCategories = [
+            'bundles' => array_keys($ecosysteme['bundles_principaux']),
+            'composants' => array_keys($ecosysteme['composants_standalone']),
+            'outils' => array_keys($ecosysteme['outils_dev']),
+        ];
+        foreach ($ecoCategories as $category => $names) {
+            foreach ($names as $index => $name) {
+                $slug = strtolower(str_replace([' ', '/'], ['_', '-'], $name));
+                $detail = [];
+                if ($category === 'bundles') {
+                    $detail = $bundlesDetails[$name] ?? [];
+                } elseif ($category === 'composants') {
+                    $detail = $componentsDetails[$name] ?? [];
+                } else {
+                    $detail = $toolsDetails[$name] ?? [];
+                }
+
+                $ecosystemModals[] = [
+                    'id' => $slug,
+                    'title' => $name,
+                    'icon' => $category === 'bundles' ? '🧩' : ($category === 'composants' ? '🧱' : '🛠️'),
+                    'description' => $detail['description_detaillee'] ?? ($ecosysteme[$category === 'bundles' ? 'bundles_principaux' : ($category === 'composants' ? 'composants_standalone' : 'outils_dev')][$name] ?? ''),
+                    'analogie' => $detail['analogie'] ?? null,
+                    'cas_usage' => $detail['cas_usage'] ?? [],
+                    'exemple_code' => $detail['exemple_code'] ?? null,
+                    'avantages' => $detail['avantages'] ?? [],
+                    'inconvenients' => $detail['inconvenients'] ?? [],
+                    'ressources' => $detail['ressources'] ?? [],
+                    'prevConcept' => $index > 0 ? strtolower(str_replace([' ', '/'], ['_', '-'], $names[$index - 1])) : null,
+                    'nextConcept' => isset($names[$index + 1]) ? strtolower(str_replace([' ', '/'], ['_', '-'], $names[$index + 1])) : null,
+                ];
+            }
+        }
 
         // Workflow de développement
         $workflow = [
@@ -182,7 +246,9 @@ public function __construct(
             'concepts_base' => $concepts_base,
             'architecture' => $architecture,
             'ecosysteme' => $ecosysteme,
-            'workflow' => $workflow
+            'workflow' => $workflow,
+            'architecture_modals' => $architectureModals,
+            'ecosystem_modals' => $ecosystemModals
         ]);
     }
 }

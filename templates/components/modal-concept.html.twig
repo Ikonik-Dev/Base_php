@@ -58,7 +58,7 @@
 			{% endif %}
 
 			{# Exemple de code détaillé #}
-			{% if exemple_code is defined %}
+			{% if exemple_code is defined and exemple_code is not null %}
 				<div class="concept__code-example">
 					<h3 class="concept__section-title">💻 Exemple de code</h3>
 					
@@ -74,7 +74,7 @@
 								<span class="modal__code-copy-icon">📋</span>
 							</button>
 						</div>
-						<pre class="modal__code" id="modal-code-{{ id }}"><code>{{ exemple_code.code }}</code></pre>
+						<pre class="modal__code" id="modal-code-{{ id }}"><code>{{ exemple_code.code|default('') }}</code></pre>
 					</div>
 				</div>
 			{% endif %}

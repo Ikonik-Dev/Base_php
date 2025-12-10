@@ -8,6 +8,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('styles/symfony.css') }}">
+	<link rel="stylesheet" href="{{ asset('styles/modal-concept.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -192,9 +193,10 @@
 			<h2>⚙️ Architecture Symfony</h2>
 			<div class="architecture-diagram">
 				{% for key, component in architecture %}
-					<div class="arch-component">
+					{% set icon = key == 'kernel' ? '🔧' : (key == 'service_container' ? '📦' : '📡') %}
+					<div class="arch-component" data-open-modal="{{ key }}">
 						<div class="component-header">
-							<div class="arch-icon">{{ key == 'kernel' ? '🔧' : key == 'container' ? '📦' : '📡' }}</div>
+							<div class="arch-icon">{{ icon }}</div>
 							<h3>{{ component.nom }}</h3>
 						</div>
 						<p class="component-role">{{ component.role }}</p>
@@ -218,6 +220,24 @@
 					</div>
 				{% endfor %}
 			</div>
+
+			{# Render modals for architecture components #}
+			{% for modal in architecture_modals %}
+				{% include 'components/modal-concept.html.twig' with {
+					id: modal.id,
+					title: modal.title,
+					icon: modal.icon,
+					description: modal.description,
+					analogie: modal.analogie,
+					cas_usage: modal.cas_usage,
+					exemple_code: modal.exemple_code,
+					avantages: modal.avantages,
+					inconvenients: modal.inconvenients,
+					ressources: modal.ressources,
+					prevConcept: modal.prevConcept,
+					nextConcept: modal.nextConcept
+				} %}
+			{% endfor %}
 		</section>
 
 		<!-- Section Écosystème -->
@@ -234,7 +254,8 @@
 				<div class="tab-content active" id="bundles">
 					<div class="ecosystem-grid">
 						{% for bundle, description in ecosysteme.bundles_principaux %}
-							<div class="ecosystem-card">
+							{% set slug = bundle|lower|replace({' ':'_', '/':'-'}) %}
+							<div class="ecosystem-card" data-open-modal="{{ slug }}">
 								<h4>{{ bundle }}</h4>
 								<p>{{ description }}</p>
 							</div>
@@ -245,7 +266,8 @@
 				<div class="tab-content" id="composants">
 					<div class="ecosystem-grid">
 						{% for composant, description in ecosysteme.composants_standalone %}
-							<div class="ecosystem-card">
+							{% set slug = composant|lower|replace({' ':'_', '/':'-'}) %}
+							<div class="ecosystem-card" data-open-modal="{{ slug }}">
 								<h4>{{ composant }}</h4>
 								<p>{{ description }}</p>
 							</div>
@@ -256,13 +278,32 @@
 				<div class="tab-content" id="outils">
 					<div class="ecosystem-grid">
 						{% for outil, description in ecosysteme.outils_dev %}
-							<div class="ecosystem-card">
+							{% set slug = outil|lower|replace({' ':'_', '/':'-'}) %}
+							<div class="ecosystem-card" data-open-modal="{{ slug }}">
 								<h4>{{ outil }}</h4>
 								<p>{{ description }}</p>
 							</div>
 						{% endfor %}
 					</div>
 				</div>
+
+				{# Ecosystem item modals #}
+				{% for modal in ecosystem_modals %}
+					{% include 'components/modal-concept.html.twig' with {
+						id: modal.id,
+						title: modal.title,
+						icon: modal.icon,
+						description: modal.description,
+						analogie: modal.analogie,
+						cas_usage: modal.cas_usage,
+						exemple_code: modal.exemple_code,
+						avantages: modal.avantages,
+						inconvenients: modal.inconvenients,
+						ressources: modal.ressources,
+						prevConcept: modal.prevConcept,
+						nextConcept: modal.nextConcept
+					} %}
+				{% endfor %}
 			</div>
 		</section>
 
