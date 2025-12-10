@@ -8,6 +8,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('styles/ecommerce.css') }}">
+	<link rel="stylesheet" href="{{ asset('styles/modal-etape.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -98,7 +99,7 @@
 					<h2>🗺️ Plan de Développement</h2>
 					<div class="roadmap-container">
 						{% for etape in etapes %}
-							<div class="roadmap-step {% if loop.index is odd %}step-left{% else %}step-right{% endif %}">
+							<div class="roadmap-step {% if loop.index is odd %}step-left{% else %}step-right{% endif %}" data-open-modal="etape-{{ etape.numero }}" role="button" tabindex="0">
 								<div class="step-number">{{ etape.numero }}</div>
 								<div class="step-content">
 									<div class="step-header">
@@ -326,9 +327,42 @@
 		</main>
 	</div>
 
+	<!-- Modales pour chaque étape -->
+	{% for etape in etapes %}
+		{% if etape.modal_details is defined %}
+			{% set details = etape.modal_details %}
+			{% include 'components/modal-etape.html.twig' with {
+				'id': 'etape-' ~ etape.numero,
+				'title': 'Étape ' ~ etape.numero ~ ' : ' ~ etape.titre,
+				'icon': etape.icon|default('🚀'),
+				'description': details.description_detaillee,
+				'details': '<div class="etape-info"><strong>⏱️ Durée estimée :</strong> ' ~ etape.duree ~ '</div>',
+				'commandes': details.commandes|default([]),
+				'fichiers': details.fichiers_a_creer|default([]),
+				'bestPractices': details.checklist|default([]),
+				'warnings': details.pieges_communs|default([]),
+				'resources': details.ressources|default([]),
+				'prevStep': etape.numero > 1 ? etape.numero - 1 : null,
+				'nextStep': etape.numero < etapes|length ? etape.numero + 1 : null
+			} %}
+		{% endif %}
+	{% endfor %}
+
+	<script src="{{ asset('js/modal-etape-manager.js') }}"></script>
 	<script>
 		function scrollToSection(sectionId) {
 document.getElementById(sectionId).scrollIntoView({behavior: 'smooth'});
 }
+
+// Rendre les cartes d'étapes cliquables au clavier
+document.querySelectorAll('.roadmap-step[data-open-modal]').forEach(card => {
+card.style.cursor = 'pointer';
+card.addEventListener('keypress', (e) => {
+if (e.key === 'Enter' || e.key === ' ') {
+e.preventDefault();
+card.click();
+}
+});
+});
 	</script>
 {% endblock %}

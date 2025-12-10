@@ -1,0 +1,142 @@
+{# Modal personnalisée pour les étapes e-commerce #}
+{% set modalClass = 'modal modal--large' %}
+
+<div class="{{ modalClass }}" id="modal-{{ id }}" data-modal="{{ id }}" role="dialog" aria-hidden="true" aria-labelledby="modal-title-{{ id }}">
+	<div class="modal__overlay" data-modal-close></div>
+
+	<div
+		class="modal__container">
+		{# Header #}
+		<header class="modal__header">
+			<h2 class="modal__title" id="modal-title-{{ id }}">
+				{% if icon is defined %}
+					<i class="modal__icon {{ icon }}"></i>
+				{% endif %}
+				{{ title }}
+			</h2>
+			<button class="modal__close" data-modal-close aria-label="Fermer la modale">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</header>
+
+		{# Body #}
+		<div class="modal__body">
+			{% if description is defined %}
+				<div class="modal__description">
+					<h3 class="modal__section-title">📖 Description</h3>
+					<p>{{ description|raw }}</p>
+				</div>
+			{% endif %}
+
+			{% if details is defined %}
+				<div class="modal__details">
+					{{ details|raw }}
+				</div>
+			{% endif %}
+
+			{# Section Commandes #}
+			{% if commandes is defined and commandes|length > 0 %}
+				<div class="modal__commands-section">
+					<h3 class="modal__section-title">⌨️ Commandes à exécuter</h3>
+					{% for commande in commandes %}
+						<div class="modal__command-block">
+							<h4 class="command-title">{{ commande.titre }}</h4>
+							<div class="modal__code-block">
+								<div class="modal__code-header">
+									<span class="modal__code-lang">bash</span>
+									<button class="modal__code-copy" data-copy-target="modal-code-cmd-{{ loop.index }}-{{ id }}">
+										<span class="modal__code-copy-text">Copier</span>
+										<span class="modal__code-copy-icon">📋</span>
+									</button>
+								</div>
+								<pre class="modal__code" id="modal-code-cmd-{{ loop.index }}-{{ id }}"><code>{{ commande.code }}</code></pre>
+							</div>
+							<p class="command-explanation">{{ commande.explication }}</p>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+			{# Section Fichiers à créer #}
+			{% if fichiers is defined and fichiers|length > 0 %}
+				<div class="modal__files-section">
+					<h3 class="modal__section-title">📁 Fichiers à créer/modifier</h3>
+					{% for fichier in fichiers %}
+						<div class="modal__file-block">
+							<div class="file-header">
+								<span class="file-path">{{ fichier.path }}</span>
+								<span class="file-description">{{ fichier.description }}</span>
+							</div>
+							<div class="modal__code-block">
+								<div class="modal__code-header">
+									<span class="modal__code-lang">{{ fichier.language|default('php') }}</span>
+									<button class="modal__code-copy" data-copy-target="modal-code-file-{{ loop.index }}-{{ id }}">
+										<span class="modal__code-copy-text">Copier</span>
+										<span class="modal__code-copy-icon">📋</span>
+									</button>
+								</div>
+								<pre class="modal__code" id="modal-code-file-{{ loop.index }}-{{ id }}"><code>{{ fichier.code }}</code></pre>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+			{# Checklist de validation #}
+			{% if bestPractices is defined and bestPractices|length > 0 %}
+				<div class="modal__checklist">
+					<h3 class="modal__section-title">✅ Checklist de validation</h3>
+					<ul class="modal__list modal__list--success">
+						{% for practice in bestPractices %}
+							<li class="modal__list-item">
+								<input type="checkbox" class="checklist-checkbox">
+								{{ practice|raw }}
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+
+			{# Pièges communs #}
+			{% if warnings is defined and warnings|length > 0 %}
+				<div class="modal__warnings">
+					<h3 class="modal__section-title">⚠️ Pièges courants</h3>
+					<ul class="modal__list modal__list--warning">
+						{% for warning in warnings %}
+							<li class="modal__list-item">{{ warning|raw }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+
+			{# Ressources #}
+			{% if resources is defined and resources|length > 0 %}
+				<div class="modal__resources">
+					<h3 class="modal__section-title">📚 Ressources</h3>
+					<div class="modal__resources-grid">
+						{% for resource in resources %}
+							<a href="{{ resource.url }}" class="modal__resource-link" target="_blank" rel="noopener">
+								<span class="modal__resource-icon">{{ resource.icon|default('🔗') }}</span>
+								<span class="modal__resource-title">{{ resource.label }}</span>
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		{# Footer avec navigation #}
+		<footer class="modal__footer">
+			{% if prevStep is defined %}
+				<button class="modal__nav-btn modal__nav-btn--prev" data-open-modal="etape-{{ prevStep }}">
+					← Étape précédente
+				</button>
+			{% endif %}
+			{% if nextStep is defined %}
+				<button class="modal__nav-btn modal__nav-btn--next" data-open-modal="etape-{{ nextStep }}">
+					Étape suivante →
+				</button>
+			{% endif %}
+		</footer>
+	</div>
+</div>

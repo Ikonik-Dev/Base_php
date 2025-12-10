@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Data\EcommerceEtapesData;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,6 +12,8 @@ final class EcommerceController extends AbstractController
     #[Route('/ecommerce', name: 'app_ecommerce')]
     public function index(): Response
     {
+        $modalDetails = EcommerceEtapesData::getModalDetails();
+
         // Introduction du tutoriel e-commerce
         $presentation = [
             'label' => 'E-commerce avec Symfony - Tutoriel Progressif',
@@ -43,6 +46,74 @@ final class EcommerceController extends AbstractController
                     'Projet Symfony configuré',
                     'Base de données connectée',
                     'Template de base créé'
+                ],
+                'modal_details' => [
+                    'description_detaillee' => 'Cette première étape pose les fondations de votre application e-commerce. Vous allez créer un nouveau projet Symfony, le configurer correctement, et mettre en place l\'architecture de base qui servira de socle pour toutes les fonctionnalités futures.',
+                    'commandes' => [
+                        [
+                            'titre' => 'Création du projet',
+                            'code' => 'symfony new mon-ecommerce --version="7.3.*" --webapp',
+                            'explication' => 'Crée un nouveau projet Symfony 7.3 avec toutes les dépendances web (Twig, Asset Mapper, etc.)'
+                        ],
+                        [
+                            'titre' => 'Installation des dépendances',
+                            'code' => 'composer require symfony/orm-pack
+composer require --dev symfony/maker-bundle',
+                            'explication' => 'Installe Doctrine ORM pour la base de données et MakerBundle pour générer du code'
+                        ],
+                        [
+                            'titre' => 'Configuration de la base de données',
+                            'code' => '# Dans .env
+DATABASE_URL="mysql://user:password@127.0.0.1:3306/ecommerce_db?serverVersion=8.0"',
+                            'explication' => 'Configure la connexion à votre base de données MySQL'
+                        ],
+                        [
+                            'titre' => 'Création de la base de données',
+                            'code' => 'php bin/console doctrine:database:create',
+                            'explication' => 'Crée physiquement la base de données'
+                        ]
+                    ],
+                    'fichiers_a_creer' => [
+                        [
+                            'path' => 'templates/base.html.twig',
+                            'description' => 'Template de base pour toutes les pages',
+                            'code' => '<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Boutique E-commerce{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ path(\'app_home\') }}">Accueil</a>
+        <a href="{{ path(\'app_products\') }}">Produits</a>
+    </nav>
+    
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+    
+    {% block javascripts %}{% endblock %}
+</body>
+</html>'
+                        ]
+                    ],
+                    'checklist' => [
+                        'Le serveur Symfony démarre correctement (symfony serve)',
+                        'Vous pouvez accéder à https://127.0.0.1:8000',
+                        'La base de données est créée et accessible',
+                        'Le template de base s\'affiche sans erreur'
+                    ],
+                    'pieges_communs' => [
+                        'Oublier de démarrer MySQL/MariaDB avant de créer la base',
+                        'Erreur de connexion : vérifier les identifiants dans .env',
+                        'Port 8000 déjà utilisé : utiliser symfony serve -d ou changer le port'
+                    ],
+                    'ressources' => [
+                        ['label' => 'Installation Symfony', 'url' => 'https://symfony.com/doc/current/setup.html', 'icon' => '📖'],
+                        ['label' => 'Doctrine Setup', 'url' => 'https://symfony.com/doc/current/doctrine.html', 'icon' => '🗄️']
+                    ]
                 ]
             ],
             [
@@ -61,6 +132,82 @@ final class EcommerceController extends AbstractController
                     'Entités complètes avec annotations',
                     'Base de données structurée',
                     'Données de test créées'
+                ],
+                'modal_details' => [
+                    'description_detaillee' => 'La modélisation des données est cruciale pour un e-commerce. Vous allez créer les entités qui représentent vos produits, catégories et utilisateurs, puis définir comment elles interagissent entre elles.',
+                    'commandes' => [
+                        [
+                            'titre' => 'Création de l\'entité Product',
+                            'code' => 'php bin/console make:entity Product',
+                            'explication' => 'Lance l\'assistant interactif pour créer l\'entité Product avec ses propriétés'
+                        ],
+                        [
+                            'titre' => 'Création de l\'entité Category',
+                            'code' => 'php bin/console make:entity Category',
+                            'explication' => 'Crée l\'entité Category pour organiser vos produits'
+                        ],
+                        [
+                            'titre' => 'Génération de la migration',
+                            'code' => 'php bin/console make:migration',
+                            'explication' => 'Génère le fichier de migration basé sur vos entités'
+                        ],
+                        [
+                            'titre' => 'Exécution de la migration',
+                            'code' => 'php bin/console doctrine:migrations:migrate',
+                            'explication' => 'Applique les modifications à la base de données'
+                        ]
+                    ],
+                    'fichiers_a_creer' => [
+                        [
+                            'path' => 'src/Entity/Product.php',
+                            'description' => 'Entité représentant un produit',
+                            'code' => '<?php
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: ProductRepository::class)]
+class Product
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column(type: "text")]
+    private ?string $description = null;
+
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
+    private ?string $price = null;
+
+    #[ORM\Column]
+    private ?int $stock = null;
+
+    #[ORM\ManyToOne(inversedBy: "products")]
+    private ?Category $category = null;
+    
+    // Getters et setters...
+}'
+                        ]
+                    ],
+                    'checklist' => [
+                        'Les entités Product, Category et User sont créées',
+                        'Les relations ManyToOne et OneToMany sont correctement définies',
+                        'La migration s\'exécute sans erreur',
+                        'Les tables apparaissent dans votre base de données'
+                    ],
+                    'pieges_communs' => [
+                        'Oublier de définir le inversedBy et mappedBy pour les relations',
+                        'Type decimal pour le prix : utiliser "decimal" pas "float"',
+                        'Ne pas oublier nullable: false pour les champs obligatoires'
+                    ],
+                    'ressources' => [
+                        ['label' => 'Doctrine Entities', 'url' => 'https://symfony.com/doc/current/doctrine.html#creating-an-entity-class', 'icon' => '🗂️'],
+                        ['label' => 'Relations Doctrine', 'url' => 'https://symfony.com/doc/current/doctrine/associations.html', 'icon' => '🔗']
+                    ]
                 ]
             ],
             [
@@ -228,6 +375,13 @@ final class EcommerceController extends AbstractController
                 'Doctrine Migrations' => 'Versioning de la base de données'
             ]
         ];
+
+        // Fusionner les modal_details avec les étapes
+        foreach ($etapes as $key => &$etape) {
+            if (isset($modalDetails[$etape['numero']])) {
+                $etape['modal_details'] = $modalDetails[$etape['numero']];
+            }
+        }
 
         return $this->render('ecommerce/index.html.twig', [
             'pageTitle' => 'E-commerce Symfony',
