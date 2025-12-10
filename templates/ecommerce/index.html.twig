@@ -9,6 +9,7 @@
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('styles/ecommerce.css') }}">
 	<link rel="stylesheet" href="{{ asset('styles/modal-etape.css') }}">
+	<link rel="stylesheet" href="{{ asset('styles/modal-concept.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -160,21 +161,26 @@
 						<h3>{{ concepts_techniques.architecture.label }}</h3>
 						<p class="concept-description">{{ concepts_techniques.architecture.description }}</p>
 
-						<div class="architecture-diagram">
-							{% for nom, description in concepts_techniques.architecture.composants %}
-								<div class="architecture-component">
-									<div class="component-icon">
-										{% if nom == 'Frontend' %}🖥️
-											{% elseif nom == 'Backend' %}⚙️
-											{% elseif nom == 'Database' %}🗄️
-											{% else %}🔐
-										{% endif %}
-									</div>
-									<h4>{{ nom }}</h4>
-									<p>{{ description }}</p>
+					<div class="architecture-diagram">
+						{% for nom, description in concepts_techniques.architecture.composants %}
+							<div class="architecture-component" 
+							     data-open-modal="concept-architecture-{{ nom|lower }}" 
+							     role="button" 
+							     tabindex="0"
+							     style="cursor: pointer;">
+								<div class="component-icon">
+									{% if nom == 'Frontend' %}🖥️
+										{% elseif nom == 'Backend' %}⚙️
+										{% elseif nom == 'Database' %}🗄️
+										{% else %}🔐
+									{% endif %}
 								</div>
-							{% endfor %}
-						</div>
+								<h4>{{ nom }}</h4>
+								<p>{{ description }}</p>
+								<span class="click-hint">Cliquer pour détails 👉</span>
+							</div>
+						{% endfor %}
+					</div>
 					</div>
 
 					<!-- Design Patterns -->
@@ -182,14 +188,19 @@
 						<h3>{{ concepts_techniques.patterns.label }}</h3>
 						<p class="concept-description">{{ concepts_techniques.patterns.description }}</p>
 
-						<div class="patterns-grid">
-							{% for pattern, description in concepts_techniques.patterns.liste %}
-								<div class="pattern-card">
-									<h4>{{ pattern }}</h4>
-									<p>{{ description }}</p>
-								</div>
-							{% endfor %}
-						</div>
+					<div class="patterns-grid">
+						{% for pattern, description in concepts_techniques.patterns.liste %}
+							<div class="pattern-card" 
+							     data-open-modal="concept-pattern-{{ pattern|lower|replace({' ': '-', ' pattern': ''}) }}" 
+							     role="button" 
+							     tabindex="0"
+							     style="cursor: pointer;">
+								<h4>{{ pattern }}</h4>
+								<p>{{ description }}</p>
+								<span class="click-hint">Cliquer pour détails 👉</span>
+							</div>
+						{% endfor %}
+					</div>
 					</div>
 
 					<!-- Sécurité -->
@@ -197,15 +208,20 @@
 						<h3>{{ concepts_techniques.securite.label }}</h3>
 						<p class="concept-description">{{ concepts_techniques.securite.description }}</p>
 
-						<div class="security-grid">
-							{% for mesure, description in concepts_techniques.securite.mesures %}
-								<div class="security-item">
-									<div class="security-icon">🛡️</div>
-									<h4>{{ mesure }}</h4>
-									<p>{{ description }}</p>
-								</div>
-							{% endfor %}
-						</div>
+					<div class="security-grid">
+						{% for mesure, description in concepts_techniques.securite.mesures %}
+							<div class="security-item" 
+							     data-open-modal="concept-security-{{ mesure|lower|replace({' ': '-', ' protection': '', ' prevention': ''}) }}" 
+							     role="button" 
+							     tabindex="0"
+							     style="cursor: pointer;">
+								<div class="security-icon">🛡️</div>
+								<h4>{{ mesure }}</h4>
+								<p>{{ description }}</p>
+								<span class="click-hint">Cliquer pour détails 👉</span>
+							</div>
+						{% endfor %}
+					</div>
 					</div>
 				</section>
 
@@ -220,9 +236,15 @@
 							<h3>⚙️ Backend</h3>
 							<div class="tech-grid">
 								{% for tech, description in technologies.backend %}
-									<div class="tech-item">
+									{% set slug = tech|lower|replace({' ': '_', '+': '', '.': '_'}) %}
+									<div class="tech-item" 
+										 data-open-modal="tech-backend-{{ slug }}" 
+										 role="button" 
+										 tabindex="0"
+										 style="cursor: pointer;">
 										<h4>{{ tech }}</h4>
 										<p>{{ description }}</p>
+										<span class="click-hint">Cliquer pour détails 👉</span>
 									</div>
 								{% endfor %}
 							</div>
@@ -233,9 +255,15 @@
 							<h3>🖥️ Frontend</h3>
 							<div class="tech-grid">
 								{% for tech, description in technologies.frontend %}
-									<div class="tech-item">
+									{% set slug = tech|lower|replace({' ': '_', '+': ''}) %}
+									<div class="tech-item" 
+										 data-open-modal="tech-frontend-{{ slug }}" 
+										 role="button" 
+										 tabindex="0"
+										 style="cursor: pointer;">
 										<h4>{{ tech }}</h4>
 										<p>{{ description }}</p>
+										<span class="click-hint">Cliquer pour détails 👉</span>
 									</div>
 								{% endfor %}
 							</div>
@@ -246,9 +274,15 @@
 							<h3>🔧 Outils de Développement</h3>
 							<div class="tech-grid">
 								{% for tech, description in technologies.outils %}
-									<div class="tech-item">
+									{% set slug = tech|lower|replace({' ': '_', '+': ''}) %}
+									<div class="tech-item" 
+										 data-open-modal="tech-outils-{{ slug }}" 
+										 role="button" 
+										 tabindex="0"
+										 style="cursor: pointer;">
 										<h4>{{ tech }}</h4>
 										<p>{{ description }}</p>
+										<span class="click-hint">Cliquer pour détails 👉</span>
 									</div>
 								{% endfor %}
 							</div>
@@ -348,21 +382,163 @@
 		{% endif %}
 	{% endfor %}
 
+	<!-- Modales pour Architecture -->
+	{% if concepts_techniques.architecture.composants_details is defined %}
+		{% set composants = concepts_techniques.architecture.composants_details|keys %}
+		{% for nom in composants %}
+			{% set details = concepts_techniques.architecture.composants_details[nom] %}
+			{% set currentIndex = loop.index0 %}
+			{% include 'components/modal-concept.html.twig' with {
+				'id': 'concept-architecture-' ~ nom|lower,
+				'title': nom,
+				'icon': nom == 'Frontend' ? '🖥️' : (nom == 'Backend' ? '⚙️' : (nom == 'Database' ? '🗄️' : '🔐')),
+				'description': details.description_detaillee,
+				'analogie': details.analogie,
+				'cas_usage': details.cas_usage,
+				'exemple_code': details.exemple_code,
+				'avantages': details.avantages,
+				'inconvenients': details.inconvenients,
+				'ressources': details.ressources,
+				'prevConcept': currentIndex > 0 ? 'concept-architecture-' ~ composants[currentIndex - 1]|lower : null,
+				'nextConcept': currentIndex < (composants|length - 1) ? 'concept-architecture-' ~ composants[currentIndex + 1]|lower : null
+			} %}
+		{% endfor %}
+	{% endif %}
+
+	<!-- Modales pour Technologies Backend -->
+	{% if technologies.backend_details is defined %}
+		{% set backendNames = technologies.backend_details|keys %}
+		{% for name in backendNames %}
+			{% set details = technologies.backend_details[name] %}
+			{% set currentIndex = loop.index0 %}
+			{% set slug = name|lower|replace({' ': '_', '+': '', '.': '_'}) %}
+			{% include 'components/modal-concept.html.twig' with {
+				'id': 'tech-backend-' ~ slug,
+				'title': name,
+				'icon': '⚙️',
+				'description': details.description_detaillee,
+				'analogie': details.analogie,
+				'cas_usage': details.cas_usage,
+				'exemple_code': details.exemple_code,
+				'avantages': details.avantages,
+				'inconvenients': details.inconvenients,
+				'ressources': details.ressources,
+				'prevConcept': currentIndex > 0 ? 'tech-backend-' ~ (backendNames[currentIndex - 1]|lower|replace({' ': '_', '+': '', '.': '_' })) : null,
+				'nextConcept': currentIndex < (backendNames|length - 1) ? 'tech-backend-' ~ (backendNames[currentIndex + 1]|lower|replace({' ': '_', '+': '', '.': '_' })) : null
+			} %}
+		{% endfor %}
+	{% endif %}
+
+	<!-- Modales pour Technologies Frontend -->
+	{% if technologies.frontend_details is defined %}
+		{% set frontendNames = technologies.frontend_details|keys %}
+		{% for name in frontendNames %}
+			{% set details = technologies.frontend_details[name] %}
+			{% set currentIndex = loop.index0 %}
+			{% set slug = name|lower|replace({' ': '_', '+': ''}) %}
+			{% include 'components/modal-concept.html.twig' with {
+				'id': 'tech-frontend-' ~ slug,
+				'title': name,
+				'icon': '🖥️',
+				'description': details.description_detaillee,
+				'analogie': details.analogie,
+				'cas_usage': details.cas_usage,
+				'exemple_code': details.exemple_code,
+				'avantages': details.avantages,
+				'inconvenients': details.inconvenients,
+				'ressources': details.ressources,
+				'prevConcept': currentIndex > 0 ? 'tech-frontend-' ~ (frontendNames[currentIndex - 1]|lower|replace({' ': '_', '+': '' })) : null,
+				'nextConcept': currentIndex < (frontendNames|length - 1) ? 'tech-frontend-' ~ (frontendNames[currentIndex + 1]|lower|replace({' ': '_', '+': '' })) : null
+			} %}
+		{% endfor %}
+	{% endif %}
+
+	<!-- Modales pour Outils de Développement -->
+	{% if technologies.outils_details is defined %}
+		{% set outilsNames = technologies.outils_details|keys %}
+		{% for name in outilsNames %}
+			{% set details = technologies.outils_details[name] %}
+			{% set currentIndex = loop.index0 %}
+			{% set slug = name|lower|replace({' ': '_', '+': ''}) %}
+			{% include 'components/modal-concept.html.twig' with {
+				'id': 'tech-outils-' ~ slug,
+				'title': name,
+				'icon': '🔧',
+				'description': details.description_detaillee,
+				'analogie': details.analogie,
+				'cas_usage': details.cas_usage,
+				'exemple_code': details.exemple_code,
+				'avantages': details.avantages,
+				'inconvenients': details.inconvenients,
+				'ressources': details.ressources,
+				'prevConcept': currentIndex > 0 ? 'tech-outils-' ~ (outilsNames[currentIndex - 1]|lower|replace({' ': '_', '+': '' })) : null,
+				'nextConcept': currentIndex < (outilsNames|length - 1) ? 'tech-outils-' ~ (outilsNames[currentIndex + 1]|lower|replace({' ': '_', '+': '' })) : null
+			} %}
+		{% endfor %}
+	{% endif %}
+
+	<!-- Modales pour Design Patterns -->
+	{% if concepts_techniques.patterns.liste_details is defined %}
+		{% set patterns = concepts_techniques.patterns.liste_details|keys %}
+		{% for pattern in patterns %}
+			{% set details = concepts_techniques.patterns.liste_details[pattern] %}
+			{% set currentIndex = loop.index0 %}
+			{% set slug = pattern|lower|replace({' ': '-', ' pattern': ''}) %}
+			{% include 'components/modal-concept.html.twig' with {
+				'id': 'concept-pattern-' ~ slug,
+				'title': pattern,
+				'icon': '🏗️',
+				'description': details.description_detaillee,
+				'analogie': details.analogie,
+				'cas_usage': details.cas_usage,
+				'exemple_code': details.exemple_code,
+				'avantages': details.avantages,
+				'inconvenients': details.inconvenients,
+				'ressources': details.ressources,
+				'prevConcept': currentIndex > 0 ? 'concept-pattern-' ~ (patterns[currentIndex - 1]|lower|replace({' ': '-', ' pattern': ''})) : null,
+				'nextConcept': currentIndex < (patterns|length - 1) ? 'concept-pattern-' ~ (patterns[currentIndex + 1]|lower|replace({' ': '-', ' pattern': ''})) : null
+			} %}
+		{% endfor %}
+	{% endif %}
+
+	<!-- Modales pour Sécurité -->
+	{% if concepts_techniques.securite.mesures_details is defined %}
+		{% set mesures = concepts_techniques.securite.mesures_details|keys %}
+		{% for mesure in mesures %}
+			{% set details = concepts_techniques.securite.mesures_details[mesure] %}
+			{% set currentIndex = loop.index0 %}
+			{% set slug = mesure|lower|replace({' ': '-', ' protection': '', ' prevention': ''}) %}
+			{% include 'components/modal-concept.html.twig' with {
+				'id': 'concept-security-' ~ slug,
+				'title': mesure,
+				'icon': '🛡️',
+				'description': details.description_detaillee,
+				'analogie': details.analogie,
+				'cas_usage': details.cas_usage,
+				'exemple_code': details.exemple_code,
+				'avantages': details.avantages,
+				'inconvenients': details.inconvenients,
+				'ressources': details.ressources,
+				'prevConcept': currentIndex > 0 ? 'concept-security-' ~ (mesures[currentIndex - 1]|lower|replace({' ': '-', ' protection': '', ' prevention': ''})) : null,
+				'nextConcept': currentIndex < (mesures|length - 1) ? 'concept-security-' ~ (mesures[currentIndex + 1]|lower|replace({' ': '-', ' protection': '', ' prevention': ''})) : null
+			} %}
+		{% endfor %}
+	{% endif %}
+
 	<script src="{{ asset('js/modal-etape-manager.js') }}"></script>
 	<script>
 		function scrollToSection(sectionId) {
-document.getElementById(sectionId).scrollIntoView({behavior: 'smooth'});
-}
+			document.getElementById(sectionId).scrollIntoView({behavior: 'smooth'});
+		}
 
-// Rendre les cartes d'étapes cliquables au clavier
-document.querySelectorAll('.roadmap-step[data-open-modal]').forEach(card => {
-card.style.cursor = 'pointer';
-card.addEventListener('keypress', (e) => {
-if (e.key === 'Enter' || e.key === ' ') {
-e.preventDefault();
-card.click();
-}
-});
-});
+		// Rendre TOUS les éléments avec data-open-modal cliquables au clavier
+		document.querySelectorAll('[data-open-modal]').forEach(card => {
+			card.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					card.click();
+				}
+			});
+		});
 	</script>
 {% endblock %}

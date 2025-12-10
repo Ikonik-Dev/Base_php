@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Data\EcommerceEtapesData;
+use App\Data\EcommerceConceptsData;
+use App\Data\EcommerceTechnologiesData;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -380,6 +382,107 @@ class Product
         foreach ($etapes as $key => &$etape) {
             if (isset($modalDetails[$etape['numero']])) {
                 $etape['modal_details'] = $modalDetails[$etape['numero']];
+            }
+        }
+
+        // Récupérer les données enrichies pour les concepts
+        $architectureDetails = EcommerceConceptsData::getArchitectureDetails();
+        $patternsDetails = EcommerceConceptsData::getPatternsDetails();
+        $securityDetails = EcommerceConceptsData::getSecurityDetails();
+
+        // Fusionner les données enrichies avec concepts_techniques
+        foreach ($concepts_techniques['architecture']['composants'] as $key => $description) {
+            $slug = strtolower(str_replace(' ', '_', $key));
+            if (isset($architectureDetails[$slug])) {
+                $concepts_techniques['architecture']['composants_details'][$key] = $architectureDetails[$slug];
+            }
+        }
+
+        foreach ($concepts_techniques['patterns']['liste'] as $key => $description) {
+            $slug = strtolower(str_replace(' ', '_', str_replace(' Pattern', '', $key)));
+            if (isset($patternsDetails[$slug])) {
+                $concepts_techniques['patterns']['liste_details'][$key] = $patternsDetails[$slug];
+            }
+        }
+
+        foreach ($concepts_techniques['securite']['mesures'] as $key => $description) {
+            $slug = strtolower(str_replace(' ', '_', str_replace(' Protection', '', str_replace(' Prevention', '', $key))));
+            if ($slug === 'csrf') $slug = 'csrf';
+            elseif ($slug === 'xss') $slug = 'xss';
+            elseif ($slug === 'sql_injection') $slug = 'sql_injection';
+            elseif ($slug === 'authentication') $slug = 'authentication';
+
+            if (isset($securityDetails[$slug])) {
+                $concepts_techniques['securite']['mesures_details'][$key] = $securityDetails[$slug];
+            }
+        }
+
+        // Récupérer les données enrichies pour les technologies
+        $techBackendDetails = EcommerceTechnologiesData::getBackendDetails();
+        $techFrontendDetails = EcommerceTechnologiesData::getFrontendDetails();
+        $techOutilsDetails   = EcommerceTechnologiesData::getOutilsDetails();
+
+        // Fusion Backend
+        foreach ($technologies['backend'] as $name => $desc) {
+            $slug = strtolower(str_replace([' ', '+', '.'], ['_', '', '_'], $name));
+            // Normaliser quelques cas
+            if ($slug === 'symfony_7_3') {
+                $slug = 'symfony_7_3';
+            }
+            if ($slug === 'doctrine_orm') {
+                $slug = 'doctrine_orm';
+            }
+            if ($slug === 'twig') {
+                $slug = 'twig';
+            }
+            if ($slug === 'symfony_security') {
+                $slug = 'symfony_security';
+            }
+
+            if (isset($techBackendDetails[$slug])) {
+                $technologies['backend_details'][$name] = $techBackendDetails[$slug];
+            }
+        }
+
+        // Fusion Frontend
+        foreach ($technologies['frontend'] as $name => $desc) {
+            $slug = strtolower(str_replace([' ', '+'], ['_', ''], $name));
+            if ($slug === 'bootstrap_5') {
+                $slug = 'bootstrap_5';
+            }
+            if ($slug === 'javascript_es6') {
+                $slug = 'javascript_es6';
+            }
+            if ($slug === 'stimulus') {
+                $slug = 'stimulus';
+            }
+            if ($slug === 'asset_mapper') {
+                $slug = 'asset_mapper';
+            }
+
+            if (isset($techFrontendDetails[$slug])) {
+                $technologies['frontend_details'][$name] = $techFrontendDetails[$slug];
+            }
+        }
+
+        // Fusion Outils
+        foreach ($technologies['outils'] as $name => $desc) {
+            $slug = strtolower(str_replace([' ', '+'], ['_', ''], $name));
+            if ($slug === 'composer') {
+                $slug = 'composer';
+            }
+            if ($slug === 'symfony_cli') {
+                $slug = 'symfony_cli';
+            }
+            if ($slug === 'phpunit') {
+                $slug = 'phpunit';
+            }
+            if ($slug === 'doctrine_migrations') {
+                $slug = 'doctrine_migrations';
+            }
+
+            if (isset($techOutilsDetails[$slug])) {
+                $technologies['outils_details'][$name] = $techOutilsDetails[$slug];
             }
         }
 

@@ -621,3 +621,98 @@
         border-left-color: transparent;
     }
 }
+
+/* ===============================================
+   CLICKABLE ELEMENTS FOR CONCEPTS
+   =============================================== */
+
+/* Click hint text */
+.click-hint {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--matrix-green);
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Hover effects for clickable architecture components */
+.architecture-component[data-open-modal] {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.architecture-component[data-open-modal]:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+}
+
+.architecture-component[data-open-modal]:hover .click-hint {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover effects for pattern cards */
+.pattern-card[data-open-modal] {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.pattern-card[data-open-modal]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 255, 65, 0.25);
+    border-color: var(--matrix-green);
+}
+
+.pattern-card[data-open-modal]:hover .click-hint {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover effects for security items */
+.security-item[data-open-modal] {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.security-item[data-open-modal]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 255, 65, 0.25);
+    background: rgba(0, 255, 65, 0.15);
+}
+
+.security-item[data-open-modal]:hover .click-hint {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Keyboard focus styles */
+[data-open-modal]:focus {
+    outline: 2px solid var(--matrix-green);
+    outline-offset: 3px;
+}
+
+/* Active click animation */
+[data-open-modal]:active {
+    transform: scale(0.98);
+}
+
+/* Hover effects for tech items */
+.tech-item[data-open-modal] {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tech-item[data-open-modal]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 255, 65, 0.25);
+    background: rgba(0, 255, 65, 0.15);
+}
+
+.tech-item[data-open-modal]:hover .click-hint {
+    opacity: 1;
+    transform: translateY(0);
+}

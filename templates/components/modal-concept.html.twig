@@ -1,0 +1,145 @@
+{# Modal pour concepts techniques, patterns, sécurité, technologies #}
+{% set modalClass = 'modal modal--concept' %}
+
+<div class="{{ modalClass }}" id="modal-{{ id }}" data-modal="{{ id }}" role="dialog" aria-hidden="true" aria-labelledby="modal-title-{{ id }}">
+	<div class="modal__overlay" data-modal-close></div>
+
+	<div class="modal__container">
+		{# Header #}
+		<header class="modal__header">
+			<h2 class="modal__title" id="modal-title-{{ id }}">
+				{% if icon is defined %}
+					<span class="modal__icon">{{ icon }}</span>
+				{% endif %}
+				{{ title }}
+			</h2>
+			<button class="modal__close" data-modal-close aria-label="Fermer la modale">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</header>
+
+		{# Body #}
+		<div class="modal__body">
+			
+			{# Description détaillée #}
+			{% if description is defined %}
+				<div class="concept__description">
+					<h3 class="concept__section-title">📖 Description</h3>
+					<p class="concept__text">{{ description|raw }}</p>
+				</div>
+			{% endif %}
+
+			{# Analogie pédagogique #}
+			{% if analogie is defined %}
+				<div class="concept__analogie">
+					<div class="analogie-box">
+						<div class="analogie-icon">💡</div>
+						<div class="analogie-content">
+							<h4>Analogie pour mieux comprendre</h4>
+							<p>{{ analogie|raw }}</p>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+
+			{# Cas d'usage pratiques #}
+			{% if cas_usage is defined and cas_usage|length > 0 %}
+				<div class="concept__cas-usage">
+					<h3 class="concept__section-title">🎯 Cas d'usage pratiques</h3>
+					<ul class="usage-list">
+						{% for cas in cas_usage %}
+							<li class="usage-item">
+								<span class="usage-bullet">▸</span>
+								{{ cas }}
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+
+			{# Exemple de code détaillé #}
+			{% if exemple_code is defined %}
+				<div class="concept__code-example">
+					<h3 class="concept__section-title">💻 Exemple de code</h3>
+					
+					{% if exemple_code.titre is defined %}
+						<h4 class="code-example-title">{{ exemple_code.titre }}</h4>
+					{% endif %}
+
+					<div class="modal__code-block">
+						<div class="modal__code-header">
+							<span class="modal__code-lang">{{ exemple_code.language|default('php') }}</span>
+							<button class="modal__code-copy" data-copy-target="modal-code-{{ id }}">
+								<span class="modal__code-copy-text">Copier</span>
+								<span class="modal__code-copy-icon">📋</span>
+							</button>
+						</div>
+						<pre class="modal__code" id="modal-code-{{ id }}"><code>{{ exemple_code.code }}</code></pre>
+					</div>
+				</div>
+			{% endif %}
+
+			{# Avantages et Inconvénients #}
+			<div class="concept__pros-cons">
+				<div class="pros-cons-grid">
+					{# Avantages #}
+					{% if avantages is defined and avantages|length > 0 %}
+						<div class="pros-section">
+							<h3 class="concept__section-title">✅ Avantages</h3>
+							<ul class="pros-list">
+								{% for avantage in avantages %}
+									<li class="pros-item">{{ avantage }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+
+					{# Inconvénients #}
+					{% if inconvenients is defined and inconvenients|length > 0 %}
+						<div class="cons-section">
+							<h3 class="concept__section-title">⚠️ Inconvénients</h3>
+							<ul class="cons-list">
+								{% for inconvenient in inconvenients %}
+									<li class="cons-item">{{ inconvenient }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+
+			{# Ressources pour aller plus loin #}
+			{% if ressources is defined and ressources|length > 0 %}
+				<div class="concept__resources">
+					<h3 class="concept__section-title">📚 Ressources pour approfondir</h3>
+					<div class="resources-grid">
+						{% for resource in ressources %}
+							<a href="{{ resource.url }}" class="resource-link" target="_blank" rel="noopener">
+								<span class="resource-icon">{{ resource.icon|default('🔗') }}</span>
+								<span class="resource-label">{{ resource.label }}</span>
+								<span class="resource-external">↗</span>
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+
+		</div>
+
+		{# Footer avec navigation entre concepts de même catégorie #}
+		{% if prevConcept is defined or nextConcept is defined %}
+			<footer class="modal__footer">
+				{% if prevConcept is defined %}
+					<button class="modal__nav-btn modal__nav-btn--prev" data-open-modal="{{ prevConcept }}">
+						← Concept précédent
+					</button>
+				{% endif %}
+				{% if nextConcept is defined %}
+					<button class="modal__nav-btn modal__nav-btn--next" data-open-modal="{{ nextConcept }}">
+						Concept suivant →
+					</button>
+				{% endif %}
+			</footer>
+		{% endif %}
+	</div>
+</div>
