@@ -65,7 +65,7 @@ composer require --dev symfony/maker-bundle',
                         ],
                         [
                             'titre' => 'Configuration de la base de données',
-                            'code' => '# Dans .env
+                            'code' => '# Dans .env.local
 DATABASE_URL="mysql://user:password@127.0.0.1:3306/ecommerce_db?serverVersion=8.0"',
                             'explication' => 'Configure la connexion à votre base de données MySQL'
                         ],
@@ -125,7 +125,7 @@ DATABASE_URL="mysql://user:password@127.0.0.1:3306/ecommerce_db?serverVersion=8.
                 'duree' => '1.5h',
                 'concepts' => ['Entités Doctrine', 'Relations', 'Migrations'],
                 'objectifs' => [
-                    'Créer les entités Product, Category, User',
+                    'Créer les entités Product et Category',
                     'Définir les relations entre entités',
                     'Générer et exécuter les migrations',
                     'Comprendre les fixtures de données'
@@ -136,7 +136,7 @@ DATABASE_URL="mysql://user:password@127.0.0.1:3306/ecommerce_db?serverVersion=8.
                     'Données de test créées'
                 ],
                 'modal_details' => [
-                    'description_detaillee' => 'La modélisation des données est cruciale pour un e-commerce. Vous allez créer les entités qui représentent vos produits, catégories et utilisateurs, puis définir comment elles interagissent entre elles.',
+                    'description_detaillee' => 'La modélisation des données est cruciale pour un e-commerce. Vous allez créer les entités qui représentent vos produits et catégories, puis définir comment elles interagissent entre elles. L\'entité User sera créée plus tard lors de l\'étape Authentification.',
                     'commandes' => [
                         [
                             'titre' => 'Création de l\'entité Product',
@@ -196,7 +196,7 @@ class Product
                         ]
                     ],
                     'checklist' => [
-                        'Les entités Product, Category et User sont créées',
+                        'Les entités Product et Category sont créées',
                         'Les relations ManyToOne et OneToMany sont correctement définies',
                         'La migration s\'exécute sans erreur',
                         'Les tables apparaissent dans votre base de données'

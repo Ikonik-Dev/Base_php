@@ -75,7 +75,15 @@
 										<span class="modal__code-copy-icon">📋</span>
 									</button>
 								</div>
-								<pre class="modal__code" id="modal-code-file-{{ loop.index }}-{{ id }}"><code>{{ fichier.code }}</code></pre>
+								{% set display_code = fichier.code %}
+								{# Cleanup leading slashes in method-level routes for copy-paste clarity #}
+								{% if "#[Route('/add/" in display_code or "#[Route('/remove/" in display_code %}
+									{% set display_code = display_code|replace({
+										"#[Route('/add/": "#[Route('add/",
+										"#[Route('/remove/": "#[Route('remove/"
+									}) %}
+								{% endif %}
+								<pre class="modal__code" id="modal-code-file-{{ loop.index }}-{{ id }}"><code>{{ display_code }}</code></pre>
 							</div>
 						</div>
 					{% endfor %}
