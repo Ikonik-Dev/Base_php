@@ -83,6 +83,8 @@
 										"#[Route('/remove/": "#[Route('remove/"
 									}) %}
 								{% endif %}
+								{# Remove escape backslashes before $ for clean copy-paste #}
+								{% set display_code = display_code|replace({'\\$': '$'}) %}
 								<pre class="modal__code" id="modal-code-file-{{ loop.index }}-{{ id }}"><code>{{ display_code }}</code></pre>
 							</div>
 						</div>

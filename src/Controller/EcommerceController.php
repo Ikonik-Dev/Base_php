@@ -21,7 +21,7 @@ final class EcommerceController extends AbstractController
             'label' => 'E-commerce avec Symfony - Tutoriel Progressif',
             'description' => 'Apprenez à construire un site e-commerce complet étape par étape en utilisant Symfony et ses bonnes pratiques.',
             'niveau' => 'Intermédiaire',
-            'duree_estimee' => '8-12 heures',
+            'duree_estimee' => '10-14 heures',
             'prerequis' => [
                 'Bases de PHP orienté objet',
                 'Notions de base de données',
@@ -318,6 +318,26 @@ class Product
                     'Upload d\'images fonctionnel',
                     'Notifications par email',
                     'Application optimisée'
+                ]
+            ],
+            [
+                'numero' => 9,
+                'titre' => 'Intégration Paiement (Stripe)',
+                'description' => 'Système de paiement sécurisé',
+                'duree' => '2h',
+                'concepts' => ['Stripe Checkout', 'Webhooks', 'Sécurité paiement', 'API externe'],
+                'objectifs' => [
+                    'Intégrer le SDK Stripe',
+                    'Créer une session Checkout',
+                    'Gérer les webhooks de confirmation',
+                    'Mettre à jour les statuts de commande',
+                    'Sécuriser les transactions'
+                ],
+                'livrables' => [
+                    'Paiement Stripe fonctionnel',
+                    'Pages succès et annulation',
+                    'Webhook sécurisé',
+                    'Mise à jour automatique des commandes'
                 ]
             ]
         ];
