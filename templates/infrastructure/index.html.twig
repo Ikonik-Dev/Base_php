@@ -84,6 +84,28 @@
 							</div>
 						</div>
 					</div>
+
+					{# Analogie pour architecture client-serveur #}
+					{% if concepts.architecture_client_serveur.analogie is defined %}
+						<div class="analogy-box">
+							<div class="analogy-icon">💡</div>
+							<div class="analogy-content">
+								<strong>Analogie pour comprendre :</strong>
+								<p>{{ concepts.architecture_client_serveur.analogie }}</p>
+							</div>
+						</div>
+					{% endif %}
+
+					{# Exemple concret #}
+					{% if concepts.architecture_client_serveur.exemple_concret is defined %}
+						<div class="example-box">
+							<div class="example-icon">🔍</div>
+							<div class="example-content">
+								<strong>Exemple concret :</strong>
+								<p>{{ concepts.architecture_client_serveur.exemple_concret }}</p>
+							</div>
+						</div>
+					{% endif %}
 				</section>
 
 				<!-- Diagramme Pile LAMP/LEMP -->
@@ -130,6 +152,32 @@
 							</div>
 						</div>
 					</div>
+
+					{# Variantes de la pile #}
+					{% if concepts.pile_lamp_lemp.variantes is defined %}
+						<div class="variants-grid">
+							<h4>🔄 Variantes courantes</h4>
+							<div class="variants-cards">
+								{% for nom, desc in concepts.pile_lamp_lemp.variantes %}
+									<div class="variant-card">
+										<span class="variant-name">{{ nom }}</span>
+										<span class="variant-desc">{{ desc }}</span>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+
+					{# Analogie pour pile LAMP #}
+					{% if concepts.pile_lamp_lemp.analogie is defined %}
+						<div class="analogy-box">
+							<div class="analogy-icon">💡</div>
+							<div class="analogy-content">
+								<strong>Analogie pour comprendre :</strong>
+								<p>{{ concepts.pile_lamp_lemp.analogie }}</p>
+							</div>
+						</div>
+					{% endif %}
 				</section>
 
 				<!-- Diagramme Cycle HTTP -->
@@ -181,6 +229,32 @@
 								</div>
 							</div>
 						</div>
+
+						{# Codes HTTP visuels #}
+						{% if concepts.cycle_requete_reponse.codes_http is defined %}
+							<div class="http-codes-visual">
+								<h4>📊 Codes HTTP les plus courants</h4>
+								<div class="codes-grid">
+									{% for code, description in concepts.cycle_requete_reponse.codes_http %}
+										<div class="code-badge {% if '200' in code %}success{% elseif '301' in code or '302' in code %}redirect{% elseif '404' in code %}not-found{% else %}error{% endif %}">
+											<span class="code-number">{{ code }}</span>
+											<span class="code-desc">{{ description }}</span>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						{% endif %}
+
+						{# Analogie visuelle #}
+						{% if concepts.cycle_requete_reponse.analogie is defined %}
+							<div class="analogy-box">
+								<div class="analogy-icon">💡</div>
+								<div class="analogy-content">
+									<strong>Analogie pour comprendre :</strong>
+									<p>{{ concepts.cycle_requete_reponse.analogie }}</p>
+								</div>
+							</div>
+						{% endif %}
 					</div>
 				</section>
 
@@ -204,17 +278,172 @@
 							</div>
 						{% endfor %}
 					</div>
+
+					{# Sites célèbres utilisant PHP #}
+					{% if concepts.role_de_php.sites_celebres is defined %}
+						<div class="famous-sites">
+							<h4>🌟 PHP propulse des géants du web</h4>
+							<div class="sites-badges">
+								{% for site, info in concepts.role_de_php.sites_celebres %}
+									<div class="site-badge">
+										<span class="site-name">{{ site }}</span>
+										<span class="site-info">{{ info }}</span>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+
+					{# Analogie #}
+					{% if concepts.role_de_php.analogie is defined %}
+						<div class="analogy-box">
+							<div class="analogy-icon">💡</div>
+							<div class="analogy-content">
+								<strong>Analogie pour comprendre :</strong>
+								<p>{{ concepts.role_de_php.analogie }}</p>
+							</div>
+						</div>
+					{% endif %}
 				</section>
+
+				<!-- NOUVEAU : Frontend vs Backend -->
+				{% if concepts.frontend_vs_backend is defined %}
+					<section id="frontend-backend" class="concept-section">
+						<h2>{{ concepts.frontend_vs_backend.label }}</h2>
+						<p class="section-description">{{ concepts.frontend_vs_backend.description }}</p>
+
+						<div class="frontend-backend-diagram">
+							<div class="diagram-side frontend-side">
+								<div class="side-header">
+									<span class="side-icon">🎨</span>
+									<h3>FRONTEND</h3>
+									<span class="side-subtitle">Ce que l'utilisateur voit</span>
+								</div>
+								<div class="side-content">
+									<ul>
+										<li>
+											<span class="tech-badge html">HTML</span>
+											Structure</li>
+										<li>
+											<span class="tech-badge css">CSS</span>
+											Style & Design</li>
+										<li>
+											<span class="tech-badge js">JavaScript</span>
+											Interactivité</li>
+									</ul>
+									<div class="execution-note">⚡ S'exécute dans le NAVIGATEUR</div>
+								</div>
+							</div>
+
+							<div class="diagram-middle">
+								<div class="api-bridge">
+									<span class="bridge-arrow">⇄</span>
+									<span class="bridge-label">API / HTTP</span>
+								</div>
+							</div>
+
+							<div class="diagram-side backend-side">
+								<div class="side-header">
+									<span class="side-icon">⚙️</span>
+									<h3>BACKEND</h3>
+									<span class="side-subtitle">Les coulisses invisibles</span>
+								</div>
+								<div class="side-content">
+									<ul>
+										<li>
+											<span class="tech-badge php">PHP</span>
+											Logique métier</li>
+										<li>
+											<span class="tech-badge mysql">MySQL</span>
+											Base de données</li>
+										<li>
+											<span class="tech-badge server">Serveur</span>
+											Sécurité</li>
+									</ul>
+									<div class="execution-note">🖥️ S'exécute sur le SERVEUR</div>
+								</div>
+							</div>
+						</div>
+
+						{% if concepts.frontend_vs_backend.analogie is defined %}
+							<div class="analogy-box">
+								<div class="analogy-icon">💡</div>
+								<div class="analogy-content">
+									<strong>Analogie pour comprendre :</strong>
+									<p>{{ concepts.frontend_vs_backend.analogie }}</p>
+								</div>
+							</div>
+						{% endif %}
+					</section>
+				{% endif %}
+
+				<!-- NOUVEAU : Types d'hébergement -->
+				{% if concepts.hebergement_web is defined %}
+					<section id="hebergement" class="concept-section">
+						<h2>{{ concepts.hebergement_web.label }}</h2>
+						<p class="section-description">{{ concepts.hebergement_web.description }}</p>
+
+						<div class="hosting-comparison">
+							<div class="hosting-card shared">
+								<div class="hosting-icon">🏠</div>
+								<h4>Mutualisé</h4>
+								<div class="hosting-price">3-10€/mois</div>
+								<p>Partage un serveur avec d'autres sites</p>
+								<div class="hosting-use">✓ Blogs, sites vitrines</div>
+							</div>
+							<div class="hosting-card vps">
+								<div class="hosting-icon">🏢</div>
+								<h4>VPS</h4>
+								<div class="hosting-price">15-50€/mois</div>
+								<p>Votre espace virtuel garanti</p>
+								<div class="hosting-use">✓ PME, e-commerce</div>
+							</div>
+							<div class="hosting-card dedicated">
+								<div class="hosting-icon">🏰</div>
+								<h4>Dédié</h4>
+								<div class="hosting-price">100-500€/mois</div>
+								<p>Serveur physique rien qu'à vous</p>
+								<div class="hosting-use">✓ Gros projets</div>
+							</div>
+							<div class="hosting-card cloud">
+								<div class="hosting-icon">☁️</div>
+								<h4>Cloud</h4>
+								<div class="hosting-price">Variable</div>
+								<p>Ressources à la demande</p>
+								<div class="hosting-use">✓ Startups, scalabilité</div>
+							</div>
+						</div>
+
+						{% if concepts.hebergement_web.analogie is defined %}
+							<div class="analogy-box">
+								<div class="analogy-icon">💡</div>
+								<div class="analogy-content">
+									<strong>Analogie pour comprendre :</strong>
+									<p>{{ concepts.hebergement_web.analogie }}</p>
+								</div>
+							</div>
+						{% endif %}
+					</section>
+				{% endif %}
 
 				<!-- Section Concepts détaillés -->
 				<section class="detailed-concepts">
 					<h2>Concepts Approfondis</h2>
 					<div class="concepts-grid">
 						{% for key, concept in concepts %}
-							{% if key not in ['architecture_client_serveur', 'pile_lamp_lemp', 'cycle_requete_reponse', 'role_de_php'] %}
+							{% if key not in ['architecture_client_serveur', 'pile_lamp_lemp', 'cycle_requete_reponse', 'role_de_php', 'frontend_vs_backend', 'hebergement_web'] %}
 								<div class="concept-card advanced-concept">
 									<h3>{{ concept.label }}</h3>
 									<p class="concept-description">{{ concept.description }}</p>
+
+									{# Analogie en haut de la carte #}
+									{% if concept.analogie is defined %}
+										<div class="concept-analogy">
+											<span class="analogy-label">💡 Analogie :</span>
+											<span>{{ concept.analogie }}</span>
+										</div>
+									{% endif %}
+
 									<div class="concept-details">
 										{% for detail, description in concept.details %}
 											<div class="detail-item">
@@ -223,6 +452,37 @@
 											</div>
 										{% endfor %}
 									</div>
+
+									{# Informations supplémentaires #}
+									{% if concept.variantes is defined %}
+										<div class="concept-extra">
+											<strong>Variantes :</strong>
+											{% for nom, desc in concept.variantes %}
+												<span class="variant-badge">{{ nom }}:
+													{{ desc }}</span>
+											{% endfor %}
+										</div>
+									{% endif %}
+
+									{% if concept.attaques_courantes is defined %}
+										<div class="concept-extra danger">
+											<strong>⚠️ Attaques courantes :</strong>
+											{% for nom, desc in concept.attaques_courantes %}
+												<span class="attack-badge">{{ nom }}:
+													{{ desc }}</span>
+											{% endfor %}
+										</div>
+									{% endif %}
+
+									{% if concept.metriques is defined %}
+										<div class="concept-extra metrics">
+											<strong>📊 Métriques clés :</strong>
+											{% for nom, desc in concept.metriques %}
+												<span class="metric-badge">{{ nom }}:
+													{{ desc }}</span>
+											{% endfor %}
+										</div>
+									{% endif %}
 								</div>
 							{% endif %}
 						{% endfor %}
@@ -235,7 +495,11 @@
 					<div class="tools-grid">
 						{% for category, toolList in tools %}
 							<div class="tool-category">
-								<h3>{{ category|replace({'_': ' '})|title }}</h3>
+								<h3>
+									{% if 'serveur' in category %}🌐{% elseif 'base' in category %}🗄️{% elseif 'monitoring' in category %}📊{% else %}🛠️
+									{% endif %}
+									{{ category|replace({'_': ' '})|title }}
+								</h3>
 								<div class="tools-list">
 									{% for tool, description in toolList %}
 										<div class="tool-item">
@@ -1024,6 +1288,509 @@ transform: translateY(-3px);
 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* ===== NOUVELLES SECTIONS ENRICHIES ===== */
+
+/* Codes HTTP visuels */
+.http-codes-visual {
+margin-top: 2rem;
+padding: 1.5rem;
+background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+border-radius: 10px;
+}
+
+.http-codes-visual h4 {
+text-align: center;
+margin-bottom: 1rem;
+color: var(--infra-primary);
+}
+
+.codes-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 1rem;
+}
+
+.code-badge {
+display: flex;
+flex-direction: column;
+padding: 1rem;
+border-radius: 10px;
+text-align: center;
+transition: transform 0.3s ease;
+}
+
+.code-badge:hover {
+transform: scale(1.05);
+}
+
+.code-badge.success {
+background: linear-gradient(135deg, #28a745, #20c997);
+color: white;
+}
+
+.code-badge.redirect {
+background: linear-gradient(135deg, #17a2b8, #6f42c1);
+color: white;
+}
+
+.code-badge.not-found {
+background: linear-gradient(135deg, #ffc107, #fd7e14);
+color: white;
+}
+
+.code-badge.error {
+background: linear-gradient(135deg, #dc3545, #c82333);
+color: white;
+}
+
+.code-number {
+font-weight: bold;
+font-size: 1.1rem;
+margin-bottom: 0.5rem;
+}
+
+.code-desc {
+font-size: 0.85rem;
+}
+
+/* Boîte d'analogie */
+.analogy-box {
+display: flex;
+align-items: flex-start;
+gap: 1rem;
+margin-top: 1.5rem;
+padding: 1.5rem;
+background: linear-gradient(135deg, #fff3cd, #ffeeba);
+border-radius: 10px;
+border-left: 5px solid #ffc107;
+animation: fadeInScale 0.8s ease-out;
+}
+
+.analogy-icon {
+font-size: 2rem;
+flex-shrink: 0;
+}
+
+.analogy-content strong {
+color: #856404;
+display: block;
+margin-bottom: 0.5rem;
+}
+
+.analogy-content p {
+margin: 0;
+color: #856404;
+line-height: 1.6;
+}
+
+/* Boîte d'exemple concret */
+.example-box {
+display: flex;
+align-items: flex-start;
+gap: 1rem;
+margin-top: 1rem;
+padding: 1.5rem;
+background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+border-radius: 10px;
+border-left: 5px solid #2196f3;
+animation: fadeInScale 0.8s ease-out;
+}
+
+.example-icon {
+font-size: 2rem;
+flex-shrink: 0;
+}
+
+.example-content strong {
+color: #1565c0;
+display: block;
+margin-bottom: 0.5rem;
+}
+
+.example-content p {
+margin: 0;
+color: #1565c0;
+line-height: 1.6;
+font-family: monospace;
+background: rgba(255, 255, 255, 0.5);
+padding: 0.5rem;
+border-radius: 5px;
+}
+
+/* Grille des variantes */
+.variants-grid {
+margin-top: 1.5rem;
+padding: 1.5rem;
+background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+border-radius: 10px;
+}
+
+.variants-grid h4 {
+text-align: center;
+margin-bottom: 1rem;
+color: #7b1fa2;
+}
+
+.variants-cards {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: 1rem;
+}
+
+.variant-card {
+display: flex;
+flex-direction: column;
+background: white;
+padding: 1rem;
+border-radius: 10px;
+text-align: center;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease;
+}
+
+.variant-card:hover {
+transform: translateY(-5px);
+}
+
+.variant-name {
+font-weight: bold;
+color: #7b1fa2;
+font-size: 1.1rem;
+margin-bottom: 0.5rem;
+}
+
+.variant-desc {
+font-size: 0.85rem;
+color: #666;
+}
+
+/* Sites célèbres PHP */
+.famous-sites {
+margin-top: 2rem;
+padding: 1.5rem;
+background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+border-radius: 10px;
+}
+
+.famous-sites h4 {
+text-align: center;
+margin-bottom: 1rem;
+color: #2e7d32;
+}
+
+.sites-badges {
+display: flex;
+flex-wrap: wrap;
+gap: 1rem;
+justify-content: center;
+}
+
+.site-badge {
+display: flex;
+flex-direction: column;
+background: white;
+padding: 1rem 1.5rem;
+border-radius: 10px;
+text-align: center;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease;
+}
+
+.site-badge:hover {
+transform: translateY(-5px);
+}
+
+.site-name {
+font-weight: bold;
+color: var(--infra-primary);
+font-size: 1.1rem;
+}
+
+.site-info {
+font-size: 0.85rem;
+color: #666;
+margin-top: 0.25rem;
+}
+
+/* Diagramme Frontend/Backend */
+.frontend-backend-diagram {
+display: grid;
+grid-template-columns: 1fr auto 1fr;
+gap: 2rem;
+align-items: stretch;
+padding: 2rem;
+background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+border-radius: 15px;
+margin: 2rem 0;
+}
+
+.diagram-side {
+background: white;
+border-radius: 15px;
+overflow: hidden;
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease;
+}
+
+.diagram-side:hover {
+transform: translateY(-5px);
+}
+
+.frontend-side .side-header {
+background: linear-gradient(135deg, #667eea, #764ba2);
+color: white;
+}
+
+.backend-side .side-header {
+background: linear-gradient(135deg, #ff6b35, #f7931e);
+color: white;
+}
+
+.side-header {
+padding: 1.5rem;
+text-align: center;
+}
+
+.side-icon {
+font-size: 2.5rem;
+display: block;
+margin-bottom: 0.5rem;
+}
+
+.side-header h3 {
+margin: 0.5rem 0 0.25rem;
+font-size: 1.3rem;
+}
+
+.side-subtitle {
+font-size: 0.85rem;
+opacity: 0.9;
+}
+
+.side-content {
+padding: 1.5rem;
+}
+
+.side-content ul {
+list-style: none;
+padding: 0;
+margin: 0 0 1rem;
+}
+
+.side-content li {
+display: flex;
+align-items: center;
+gap: 0.75rem;
+margin-bottom: 0.75rem;
+padding: 0.5rem;
+background: #f8f9fa;
+border-radius: 8px;
+}
+
+.tech-badge {
+padding: 0.25rem 0.75rem;
+border-radius: 15px;
+font-weight: bold;
+font-size: 0.8rem;
+color: white;
+}
+
+.tech-badge.html {
+background: #e34c26;
+}
+.tech-badge.css {
+background: #264de4;
+}
+.tech-badge.js {
+background: #f0db4f;
+color: #323330;
+}
+.tech-badge.php {
+background: #8892bf;
+}
+.tech-badge.mysql {
+background: #00618a;
+}
+.tech-badge.server {
+background: #6c757d;
+}
+
+.execution-note {
+background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+padding: 0.75rem;
+border-radius: 8px;
+text-align: center;
+font-size: 0.9rem;
+color: #2e7d32;
+font-weight: 500;
+}
+
+.diagram-middle {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.api-bridge {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0.5rem;
+}
+
+.bridge-arrow {
+font-size: 2.5rem;
+color: var(--infra-primary);
+animation: pulse 2s infinite;
+}
+
+.bridge-label {
+background: var(--infra-gradient);
+color: white;
+padding: 0.5rem 1rem;
+border-radius: 20px;
+font-weight: bold;
+font-size: 0.9rem;
+}
+
+/* Comparaison hébergement */
+.hosting-comparison {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 1.5rem;
+margin: 2rem 0;
+}
+
+.hosting-card {
+background: white;
+border-radius: 15px;
+padding: 1.5rem;
+text-align: center;
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+transition: all 0.3s ease;
+border-top: 4px solid transparent;
+}
+
+.hosting-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.hosting-card.shared {
+border-top-color: #28a745;
+}
+.hosting-card.vps {
+border-top-color: #17a2b8;
+}
+.hosting-card.dedicated {
+border-top-color: #ffc107;
+}
+.hosting-card.cloud {
+border-top-color: #6f42c1;
+}
+
+.hosting-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}
+
+.hosting-card h4 {
+color: var(--infra-primary);
+margin-bottom: 0.5rem;
+}
+
+.hosting-price {
+background: var(--infra-gradient);
+color: white;
+padding: 0.5rem 1rem;
+border-radius: 20px;
+display: inline-block;
+font-weight: bold;
+margin-bottom: 0.75rem;
+}
+
+.hosting-card p {
+font-size: 0.9rem;
+color: #666;
+margin-bottom: 0.75rem;
+}
+
+.hosting-use {
+background: #e8f5e9;
+color: #2e7d32;
+padding: 0.5rem;
+border-radius: 8px;
+font-size: 0.85rem;
+}
+
+/* Concept analogie inline */
+.concept-analogy {
+background: linear-gradient(135deg, #fff3cd, #ffeeba);
+padding: 0.75rem 1rem;
+border-radius: 8px;
+margin-bottom: 1rem;
+border-left: 4px solid #ffc107;
+}
+
+.concept-analogy .analogy-label {
+font-weight: bold;
+color: #856404;
+}
+
+/* Extras dans les cartes concept */
+.concept-extra {
+margin-top: 1rem;
+padding: 1rem;
+background: #f8f9fa;
+border-radius: 8px;
+font-size: 0.9rem;
+}
+
+.concept-extra strong {
+display: block;
+margin-bottom: 0.5rem;
+color: var(--infra-primary);
+}
+
+.concept-extra.danger {
+background: linear-gradient(135deg, #ffebee, #ffcdd2);
+border-left: 4px solid #dc3545;
+}
+
+.concept-extra.danger strong {
+color: #c82333;
+}
+
+.concept-extra.metrics {
+background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+border-left: 4px solid #2196f3;
+}
+
+.concept-extra.metrics strong {
+color: #1565c0;
+}
+
+.variant-badge,
+.attack-badge,
+.metric-badge {
+display: block;
+padding: 0.5rem;
+margin-bottom: 0.5rem;
+background: rgba(255, 255, 255, 0.7);
+border-radius: 5px;
+font-size: 0.85rem;
+}
+
+.attack-badge {
+background: rgba(255, 255, 255, 0.8);
+color: #c82333;
+}
+
+.metric-badge {
+background: rgba(255, 255, 255, 0.8);
+color: #1565c0;
+}
+
 /* Animations */
 @keyframes float {
 0% {
@@ -1069,6 +1836,33 @@ align-self: center;
 }
 
 .cta-buttons {
+flex-direction: column;
+align-items: center;
+}
+
+.frontend-backend-diagram {
+grid-template-columns: 1fr;
+}
+
+.diagram-middle {
+transform: rotate(90deg);
+padding: 1rem 0;
+}
+
+.hosting-comparison {
+grid-template-columns: 1fr;
+}
+
+.codes-grid {
+grid-template-columns: 1fr 1fr;
+}
+
+.analogy-box {
+flex-direction: column;
+text-align: center;
+}
+
+.sites-badges {
 flex-direction: column;
 align-items: center;
 }

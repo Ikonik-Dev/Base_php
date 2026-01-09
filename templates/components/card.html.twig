@@ -56,7 +56,8 @@
 					<span class="card__example-lang">{{ example.language }}</span>
 				{% endif %}
 			</div>
-			<pre class="card__example-code"><code>{{ example.code is defined ? example.code : example }}</code></pre>
+			{% set exampleCode = example.code is defined ? example.code : example %}
+			<pre class="card__example-code"><code>{{ exampleCode|replace({'\\n': "\n", '\\t': "\t"})|raw }}</code></pre>
 		</div>
 	{% endif %}
 

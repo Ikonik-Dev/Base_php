@@ -18,6 +18,61 @@
 
 	<main class="main-content">
 		<div class="container">
+
+			{# ===== SCHÉMA 1 : Architecture PHP-BDD ===== #}
+			<section class="diagram-section">
+				<h2 class="diagram-title">🏗️ Architecture PHP ↔ Base de Données</h2>
+				<p class="diagram-description">Comment PHP communique avec MySQL via PDO</p>
+				
+				<div class="php-bdd-diagram">
+					<div class="diagram-layer app-layer">
+						<div class="layer-icon">📱</div>
+						<div class="layer-content">
+							<h4>Application PHP</h4>
+							<p>Votre code</p>
+							<code>$pdo->query(...)</code>
+						</div>
+					</div>
+					
+					<div class="diagram-arrow">⬇️ Requête SQL</div>
+					
+					<div class="diagram-layer pdo-layer">
+						<div class="layer-icon">🔌</div>
+						<div class="layer-content">
+							<h4>PDO (PHP Data Objects)</h4>
+							<p>Couche d'abstraction</p>
+							<code>prepare() → execute() → fetch()</code>
+						</div>
+					</div>
+					
+					<div class="diagram-arrow">⬇️ Protocole MySQL</div>
+					
+					<div class="diagram-layer db-layer">
+						<div class="layer-icon">🗄️</div>
+						<div class="layer-content">
+							<h4>MySQL / MariaDB</h4>
+							<p>Serveur de base de données</p>
+							<code>Tables, Index, Données</code>
+						</div>
+					</div>
+				</div>
+
+				<div class="diagram-legend">
+					<div class="legend-item">
+						<span class="legend-color app"></span>
+						<span>Code PHP (vous écrivez ici)</span>
+					</div>
+					<div class="legend-item">
+						<span class="legend-color pdo"></span>
+						<span>PDO traduit PHP → SQL</span>
+					</div>
+					<div class="legend-item">
+						<span class="legend-color db"></span>
+						<span>MySQL stocke les données</span>
+					</div>
+				</div>
+			</section>
+
 			<h2 class="section-title">Introduction & Connexion</h2>
 			<div class="grid">
 				{% include 'components/card.html.twig' with {
@@ -36,6 +91,53 @@
 } %}
 			</div>
 
+			{# ===== SCHÉMA 2 : Structure d'une Table ===== #}
+			<section class="diagram-section">
+				<h2 class="diagram-title">📊 Structure d'une Table SQL</h2>
+				<p class="diagram-description">Une table = un tableau avec colonnes (champs) et lignes (enregistrements)</p>
+				
+				<div class="table-structure-diagram">
+					<div class="sql-table">
+						<div class="table-name">📋 Table : users</div>
+						<div class="table-header">
+							<div class="col col-id">id</div>
+							<div class="col col-name">nom</div>
+							<div class="col col-email">email</div>
+							<div class="col col-date">created_at</div>
+						</div>
+						<div class="table-row">
+							<div class="cell cell-id">1</div>
+							<div class="cell">Alice</div>
+							<div class="cell">alice@mail.com</div>
+							<div class="cell">2024-01-15</div>
+						</div>
+						<div class="table-row">
+							<div class="cell cell-id">2</div>
+							<div class="cell">Bob</div>
+							<div class="cell">bob@mail.com</div>
+							<div class="cell">2024-02-20</div>
+						</div>
+						<div class="table-row highlight">
+							<div class="cell cell-id">3</div>
+							<div class="cell">Charlie</div>
+							<div class="cell">charlie@mail.com</div>
+							<div class="cell">2024-03-10</div>
+						</div>
+					</div>
+					
+					<div class="table-annotations">
+						<div class="annotation pk">
+							<span class="annotation-arrow">←</span>
+							<span class="annotation-text"><strong>Clé Primaire (PK)</strong><br>Identifiant unique, auto-incrémenté</span>
+						</div>
+						<div class="annotation row">
+							<span class="annotation-arrow">←</span>
+							<span class="annotation-text"><strong>Ligne = Enregistrement</strong><br>Une entrée dans la table</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			<h2 class="section-title">Requêtes & Sécurité</h2>
 			<div class="grid">
 				{% include 'components/card.html.twig' with {
@@ -53,6 +155,46 @@
 'iconClass': 'fa-solid fa-shield-halved'
 } %}
 			</div>
+
+			{# ===== SCHÉMA 3 : CRUD Operations ===== #}
+			<section class="diagram-section">
+				<h2 class="diagram-title">🔄 Les 4 Opérations CRUD</h2>
+				<p class="diagram-description">Create, Read, Update, Delete - les actions de base sur les données</p>
+				
+				<div class="crud-diagram">
+					<div class="crud-operation create">
+						<div class="crud-icon">➕</div>
+						<div class="crud-letter">C</div>
+						<div class="crud-name">CREATE</div>
+						<div class="crud-sql">INSERT INTO</div>
+						<div class="crud-desc">Ajouter une nouvelle ligne</div>
+					</div>
+					
+					<div class="crud-operation read">
+						<div class="crud-icon">👁️</div>
+						<div class="crud-letter">R</div>
+						<div class="crud-name">READ</div>
+						<div class="crud-sql">SELECT</div>
+						<div class="crud-desc">Lire/Récupérer des données</div>
+					</div>
+					
+					<div class="crud-operation update">
+						<div class="crud-icon">✏️</div>
+						<div class="crud-letter">U</div>
+						<div class="crud-name">UPDATE</div>
+						<div class="crud-sql">UPDATE ... SET</div>
+						<div class="crud-desc">Modifier une ligne existante</div>
+					</div>
+					
+					<div class="crud-operation delete">
+						<div class="crud-icon">🗑️</div>
+						<div class="crud-letter">D</div>
+						<div class="crud-name">DELETE</div>
+						<div class="crud-sql">DELETE FROM</div>
+						<div class="crud-desc">Supprimer une ligne</div>
+					</div>
+				</div>
+			</section>
 
 			<h2 class="section-title">Manipulation Données (CRUD)</h2>
 			<div class="grid">
@@ -79,6 +221,75 @@
 } %}
 			</div>
 
+			{# ===== SCHÉMA 4 : Jointures SQL ===== #}
+			<section class="diagram-section">
+				<h2 class="diagram-title">🔗 Les Jointures SQL (JOIN)</h2>
+				<p class="diagram-description">Relier plusieurs tables entre elles grâce aux clés</p>
+				
+				<div class="join-diagram">
+					<div class="join-tables">
+						<div class="join-table table-left">
+							<div class="join-table-name">users</div>
+							<div class="join-table-cols">
+								<span class="pk">id</span>
+								<span>nom</span>
+							</div>
+							<div class="join-table-data">
+								<div>1 | Alice</div>
+								<div>2 | Bob</div>
+							</div>
+						</div>
+						
+						<div class="join-connector">
+							<div class="join-type">INNER JOIN</div>
+							<div class="join-on">ON users.id = orders.user_id</div>
+							<div class="join-arrows">
+								<span>←→</span>
+							</div>
+						</div>
+						
+						<div class="join-table table-right">
+							<div class="join-table-name">orders</div>
+							<div class="join-table-cols">
+								<span class="pk">id</span>
+								<span class="fk">user_id</span>
+								<span>total</span>
+							</div>
+							<div class="join-table-data">
+								<div>1 | 1 | 99€</div>
+								<div>2 | 1 | 150€</div>
+								<div>3 | 2 | 75€</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="join-result">
+						<div class="join-result-title">📋 Résultat du JOIN</div>
+						<div class="join-result-table">
+							<div class="result-header">
+								<span>nom</span>
+								<span>total</span>
+							</div>
+							<div class="result-row">Alice | 99€</div>
+							<div class="result-row">Alice | 150€</div>
+							<div class="result-row">Bob | 75€</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="join-types-legend">
+					<div class="join-type-item inner">
+						<strong>INNER JOIN</strong> : Uniquement les correspondances
+					</div>
+					<div class="join-type-item left">
+						<strong>LEFT JOIN</strong> : Tout à gauche + correspondances
+					</div>
+					<div class="join-type-item right">
+						<strong>RIGHT JOIN</strong> : Tout à droite + correspondances
+					</div>
+				</div>
+			</section>
+
 			<h2 class="section-title">Transactions & Jointures</h2>
 			<div class="grid">
 				{% include 'components/card.html.twig' with {
@@ -96,6 +307,54 @@
 'iconClass': 'fa-solid fa-link'
 } %}
 			</div>
+
+			{# ===== SCHÉMA 5 : Transaction ACID ===== #}
+			<section class="diagram-section">
+				<h2 class="diagram-title">🔐 Transactions : Le Principe ACID</h2>
+				<p class="diagram-description">Les 4 garanties d'une transaction fiable</p>
+				
+				<div class="acid-diagram">
+					<div class="acid-property atomicity">
+						<div class="acid-letter">A</div>
+						<div class="acid-name">Atomicité</div>
+						<div class="acid-desc">Tout ou rien : si une étape échoue, tout est annulé</div>
+						<div class="acid-example">❌ Paiement échoue → commande annulée</div>
+					</div>
+					
+					<div class="acid-property consistency">
+						<div class="acid-letter">C</div>
+						<div class="acid-name">Cohérence</div>
+						<div class="acid-desc">La BDD reste dans un état valide après chaque transaction</div>
+						<div class="acid-example">✅ Stock jamais négatif</div>
+					</div>
+					
+					<div class="acid-property isolation">
+						<div class="acid-letter">I</div>
+						<div class="acid-name">Isolation</div>
+						<div class="acid-desc">Les transactions parallèles ne s'interfèrent pas</div>
+						<div class="acid-example">👥 2 achats simultanés = pas de conflit</div>
+					</div>
+					
+					<div class="acid-property durability">
+						<div class="acid-letter">D</div>
+						<div class="acid-name">Durabilité</div>
+						<div class="acid-desc">Une fois validée, la transaction est permanente</div>
+						<div class="acid-example">💾 Même si serveur crash après commit</div>
+					</div>
+				</div>
+				
+				<div class="transaction-flow">
+					<div class="flow-step begin">BEGIN</div>
+					<div class="flow-arrow">→</div>
+					<div class="flow-step query">Requêtes SQL</div>
+					<div class="flow-arrow">→</div>
+					<div class="flow-step-group">
+						<div class="flow-step commit">✅ COMMIT</div>
+						<div class="flow-or">ou</div>
+						<div class="flow-step rollback">❌ ROLLBACK</div>
+					</div>
+				</div>
+			</section>
 
 			<h2 class="section-title">Gestion Erreurs & Outils Avancés</h2>
 			<div class="grid">
@@ -121,6 +380,48 @@
 'iconClass': 'fa-solid fa-code-branch'
 } %}
 			</div>
+
+			{# ===== SCHÉMA 6 : Injection SQL vs Requête Préparée ===== #}
+			<section class="diagram-section">
+				<h2 class="diagram-title">🛡️ Injection SQL : Danger & Protection</h2>
+				<p class="diagram-description">Pourquoi les requêtes préparées sont essentielles</p>
+				
+				<div class="injection-comparison">
+					<div class="injection-side danger">
+						<div class="side-header">❌ DANGEREUX : Concaténation</div>
+						<div class="side-code">
+							<code>$sql = "SELECT * FROM users WHERE id = " . $_GET['id'];</code>
+						</div>
+						<div class="side-attack">
+							<div class="attack-label">🏴‍☠️ Attaque :</div>
+							<code>?id=1 OR 1=1 --</code>
+						</div>
+						<div class="side-result bad">
+							<div class="result-label">Résultat :</div>
+							<code>SELECT * FROM users WHERE id = 1 OR 1=1 --</code>
+							<p>→ Retourne TOUS les utilisateurs ! 😱</p>
+						</div>
+					</div>
+					
+					<div class="vs-separator">VS</div>
+					
+					<div class="injection-side safe">
+						<div class="side-header">✅ SÉCURISÉ : Requête préparée</div>
+						<div class="side-code">
+							<code>$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");<br>$stmt->execute([$_GET['id']]);</code>
+						</div>
+						<div class="side-attack">
+							<div class="attack-label">🏴‍☠️ Même attaque :</div>
+							<code>?id=1 OR 1=1 --</code>
+						</div>
+						<div class="side-result good">
+							<div class="result-label">Résultat :</div>
+							<code>Cherche id = "1 OR 1=1 --" (texte littéral)</code>
+							<p>→ Aucun résultat, attaque bloquée ! 🛡️</p>
+						</div>
+					</div>
+				</div>
+			</section>
 
 			<h2 class="section-title">Performance & Sécurité</h2>
 			<div class="grid">
@@ -158,4 +459,700 @@
 	{% endfor %}
 
 	<div class="matrix-bg" id="matrix-canvas"></div>
+
+	<style>
+		/* ===== STYLES DIAGRAMMES BDD ===== */
+		.diagram-section {
+			margin: 3rem 0;
+			padding: 2rem;
+			background: linear-gradient(135deg, rgba(0, 255, 65, 0.05), rgba(0, 200, 50, 0.02));
+			border-radius: 15px;
+			border: 1px solid rgba(0, 255, 65, 0.2);
+		}
+
+		.diagram-title {
+			font-size: 1.5rem;
+			color: #00ff41;
+			margin-bottom: 0.5rem;
+			text-align: center;
+		}
+
+		.diagram-description {
+			text-align: center;
+			color: rgba(255, 255, 255, 0.7);
+			margin-bottom: 2rem;
+		}
+
+		/* === Architecture PHP-BDD === */
+		.php-bdd-diagram {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.5rem;
+			max-width: 500px;
+			margin: 0 auto;
+		}
+
+		.diagram-layer {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			width: 100%;
+			padding: 1.5rem;
+			border-radius: 12px;
+			background: rgba(0, 0, 0, 0.3);
+			border: 2px solid;
+			transition: transform 0.3s ease;
+		}
+
+		.diagram-layer:hover {
+			transform: scale(1.02);
+		}
+
+		.diagram-layer.app-layer {
+			border-color: #667eea;
+			background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(102, 126, 234, 0.05));
+		}
+
+		.diagram-layer.pdo-layer {
+			border-color: #00ff41;
+			background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 255, 65, 0.05));
+		}
+
+		.diagram-layer.db-layer {
+			border-color: #f7931e;
+			background: linear-gradient(135deg, rgba(247, 147, 30, 0.2), rgba(247, 147, 30, 0.05));
+		}
+
+		.layer-icon {
+			font-size: 2.5rem;
+		}
+
+		.layer-content h4 {
+			color: #fff;
+			margin: 0 0 0.25rem 0;
+		}
+
+		.layer-content p {
+			color: rgba(255, 255, 255, 0.6);
+			margin: 0 0 0.5rem 0;
+			font-size: 0.9rem;
+		}
+
+		.layer-content code {
+			background: rgba(0, 0, 0, 0.4);
+			padding: 0.25rem 0.5rem;
+			border-radius: 4px;
+			font-size: 0.8rem;
+			color: #00ff41;
+		}
+
+		.diagram-arrow {
+			font-size: 1.2rem;
+			color: rgba(255, 255, 255, 0.5);
+			padding: 0.5rem;
+		}
+
+		.diagram-legend {
+			display: flex;
+			justify-content: center;
+			gap: 2rem;
+			margin-top: 1.5rem;
+			flex-wrap: wrap;
+		}
+
+		.legend-item {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: 0.85rem;
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		.legend-color {
+			width: 16px;
+			height: 16px;
+			border-radius: 4px;
+		}
+
+		.legend-color.app { background: #667eea; }
+		.legend-color.pdo { background: #00ff41; }
+		.legend-color.db { background: #f7931e; }
+
+		/* === Structure Table SQL === */
+		.table-structure-diagram {
+			display: flex;
+			gap: 2rem;
+			align-items: flex-start;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+
+		.sql-table {
+			background: rgba(0, 0, 0, 0.4);
+			border-radius: 10px;
+			overflow: hidden;
+			min-width: 400px;
+			border: 2px solid rgba(0, 255, 65, 0.3);
+		}
+
+		.table-name {
+			background: linear-gradient(135deg, #00ff41, #00cc33);
+			color: #000;
+			padding: 0.75rem 1rem;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		.table-header {
+			display: grid;
+			grid-template-columns: 60px 1fr 1fr 1fr;
+			background: rgba(0, 255, 65, 0.1);
+			border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+		}
+
+		.table-header .col {
+			padding: 0.75rem;
+			font-weight: bold;
+			color: #00ff41;
+			text-align: center;
+			border-right: 1px solid rgba(0, 255, 65, 0.2);
+		}
+
+		.table-header .col:last-child {
+			border-right: none;
+		}
+
+		.table-row {
+			display: grid;
+			grid-template-columns: 60px 1fr 1fr 1fr;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.table-row:last-child {
+			border-bottom: none;
+		}
+
+		.table-row.highlight {
+			background: rgba(0, 255, 65, 0.1);
+		}
+
+		.table-row .cell {
+			padding: 0.75rem;
+			color: rgba(255, 255, 255, 0.8);
+			text-align: center;
+			border-right: 1px solid rgba(255, 255, 255, 0.05);
+		}
+
+		.table-row .cell:last-child {
+			border-right: none;
+		}
+
+		.cell-id {
+			color: #f7931e;
+			font-weight: bold;
+		}
+
+		.table-annotations {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.annotation {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.75rem 1rem;
+			background: rgba(0, 0, 0, 0.3);
+			border-radius: 8px;
+			border-left: 3px solid #f7931e;
+		}
+
+		.annotation-arrow {
+			color: #f7931e;
+			font-size: 1.2rem;
+		}
+
+		.annotation-text {
+			font-size: 0.85rem;
+			color: rgba(255, 255, 255, 0.8);
+		}
+
+		/* === CRUD Diagram === */
+		.crud-diagram {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 1.5rem;
+			max-width: 900px;
+			margin: 0 auto;
+		}
+
+		.crud-operation {
+			text-align: center;
+			padding: 1.5rem;
+			border-radius: 12px;
+			background: rgba(0, 0, 0, 0.3);
+			border: 2px solid;
+			transition: all 0.3s ease;
+		}
+
+		.crud-operation:hover {
+			transform: translateY(-5px);
+		}
+
+		.crud-operation.create {
+			border-color: #28a745;
+		}
+
+		.crud-operation.read {
+			border-color: #17a2b8;
+		}
+
+		.crud-operation.update {
+			border-color: #ffc107;
+		}
+
+		.crud-operation.delete {
+			border-color: #dc3545;
+		}
+
+		.crud-icon {
+			font-size: 2rem;
+			margin-bottom: 0.5rem;
+		}
+
+		.crud-letter {
+			font-size: 2.5rem;
+			font-weight: bold;
+		}
+
+		.create .crud-letter { color: #28a745; }
+		.read .crud-letter { color: #17a2b8; }
+		.update .crud-letter { color: #ffc107; }
+		.delete .crud-letter { color: #dc3545; }
+
+		.crud-name {
+			font-weight: bold;
+			color: #fff;
+			margin: 0.5rem 0;
+		}
+
+		.crud-sql {
+			font-family: monospace;
+			background: rgba(0, 0, 0, 0.4);
+			padding: 0.25rem 0.5rem;
+			border-radius: 4px;
+			font-size: 0.8rem;
+			color: #00ff41;
+			margin-bottom: 0.5rem;
+		}
+
+		.crud-desc {
+			font-size: 0.8rem;
+			color: rgba(255, 255, 255, 0.6);
+		}
+
+		/* === Join Diagram === */
+		.join-diagram {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.join-tables {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.join-table {
+			background: rgba(0, 0, 0, 0.4);
+			border-radius: 10px;
+			overflow: hidden;
+			min-width: 150px;
+			border: 2px solid rgba(0, 255, 65, 0.3);
+		}
+
+		.join-table-name {
+			background: linear-gradient(135deg, #667eea, #764ba2);
+			color: #fff;
+			padding: 0.5rem;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		.join-table-cols {
+			display: flex;
+			gap: 0.5rem;
+			padding: 0.5rem;
+			background: rgba(0, 0, 0, 0.3);
+			justify-content: center;
+		}
+
+		.join-table-cols span {
+			font-size: 0.75rem;
+			padding: 0.25rem 0.5rem;
+			border-radius: 4px;
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.join-table-cols .pk {
+			background: #f7931e;
+			color: #000;
+		}
+
+		.join-table-cols .fk {
+			background: #17a2b8;
+			color: #fff;
+		}
+
+		.join-table-data {
+			padding: 0.5rem;
+			font-size: 0.8rem;
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		.join-table-data div {
+			padding: 0.25rem 0;
+		}
+
+		.join-connector {
+			text-align: center;
+			padding: 1rem;
+		}
+
+		.join-type {
+			background: #00ff41;
+			color: #000;
+			padding: 0.5rem 1rem;
+			border-radius: 20px;
+			font-weight: bold;
+			font-size: 0.85rem;
+			display: inline-block;
+			margin-bottom: 0.5rem;
+		}
+
+		.join-on {
+			font-family: monospace;
+			font-size: 0.75rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin-bottom: 0.5rem;
+		}
+
+		.join-arrows {
+			font-size: 2rem;
+			color: #00ff41;
+		}
+
+		.join-result {
+			margin-top: 1.5rem;
+			text-align: center;
+		}
+
+		.join-result-title {
+			color: #00ff41;
+			font-weight: bold;
+			margin-bottom: 0.5rem;
+		}
+
+		.join-result-table {
+			background: rgba(0, 0, 0, 0.4);
+			border-radius: 8px;
+			display: inline-block;
+			overflow: hidden;
+			border: 2px solid #00ff41;
+		}
+
+		.result-header {
+			display: flex;
+			gap: 2rem;
+			padding: 0.5rem 1rem;
+			background: rgba(0, 255, 65, 0.2);
+			font-weight: bold;
+			color: #00ff41;
+		}
+
+		.result-row {
+			padding: 0.5rem 1rem;
+			color: rgba(255, 255, 255, 0.8);
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.join-types-legend {
+			display: flex;
+			justify-content: center;
+			gap: 1.5rem;
+			margin-top: 1.5rem;
+			flex-wrap: wrap;
+		}
+
+		.join-type-item {
+			padding: 0.5rem 1rem;
+			border-radius: 8px;
+			font-size: 0.85rem;
+			background: rgba(0, 0, 0, 0.3);
+		}
+
+		.join-type-item.inner { border-left: 3px solid #00ff41; }
+		.join-type-item.left { border-left: 3px solid #17a2b8; }
+		.join-type-item.right { border-left: 3px solid #f7931e; }
+
+		/* === ACID Diagram === */
+		.acid-diagram {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 1rem;
+			max-width: 1000px;
+			margin: 0 auto 2rem;
+		}
+
+		.acid-property {
+			padding: 1.5rem;
+			border-radius: 12px;
+			background: rgba(0, 0, 0, 0.3);
+			border: 2px solid;
+			text-align: center;
+			transition: transform 0.3s ease;
+		}
+
+		.acid-property:hover {
+			transform: translateY(-5px);
+		}
+
+		.acid-property.atomicity { border-color: #dc3545; }
+		.acid-property.consistency { border-color: #28a745; }
+		.acid-property.isolation { border-color: #17a2b8; }
+		.acid-property.durability { border-color: #ffc107; }
+
+		.acid-letter {
+			font-size: 3rem;
+			font-weight: bold;
+			margin-bottom: 0.5rem;
+		}
+
+		.atomicity .acid-letter { color: #dc3545; }
+		.consistency .acid-letter { color: #28a745; }
+		.isolation .acid-letter { color: #17a2b8; }
+		.durability .acid-letter { color: #ffc107; }
+
+		.acid-name {
+			font-weight: bold;
+			color: #fff;
+			margin-bottom: 0.5rem;
+		}
+
+		.acid-desc {
+			font-size: 0.85rem;
+			color: rgba(255, 255, 255, 0.7);
+			margin-bottom: 0.75rem;
+		}
+
+		.acid-example {
+			font-size: 0.8rem;
+			padding: 0.5rem;
+			background: rgba(0, 0, 0, 0.3);
+			border-radius: 6px;
+			color: rgba(255, 255, 255, 0.6);
+		}
+
+		.transaction-flow {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.flow-step {
+			padding: 0.75rem 1.5rem;
+			border-radius: 8px;
+			font-weight: bold;
+		}
+
+		.flow-step.begin {
+			background: #17a2b8;
+			color: #fff;
+		}
+
+		.flow-step.query {
+			background: rgba(0, 255, 65, 0.2);
+			border: 2px solid #00ff41;
+			color: #00ff41;
+		}
+
+		.flow-step.commit {
+			background: #28a745;
+			color: #fff;
+		}
+
+		.flow-step.rollback {
+			background: #dc3545;
+			color: #fff;
+		}
+
+		.flow-arrow {
+			color: rgba(255, 255, 255, 0.5);
+			font-size: 1.5rem;
+		}
+
+		.flow-step-group {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.flow-or {
+			color: rgba(255, 255, 255, 0.5);
+			font-size: 0.8rem;
+		}
+
+		/* === Injection SQL Comparison === */
+		.injection-comparison {
+			display: grid;
+			grid-template-columns: 1fr auto 1fr;
+			gap: 1.5rem;
+			align-items: stretch;
+			max-width: 1000px;
+			margin: 0 auto;
+		}
+
+		.injection-side {
+			padding: 1.5rem;
+			border-radius: 12px;
+			background: rgba(0, 0, 0, 0.3);
+		}
+
+		.injection-side.danger {
+			border: 2px solid #dc3545;
+		}
+
+		.injection-side.safe {
+			border: 2px solid #28a745;
+		}
+
+		.side-header {
+			font-weight: bold;
+			font-size: 1.1rem;
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+
+		.danger .side-header { color: #dc3545; }
+		.safe .side-header { color: #28a745; }
+
+		.side-code {
+			background: rgba(0, 0, 0, 0.4);
+			padding: 1rem;
+			border-radius: 8px;
+			margin-bottom: 1rem;
+		}
+
+		.side-code code {
+			font-size: 0.8rem;
+			color: #00ff41;
+			word-break: break-all;
+		}
+
+		.side-attack {
+			margin-bottom: 1rem;
+		}
+
+		.attack-label {
+			font-size: 0.85rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin-bottom: 0.5rem;
+		}
+
+		.side-attack code {
+			background: #f7931e;
+			color: #000;
+			padding: 0.25rem 0.5rem;
+			border-radius: 4px;
+		}
+
+		.side-result {
+			padding: 1rem;
+			border-radius: 8px;
+		}
+
+		.side-result.bad {
+			background: rgba(220, 53, 69, 0.2);
+			border: 1px solid rgba(220, 53, 69, 0.3);
+		}
+
+		.side-result.good {
+			background: rgba(40, 167, 69, 0.2);
+			border: 1px solid rgba(40, 167, 69, 0.3);
+		}
+
+		.result-label {
+			font-size: 0.8rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin-bottom: 0.5rem;
+		}
+
+		.side-result code {
+			display: block;
+			font-size: 0.75rem;
+			color: rgba(255, 255, 255, 0.8);
+			word-break: break-all;
+			margin-bottom: 0.5rem;
+		}
+
+		.side-result p {
+			margin: 0;
+			font-size: 0.85rem;
+		}
+
+		.bad p { color: #dc3545; }
+		.good p { color: #28a745; }
+
+		.vs-separator {
+			display: flex;
+			align-items: center;
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: rgba(255, 255, 255, 0.3);
+		}
+
+		/* === Responsive === */
+		@media (max-width: 768px) {
+			.crud-diagram,
+			.acid-diagram {
+				grid-template-columns: repeat(2, 1fr);
+			}
+
+			.injection-comparison {
+				grid-template-columns: 1fr;
+			}
+
+			.vs-separator {
+				transform: rotate(90deg);
+				padding: 1rem 0;
+			}
+
+			.table-structure-diagram {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.sql-table {
+				min-width: 100%;
+			}
+
+			.join-tables {
+				flex-direction: column;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.crud-diagram,
+			.acid-diagram {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
 {% endblock %}
